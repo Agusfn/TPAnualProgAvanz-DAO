@@ -1,6 +1,6 @@
 package modelo;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Pasaporte {
 
@@ -8,12 +8,15 @@ public class Pasaporte {
 	private String numero;
 	private Pais paisEmision;
 	private String autoridadEmision;
-	private Date fechaEmision;
-	private Date fechVencimiento;
+	private LocalDate fechaEmision;
+	private LocalDate fechVencimiento;
 	
+	public Pasaporte()
+	{
+	}
 
-	public Pasaporte(int id, String numero, Pais paisEmision, String autoridadEmision, Date fechaEmision,
-			Date fechVencimiento) {
+	public Pasaporte(int id, String numero, Pais paisEmision, String autoridadEmision, LocalDate fechaEmision,
+			LocalDate fechVencimiento) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -46,16 +49,16 @@ public class Pasaporte {
 	public void setAutoridadEmision(String autoridadEmision) {
 		this.autoridadEmision = autoridadEmision;
 	}
-	public Date getFechaEmision() {
+	public LocalDate getFechaEmision() {
 		return fechaEmision;
 	}
-	public void setFechaEmision(Date fechaEmision) {
+	public void setFechaEmision(LocalDate fechaEmision) {
 		this.fechaEmision = fechaEmision;
 	}
-	public Date getFechVencimiento() {
+	public LocalDate getFechVencimiento() {
 		return fechVencimiento;
 	}
-	public void setFechVencimiento(Date fechVencimiento) {
+	public void setFechVencimiento(LocalDate fechVencimiento) {
 		this.fechVencimiento = fechVencimiento;
 	}
 	

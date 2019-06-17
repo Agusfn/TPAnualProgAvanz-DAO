@@ -3,7 +3,6 @@ package dao.implementations;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import dao.interfaces.IPasajeroFrecuenteDao;
 import modelo.PasajeroFrecuente;
 import util.Archivo;
@@ -35,7 +34,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	}
 
 	/**
-	 * Obtener un pais del archivo a partir de su id.
+	 * Obtener un pasajero frecuente del archivo a partir de su id.
 	 */
 	@Override
 	public PasajeroFrecuente obtener(int id) throws IOException {
@@ -44,11 +43,11 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 
 		while ((linea = archivo.siguienteLinea()) != null) {
 
-			PasajeroFrecuente pais = csvToPasajeroFrecuente(linea);
+			PasajeroFrecuente pasajeroFrecuente = csvToPasajeroFrecuente(linea);
 
-			if (pais.getId() == id) {
+			if (pasajeroFrecuente.getId() == id) {
 				archivo.reiniciarReader();
-				return pais;
+				return pasajeroFrecuente;
 			}
 		}
 
@@ -56,51 +55,52 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	}
 
 	/**
-	 * Obtener lista de todos los paises del archivo.
+	 * Obtener lista de todos los pasajeros del archivo.
 	 */
 	@Override
 	public List<PasajeroFrecuente> obtenerTodos() throws IOException {
 
-		List<PasajeroFrecuente> paises = new ArrayList<PasajeroFrecuente>();
+		List<PasajeroFrecuente> pasajerosFrecuentes = new ArrayList<PasajeroFrecuente>();
 
 		String linea;
 
 		while ((linea = archivo.siguienteLinea()) != null) {
-			paises.add(csvToPasajeroFrecuente(linea));
+			pasajerosFrecuentes.add(csvToPasajeroFrecuente(linea));
 		}
 
-		return paises;
+		return pasajerosFrecuentes;
 	}
 
 	/**
-	 * Agregar nuevo pais al archivo. Se le asigna una id nueva auto-incremental. No
+	 * Agregar nuevo pasajero al archivo. Se le asigna una id nueva auto-incremental. No
 	 * se debe usar este metodo con un objeto ya existente en el archivo porque se
 	 * duplica.
 	 */
 	@Override
-	public void agregar(PasajeroFrecuente pais) throws IOException {
+	public void agregar(PasajeroFrecuente pasajeroFrecuente) throws IOException {
 
-		pais.setId(obtenerSiguienteId());
+		pasajeroFrecuente.setId(obtenerSiguienteId());
 
-		String lineaCsv = pasajeroFrecuenteToCsv(pais);
+		String lineaCsv = pasajeroFrecuenteToCsv(pasajeroFrecuente);
 
 		archivo.agregarLinea(lineaCsv);
 	}
 
+	
 	/**
-	 * Eliminar país de archivo. Se elimina la linea del pais que posea la id del
-	 * pais dado.
+	 * Eliminar pasajeros de archivo. Se elimina la linea del pasajero que posea la id del
+	 * pasajero dado.
 	 */
 	@Override
-	public void eliminar(PasajeroFrecuente paisAEliminar) throws IOException {
+	public void eliminar(PasajeroFrecuente pasajeroAEliminar) throws IOException {
 
 		List<String> lineas = new ArrayList<String>();
 
 		String linea;
 		while ((linea = archivo.siguienteLinea()) != null) {
 
-			PasajeroFrecuente pais = csvToPasajeroFrecuente(linea);
-			if (pais.getId() != paisAEliminar.getId()) {
+			PasajeroFrecuente pasajero = csvToPasajeroFrecuente(linea);
+			if (pasajero.getId() != pasajeroAEliminar.getId()) {
 				lineas.add(linea);
 			}
 
@@ -109,19 +109,19 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	}
 
 	/**
-	 * Actualizar un pais en el archivo. Se actualiza el país según la id.
+	 * Actualizar un pasajero en el archivo. Se actualiza el pasajero frec. según la id.
 	 */
 	@Override
-	public void actualizar(PasajeroFrecuente pais) throws IOException {
+	public void actualizar(PasajeroFrecuente pasajeroFrecuente) throws IOException {
 
 		String contenido = "";
 
 		String linea;
 
 		while ((linea = archivo.siguienteLinea()) != null) {
-			PasajeroFrecuente paisLinea = csvToPasajeroFrecuente(linea);
-			if (paisLinea.getId() == pais.getId()) {
-				contenido += pasajeroFrecuenteToCsv(pais) + System.lineSeparator();
+			PasajeroFrecuente pasajeroLinea = csvToPasajeroFrecuente(linea);
+			if (pasajeroLinea.getId() == pasajeroFrecuente.getId()) {
+				contenido += pasajeroFrecuenteToCsv(pasajeroFrecuente) + System.lineSeparator();
 			} else {
 				contenido += linea + System.lineSeparator();
 			}
@@ -140,39 +140,48 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 */
 	private int obtenerSiguienteId() throws IOException {
 
-		PasajeroFrecuente ultimoPais = null;
+		PasajeroFrecuente ultimoPasajero = null;
 
 		String linea;
 		while ((linea = archivo.siguienteLinea()) != null) {
-			ultimoPais = csvToPasajeroFrecuente(linea);
+			ultimoPasajero = csvToPasajeroFrecuente(linea);
 		}
 
-		if (ultimoPais == null)
+		if (ultimoPasajero == null)
 			return 1;
 		else
-			return ultimoPais.getId() + 1;
+			return ultimoPasajero.getId() + 1;
 	}
 
 	/**
-	 * Convierte una línea CSV de archivo a un país.
+	 * Convierte una línea CSV de archivo a un pasajero frec.
 	 * 
 	 * @param csv
 	 * @return
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
-	private PasajeroFrecuente csvToPasajeroFrecuente(String csv) throws ArrayIndexOutOfBoundsException {
+	private PasajeroFrecuente csvToPasajeroFrecuente(String csv) throws ArrayIndexOutOfBoundsException, IOException {
 		String[] props = csv.split(",");
 
 		PasajeroFrecuente pasajeroFrecuente = new PasajeroFrecuente();
+		
 		pasajeroFrecuente.setId(Integer.parseInt(props[0]));
 		pasajeroFrecuente.setAlianza(props[1]);
-
+		
+		int idAerolinea = Integer.parseInt(props[2]);
+		AerolineaDaoImpArchivo dao = new AerolineaDaoImpArchivo();
+		pasajeroFrecuente.setAerolinea(dao.obtener(idAerolinea));
+		
+		pasajeroFrecuente.setNumero(props[3]);
+		pasajeroFrecuente.setCategoria(props[4]);
+		
+		
 		return pasajeroFrecuente;
 	}
 
 	private String pasajeroFrecuenteToCsv(PasajeroFrecuente pasajFrec) {
-		return "";
-		//return pasajFrec.getId() + "," + pasajFrec.getAlianza() + "," + pasajFrec.getAerolinea().getId() + ;
+		
+		return pasajFrec.getId() + "," + pasajFrec.getAlianza() + "," + pasajFrec.getAerolinea().getId() + "," + pasajFrec.getNumero() + "," + pasajFrec.getCategoria();
 	}
 
 }
