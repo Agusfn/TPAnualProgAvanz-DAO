@@ -8,6 +8,9 @@ public class Aeropuerto {
 	private Provincia provincia;
 	private Pais pais;
 	
+	public Aeropuerto() {
+		
+	}
 	
 	public Aeropuerto(int id, String identificacion, String ciudad, Provincia provincia, Pais pais) {
 		super();
