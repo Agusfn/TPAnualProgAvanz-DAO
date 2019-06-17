@@ -16,6 +16,9 @@ public class Telefono {
 		this.nroCelular = nroCelular;
 		this.nroLaboral = nroLaboral;
 	}
+	public Telefono() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getId() {
 		return id;
 	}

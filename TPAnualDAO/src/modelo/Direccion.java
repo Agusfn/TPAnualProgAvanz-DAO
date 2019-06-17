@@ -11,6 +11,9 @@ public class Direccion {
 	private String codigoPostal;
 	
 	
+	public Direccion() {
+		
+	}
 	
 	public Direccion(int id, String calle, String altura, String ciudad, Provincia provincia, Pais pais,
 			String codigoPostal) {
