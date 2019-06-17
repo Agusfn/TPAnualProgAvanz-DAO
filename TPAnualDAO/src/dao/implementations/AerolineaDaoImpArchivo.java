@@ -12,7 +12,7 @@ public class AerolineaDaoImpArchivo implements IAerolineaDao {
 
 
 	
-	/**
+	/*
 	 * Nombre del archivo que almacenará al objeto.
 	 */
 	private static String nombreArchivo = "aerolineas.txt";

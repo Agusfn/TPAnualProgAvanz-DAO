@@ -13,6 +13,6 @@ public interface IClienteDao {
 	public void agregar(Cliente cliente) throws IOException;
 	public void eliminar(Cliente cliente) throws IOException;
 	public void actualizar(Cliente cliente) throws IOException;
-	
+	//
 	
 }

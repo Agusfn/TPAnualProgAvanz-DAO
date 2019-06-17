@@ -11,7 +11,7 @@ public class ClienteDaoImpArchivo implements IClienteDao{
 
 	
 	
-	/**
+	/*
 	 * Nombre del archivo que almacenará al objeto.
 	 */
 	private static String nombreArchivo = "cliente.txt";

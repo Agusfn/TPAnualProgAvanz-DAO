@@ -12,6 +12,6 @@ public interface IAerolineaDao {
 	public void agregar(Aerolinea aerolinea) throws IOException;
 	public void eliminar(Aerolinea aerolinea) throws IOException;
 	public void actualizar(Aerolinea aerolinea) throws IOException;
-	
+	//
 	
 }
