@@ -177,10 +177,10 @@ public class AeropuertoDaoImplArchivo implements IAeropuertoDao{
 			
 			
 			
-			/*ProvinciaDaoImplArchivo provinciasDao = new ProvinciaDaoImplArchivo();
+			ProvinciaDaoImplArchivo provinciasDao = new ProvinciaDaoImplArchivo();
 			Provincia provincia = provinciasDao.obtener(Integer.parseInt(props[3]));
 			aeropuerto.setProvincia(provincia);
-			*/
+			
 			
 			PaisDaoImplArchivo paisesDao = new PaisDaoImplArchivo();
 			Pais pais = paisesDao.obtener(Integer.parseInt(props[4]));

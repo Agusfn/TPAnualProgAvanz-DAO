@@ -180,12 +180,12 @@ public class DireccionDaoImplArchivo implements IDireccion {
 			direccion.setAltura(props[2]);
 			direccion.setCiudad(props[3]);
 			
-			/*
+			
 			ProvinciaDaoImplArchivo provinciaDao = new ProvinciaDaoImplArchivo();
 			Provincia provincia = provinciaDao.obtener(Integer.parseInt(props[4]));
 
 			direccion.setProvincia(provincia);
-			*/
+			
 			
 			PaisDaoImplArchivo paisesDao = new PaisDaoImplArchivo();
 			Pais pais = paisesDao.obtener(Integer.parseInt(props[5]));
