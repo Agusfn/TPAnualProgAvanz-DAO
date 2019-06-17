@@ -11,6 +11,9 @@ public class Venta {
 	private Date fechaHora;
 	private String formaDePago;
 	
+	//agregue
+	public Venta () {
+	}
 	
 	
 	public Venta(int id, Cliente cliente, Vuelo vuelo, Aerolinea aerolinea, Date fechaHora, String formaDePago) {
