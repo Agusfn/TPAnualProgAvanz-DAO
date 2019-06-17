@@ -166,7 +166,7 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
 	// ESTA MAL ESTA MAL ESTA MAL ESTA MAL -----------------------------------------------------------------------------
-	
+	// no tocar
 	
 	
 	private Venta csvToVenta(String csv) throws ArrayIndexOutOfBoundsException
@@ -175,7 +175,7 @@ public class VentaDaoImplArchivo implements IVentaDao {
 		
 		Venta venta = new Venta();
 		venta.setId(Integer.parseInt(props[0]));
-		venta.setNombre(props[1]);
+		venta.(props[1]);
 		
 		return venta;
 	}

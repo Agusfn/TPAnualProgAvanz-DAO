@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import modelo.Venta;
-
+//hola
 public interface IVentaDao {
 
 

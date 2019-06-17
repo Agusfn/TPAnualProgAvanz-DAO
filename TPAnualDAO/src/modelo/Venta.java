@@ -11,7 +11,7 @@ public class Venta {
 	private Date fechaHora;
 	private String formaDePago;
 	
-	
+	//agregue
 	public Venta () {
 	}
 	
