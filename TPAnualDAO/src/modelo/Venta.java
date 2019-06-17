@@ -1,5 +1,6 @@
 package modelo;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Venta {
@@ -8,15 +9,14 @@ public class Venta {
 	private Cliente cliente;
 	private Vuelo vuelo;
 	private Aerolinea aerolinea;
-	private Date fechaHora;
+	private LocalDateTime fechaHora;
 	private String formaDePago;
 	
-	//agregue
 	public Venta () {
 	}
 	
 	
-	public Venta(int id, Cliente cliente, Vuelo vuelo, Aerolinea aerolinea, Date fechaHora, String formaDePago) {
+	public Venta(int id, Cliente cliente, Vuelo vuelo, Aerolinea aerolinea, LocalDateTime fechaHora, String formaDePago) {
 		super();
 		this.id = id;
 		this.cliente = cliente;
@@ -49,10 +49,10 @@ public class Venta {
 	public void setAerolinea(Aerolinea aerolinea) {
 		this.aerolinea = aerolinea;
 	}
-	public Date getFechaHora() {
+	public LocalDateTime getFechaHora() {
 		return fechaHora;
 	}
-	public void setFechaHora(Date fechaHora) {
+	public void setFechaHora(LocalDateTime fechaHora) {
 		this.fechaHora = fechaHora;
 	}
 	public String getFormaDePago() {
