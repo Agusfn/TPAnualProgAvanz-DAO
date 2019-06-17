@@ -8,6 +8,9 @@ public class PasajeroFrecuente {
 	private String numero;
 	private String categoria;
 	
+	public PasajeroFrecuente()
+	{
+	}
 
 	public PasajeroFrecuente(int id, String alianza, Aerolinea aerolinea, String numero, String categoria) {
 		super();
