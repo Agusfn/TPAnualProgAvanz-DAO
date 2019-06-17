@@ -31,6 +31,9 @@ public class Cliente {
 		this.pasajeroFrecuente = pasajeroFrecuente;
 		this.direccion = direccion;
 	}
+	public Cliente() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getId() {
 		return id;
 	}
