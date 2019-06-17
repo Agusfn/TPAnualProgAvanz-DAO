@@ -17,6 +17,9 @@ public class Aerolinea {
 		this.alianza = alianza;
 		this.vuelos = vuelos;
 	}
+	public Aerolinea() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getId() {
 		return id;
 	}
