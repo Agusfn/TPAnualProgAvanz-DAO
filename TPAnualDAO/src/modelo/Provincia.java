@@ -6,6 +6,9 @@ public class Provincia {
 	private String nombre;
 	private Pais pais;
 	
+	public Provincia () {
+		
+	}
 	
 	public Provincia(int id, String nombre, Pais pais) {
 		super();
