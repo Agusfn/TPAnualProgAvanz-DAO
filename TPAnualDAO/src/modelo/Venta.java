@@ -12,6 +12,9 @@ public class Venta {
 	private String formaDePago;
 	
 	
+	public Venta () {
+	}
+	
 	
 	public Venta(int id, Cliente cliente, Vuelo vuelo, Aerolinea aerolinea, Date fechaHora, String formaDePago) {
 		super();
