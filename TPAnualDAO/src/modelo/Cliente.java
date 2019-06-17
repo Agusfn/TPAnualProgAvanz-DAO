@@ -67,8 +67,8 @@ public class Cliente {
 	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
+	public void setFechaNacimiento(Object object) {
+		this.fechaNacimiento = (Date) object;
 	}
 	public String getEmail() {
 		return email;

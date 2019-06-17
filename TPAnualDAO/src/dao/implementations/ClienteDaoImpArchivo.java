@@ -6,6 +6,7 @@ import java.util.List;
 import dao.interfaces.IClienteDao;
 import modelo.Cliente;
 import util.Archivo;
+import util.Dates;
 
 public class ClienteDaoImpArchivo implements IClienteDao{
 
@@ -176,7 +177,7 @@ public class ClienteDaoImpArchivo implements IClienteDao{
 		cliente.setDni(props[2]);
 	//	cliente.setPasaporte(props[3);
 		cliente.setCuitOCuil(props[4]);
-	//	cliente.setFechaNacimiento(props[5]);
+		cliente.setFechaNacimiento(Dates.fromString(props[5]));
 	//	cliente.setTelefono(props[6]);
 	//	cliente.setPasajeroFrecuente(PasajeroFrecuente.getId);
 	//	cliente.setDireccion(props[8]);
