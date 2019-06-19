@@ -9,6 +9,7 @@ import dao.interfaces.IPasaporteDao;
 import modelo.Pasaporte;
 import util.Archivo;
 import util.Dates;
+import util.PropertiesUtil;
 
 public class PasaporteDaoImplArchivo implements IPasaporteDao {
 
@@ -16,7 +17,7 @@ public class PasaporteDaoImplArchivo implements IPasaporteDao {
 	/**
 	 * Nombre del archivo que almacenará al objeto.
 	 */
-	private static String nombreArchivo = "pasaportes.txt";
+	private static String nombreArchivo;
 	
 	
 	/**
@@ -31,6 +32,7 @@ public class PasaporteDaoImplArchivo implements IPasaporteDao {
 	 */
 	public PasaporteDaoImplArchivo() throws IOException
 	{
+		nombreArchivo = PropertiesUtil.pasaportesFile("archivo");
 		archivo = new Archivo(nombreArchivo);
 		
 		if(!archivo.existe()) {
@@ -101,18 +103,17 @@ public class PasaporteDaoImplArchivo implements IPasaporteDao {
 	@Override
 	public void eliminar(Pasaporte pasaporteAEliminar) throws IOException {
 		
-		List<String> lineas = new ArrayList<String>();
+		String contenido = "";
 		
 		String linea;
 		while ((linea = archivo.siguienteLinea() ) != null) {
 			
 			Pasaporte pasaporte = csvToPasaporte(linea);
 			if(pasaporte.getId() != pasaporteAEliminar.getId()) {
-				lineas.add(linea);
+				contenido += pasaporteToCsv(pasaporte) + System.lineSeparator();
 			}
-			
 		}
-		
+		archivo.guardarContenido(contenido);
 	}
 
 	/**

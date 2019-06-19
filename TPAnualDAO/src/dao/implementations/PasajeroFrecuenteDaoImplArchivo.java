@@ -6,13 +6,14 @@ import java.util.List;
 import dao.interfaces.IPasajeroFrecuenteDao;
 import modelo.PasajeroFrecuente;
 import util.Archivo;
+import util.PropertiesUtil;
 
 public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 
 	/**
 	 * Nombre del archivo que almacenará al objeto.
 	 */
-	private static String nombreArchivo = "pasajeros_frecuentes.txt";
+	private static String nombreArchivo;
 
 	/**
 	 * Clase archivo con simplificaciones de funciones de archivo que se utilizan en
@@ -26,6 +27,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * @throws IOException
 	 */
 	public PasajeroFrecuenteDaoImplArchivo() throws IOException {
+		nombreArchivo = PropertiesUtil.pasajerosFrecuentesFile("archivo");
 		archivo = new Archivo(nombreArchivo);
 
 		if (!archivo.existe()) {
@@ -94,18 +96,17 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	@Override
 	public void eliminar(PasajeroFrecuente pasajeroAEliminar) throws IOException {
 
-		List<String> lineas = new ArrayList<String>();
+		String contenido = "";
 
 		String linea;
 		while ((linea = archivo.siguienteLinea()) != null) {
 
 			PasajeroFrecuente pasajero = csvToPasajeroFrecuente(linea);
 			if (pasajero.getId() != pasajeroAEliminar.getId()) {
-				lineas.add(linea);
+				contenido += pasajeroFrecuenteToCsv(pasajero) + System.lineSeparator();
 			}
-
 		}
-
+		archivo.guardarContenido(contenido);
 	}
 
 	/**
