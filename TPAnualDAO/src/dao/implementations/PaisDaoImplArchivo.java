@@ -6,6 +6,7 @@ import java.util.List;
 import dao.interfaces.IPaisDao;
 import modelo.Pais;
 import util.Archivo;
+import util.PropertiesUtil;
 
 public class PaisDaoImplArchivo implements IPaisDao {
 
@@ -13,7 +14,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	/**
 	 * Nombre del archivo que almacenará al objeto.
 	 */
-	private static String nombreArchivo = "paises.txt";
+	private static String nombreArchivo;
 	
 	
 	/**
@@ -28,6 +29,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	 */
 	public PaisDaoImplArchivo() throws IOException
 	{
+		nombreArchivo = PropertiesUtil.paisesFile("archivo");
 		archivo = new Archivo(nombreArchivo);
 		
 		if(!archivo.existe()) {
@@ -53,7 +55,6 @@ public class PaisDaoImplArchivo implements IPaisDao {
 				return pais;
 			}	
 		}
-		
 		return null;
 	}
 	
@@ -98,20 +99,20 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	@Override
 	public void eliminar(Pais paisAEliminar) throws IOException {
 		
-		List<String> lineas = new ArrayList<String>();
+		String contenido = "";
 		
 		String linea;
 		while ((linea = archivo.siguienteLinea() ) != null) {
 			
 			Pais pais = csvToPais(linea);
 			if(pais.getId() != paisAEliminar.getId()) {
-				lineas.add(linea);
+				contenido += paisToCsv(pais) + System.lineSeparator();
 			}
-			
 		}
-		
+		archivo.guardarContenido(contenido);
 	}
 
+	
 	/**
 	 * Actualizar un pais en el archivo. Se actualiza el país según la id.
 	 */

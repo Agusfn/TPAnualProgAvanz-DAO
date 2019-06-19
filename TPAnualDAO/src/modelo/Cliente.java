@@ -1,8 +1,9 @@
 package modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Cliente {
+public class Cliente implements Serializable {
 
 	private int id;
 	private String nombreYApellido;
@@ -16,11 +17,10 @@ public class Cliente {
 	private Direccion direccion;
 	
 
-	public Cliente(int id, String nombreYApellido, String dni, Pasaporte pasaporte, String cuitOCuil,
+	public Cliente(String nombreYApellido, String dni, Pasaporte pasaporte, String cuitOCuil,
 			Date fechaNacimiento, String email, Telefono telefono, PasajeroFrecuente pasajeroFrecuente,
 			Direccion direccion) {
 		super();
-		this.id = id;
 		this.nombreYApellido = nombreYApellido;
 		this.dni = dni;
 		this.pasaporte = pasaporte;

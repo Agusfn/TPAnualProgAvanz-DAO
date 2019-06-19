@@ -1,6 +1,8 @@
 package modelo;
 
-public class Direccion {
+import java.io.Serializable;
+
+public class Direccion implements Serializable {
 
 	private int id;
 	private String calle;
@@ -15,10 +17,9 @@ public class Direccion {
 		
 	}
 	
-	public Direccion(int id, String calle, String altura, String ciudad, Provincia provincia, Pais pais,
+	public Direccion(String calle, String altura, String ciudad, Provincia provincia, Pais pais,
 			String codigoPostal) {
 		super();
-		this.id = id;
 		this.calle = calle;
 		this.altura = altura;
 		this.ciudad = ciudad;

@@ -1,6 +1,8 @@
 package modelo;
 
-public class Aeropuerto {
+import java.io.Serializable;
+
+public class Aeropuerto implements Serializable {
 
 	private int id;	
 	private String identificacion;
@@ -12,9 +14,8 @@ public class Aeropuerto {
 		
 	}
 	
-	public Aeropuerto(int id, String identificacion, String ciudad, Provincia provincia, Pais pais) {
+	public Aeropuerto(String identificacion, String ciudad, Provincia provincia, Pais pais) {
 		super();
-		this.id = id;
 		this.identificacion = identificacion;
 		this.ciudad = ciudad;
 		this.provincia = provincia;
