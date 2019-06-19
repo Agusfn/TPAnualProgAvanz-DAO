@@ -5,7 +5,7 @@ import java.util.List;
 
 import modelo.Direccion;
 
-public interface IDireccion {
+public interface IDireccionDao {
 
 	
 	public Direccion obtener(int id) throws IOException;

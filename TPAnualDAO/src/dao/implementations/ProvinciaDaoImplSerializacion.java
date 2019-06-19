@@ -7,11 +7,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import dao.interfaces.IProvincia;
+import dao.interfaces.IProvinciaDao;
 import modelo.Provincia;
 import util.PropertiesUtil;
 
-public class ProvinciaDaoImplSerializacion implements IProvincia {
+public class ProvinciaDaoImplSerializacion implements IProvinciaDao {
 
 		
 		private static String nombreArchivo;

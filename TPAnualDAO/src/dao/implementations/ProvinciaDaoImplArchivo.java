@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.interfaces.IProvincia;
+import dao.interfaces.IProvinciaDao;
 import modelo.Pais;
 import modelo.Provincia;
 import util.Archivo;
@@ -11,7 +11,7 @@ import util.PropertiesUtil;
 
 
 
-public class ProvinciaDaoImplArchivo implements IProvincia{
+public class ProvinciaDaoImplArchivo implements IProvinciaDao{
 		
 		/*
 		 * Nombre del archivo que almacenará al objeto.

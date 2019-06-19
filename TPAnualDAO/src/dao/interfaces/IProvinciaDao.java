@@ -5,7 +5,7 @@ import java.util.List;
 
 import modelo.Provincia;
 
-public interface IProvincia {
+public interface IProvinciaDao {
 	
 	public Provincia obtener(int id) throws IOException;
 	public List<Provincia> obtenerTodos() throws IOException;	

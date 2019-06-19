@@ -2,14 +2,14 @@ package dao.implementations;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import dao.interfaces.IDireccion;
+import dao.interfaces.IDireccionDao;
 import modelo.Direccion;
 import modelo.Pais;
 import modelo.Provincia;
 import util.Archivo;
 import util.PropertiesUtil;
 
-public class DireccionDaoImplArchivo implements IDireccion {
+public class DireccionDaoImplArchivo implements IDireccionDao {
 	
 
 	

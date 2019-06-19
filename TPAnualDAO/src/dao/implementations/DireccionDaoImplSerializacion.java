@@ -7,12 +7,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import dao.interfaces.IDireccion;
+import dao.interfaces.IDireccionDao;
 import modelo.Direccion;
 import util.PropertiesUtil;
 
 
-public class DireccionDaoImplSerializacion implements IDireccion {
+public class DireccionDaoImplSerializacion implements IDireccionDao {
 
 		
 		private static String nombreArchivo;
