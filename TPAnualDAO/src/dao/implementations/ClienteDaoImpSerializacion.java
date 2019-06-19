@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.Cliente;
 import util.PropertiesUtil;
-
+//
 public class ClienteDaoImpSerializacion {
 
 

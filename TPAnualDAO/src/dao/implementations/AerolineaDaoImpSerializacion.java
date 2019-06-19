@@ -12,7 +12,7 @@ import java.util.List;
 import dao.interfaces.IAerolineaDao;
 import modelo.Aerolinea;
 import util.PropertiesUtil;
-
+//
 public class AerolineaDaoImpSerializacion implements IAerolineaDao {
 	
 

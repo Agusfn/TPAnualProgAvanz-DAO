@@ -13,7 +13,7 @@ import dao.interfaces.ITelefonoDao;
 import modelo.Pais;
 import modelo.Telefono;
 import util.PropertiesUtil;
-
+//
 public class TelefonoDaoImpSerializacion implements ITelefonoDao {
 	
 
