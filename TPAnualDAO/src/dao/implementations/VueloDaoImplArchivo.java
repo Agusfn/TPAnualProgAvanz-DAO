@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import dao.interfaces.IVueloDao;
+import modelo.Pais;
 import modelo.Vuelo;
 import util.*;
 
@@ -14,7 +15,7 @@ public class VueloDaoImplArchivo implements IVueloDao {
 	/**
 	 * Nombre del archivo que almacenará al objeto.
 	 */
-	private static String nombreArchivo = "Vuelos.txt";
+	private static String nombreArchivo;
 	
 	
 	/**
@@ -93,24 +94,23 @@ public class VueloDaoImplArchivo implements IVueloDao {
 
 	
 	/**
-	 * Eliminar país de archivo.
+	 * Eliminar vuelo de archivo.
 	 * Se elimina la linea del vuelo que posea la id del vuelo dado.
 	 */
 	@Override
 	public void eliminar(Vuelo vueloAEliminar) throws IOException {
 		
-		List<String> lineas = new ArrayList<String>();
+		String contenido = "";
 		
 		String linea;
 		while ((linea = archivo.siguienteLinea() ) != null) {
 			
 			Vuelo vuelo = csvToVuelo(linea);
 			if(vuelo.getId() != vueloAEliminar.getId()) {
-				lineas.add(linea);
+				contenido += VueloToCsv(vuelo) + System.lineSeparator();
 			}
-			
 		}
-		
+		archivo.guardarContenido(contenido);
 	}
 
 	/**

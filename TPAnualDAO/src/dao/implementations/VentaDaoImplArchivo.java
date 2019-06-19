@@ -8,6 +8,7 @@ import java.util.List;
 import dao.interfaces.IVentaDao;
 import modelo.Aerolinea;
 import modelo.Cliente;
+import modelo.Pais;
 import modelo.Venta;
 import modelo.Vuelo;
 import util.Archivo;
@@ -19,7 +20,7 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	/**
 	 * Nombre del archivo que almacenará al objeto.
 	 */
-	private static String nombreArchivo = "ventas.txt";
+	private static String nombreArchivo;
 	
 	
 	/**
@@ -98,28 +99,27 @@ public class VentaDaoImplArchivo implements IVentaDao {
 
 	
 	/**
-	 * Eliminar país de archivo.
+	 * Eliminar venta de archivo.
 	 * Se elimina la linea de la venta que posea la id de la venta dada.
 	 */
 	@Override
 	public void eliminar(Venta ventaAEliminar) throws IOException {
 		
-		List<String> lineas = new ArrayList<String>();
+		String contenido = "";
 		
 		String linea;
 		while ((linea = archivo.siguienteLinea() ) != null) {
 			
 			Venta venta = csvToVenta(linea);
 			if(venta.getId() != ventaAEliminar.getId()) {
-				lineas.add(linea);
+				contenido += ventaToCsv(venta) + System.lineSeparator();
 			}
-			
 		}
-		
+		archivo.guardarContenido(contenido);
 	}
 
 	/**
-	 * Actualizar una venta en el archivo. Se actualiza el país según la id.
+	 * Actualizar una venta en el archivo. Se actualiza el vuelo según la id.
 	 */
 	@Override
 	public void actualizar(Venta venta) throws IOException {
@@ -196,7 +196,10 @@ public class VentaDaoImplArchivo implements IVentaDao {
 		return venta;
 	}
 	
-	
+	/**
+	 * Convierte una venta en un string csv
+	 */
+		
 	private String ventaToCsv(Venta venta)
 	{
 		return venta.getId() + "," + venta.getCliente().getId() + "," + venta.getVuelo().getId() + "," + venta.getAerolinea().getId() + "," + Dates.toString(venta.getFechaHora()) + "," + venta.getFormaDePago();
