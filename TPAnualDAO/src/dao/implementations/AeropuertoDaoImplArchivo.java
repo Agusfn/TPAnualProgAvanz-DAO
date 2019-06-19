@@ -8,13 +8,14 @@ import modelo.Aeropuerto;
 import modelo.Pais;
 import modelo.Provincia;
 import util.Archivo;
+import util.PropertiesUtil;
 
 public class AeropuertoDaoImplArchivo implements IAeropuertoDao{
 
 		/**
 		 * Nombre del archivo que almacenará al objeto.
 		 */
-		private static String nombreArchivo = "aeropuerto.txt";
+		private static String nombreArchivo;
 		
 		
 		/**
@@ -29,6 +30,7 @@ public class AeropuertoDaoImplArchivo implements IAeropuertoDao{
 		 */
 		public AeropuertoDaoImplArchivo() throws IOException
 		{
+			nombreArchivo = PropertiesUtil.aeropuertosFile("archivo");
 			archivo = new Archivo(nombreArchivo);
 			
 			if(!archivo.existe()) {
@@ -99,18 +101,18 @@ public class AeropuertoDaoImplArchivo implements IAeropuertoDao{
 		@Override
 		public void eliminar(Aeropuerto aeropuertoAEliminar) throws IOException {
 			
-			List<String> lineas = new ArrayList<String>();
+			String contenido  = "";
 			
 			String linea;
 			while ((linea = archivo.siguienteLinea() ) != null) {
 				
 				Aeropuerto aeropuerto = csvToAeropuerto(linea);
 				if(aeropuerto.getId() != aeropuertoAEliminar.getId()) {
-					lineas.add(linea);
+					contenido += aeropuertoToCsv(aeropuerto) + System.lineSeparator();
 				}
 				
 			}
-			
+			archivo.guardarContenido(contenido);
 		}
 
 		/**

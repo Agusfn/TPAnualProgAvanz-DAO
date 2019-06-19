@@ -7,6 +7,7 @@ import dao.interfaces.IProvincia;
 import modelo.Pais;
 import modelo.Provincia;
 import util.Archivo;
+import util.PropertiesUtil;
 
 
 
@@ -15,7 +16,7 @@ public class ProvinciaDaoImplArchivo implements IProvincia{
 		/*
 		 * Nombre del archivo que almacenará al objeto.
 		 */
-		private static String nombreArchivo = "provincias.txt";
+		private static String nombreArchivo;
 		
 		
 		/**
@@ -30,6 +31,7 @@ public class ProvinciaDaoImplArchivo implements IProvincia{
 		 */
 		public ProvinciaDaoImplArchivo() throws IOException
 		{
+			nombreArchivo = PropertiesUtil.provinciasFile("archivo");
 			archivo = new Archivo(nombreArchivo);
 			
 			if(!archivo.existe()) {
@@ -87,7 +89,7 @@ public class ProvinciaDaoImplArchivo implements IProvincia{
 
 			provincia.setId(obtenerSiguienteId());
 			
-			String lineaCsv = ProvinciaToCsv(provincia);
+			String lineaCsv = provinciaToCsv(provincia);
 			
 			archivo.agregarLinea(lineaCsv);
 		}
@@ -100,15 +102,18 @@ public class ProvinciaDaoImplArchivo implements IProvincia{
 		@Override
 		public void eliminar(Provincia provinciaAEliminar) throws IOException {
 			
-			List<String> lineas = new ArrayList<String>();
+			String contenido="";
 			
 			String linea;
 			while ((linea = archivo.siguienteLinea() ) != null) {
 				
 				Provincia provincia = csvToProvincia(linea);
 				if(provincia.getId() != provinciaAEliminar.getId()) {
-					lineas.add(linea);
+					contenido += provinciaToCsv(provincia) + System.lineSeparator();
+
 				}
+				
+				archivo.guardarContenido(contenido);
 				
 			}
 			
@@ -127,7 +132,7 @@ public class ProvinciaDaoImplArchivo implements IProvincia{
 			while ((linea = archivo.siguienteLinea() ) != null) {
 				Provincia provinciaLinea = csvToProvincia(linea);
 				if(provinciaLinea.getId() == provincia.getId()) {
-					contenido += ProvinciaToCsv(provincia) + System.lineSeparator();
+					contenido += provinciaToCsv(provincia) + System.lineSeparator();
 				}
 				else {
 					contenido += linea + System.lineSeparator();
@@ -188,7 +193,7 @@ public class ProvinciaDaoImplArchivo implements IProvincia{
 		}
 		
 		
-		private String ProvinciaToCsv(Provincia provincia)
+		private String provinciaToCsv(Provincia provincia)
 		{
 			return provincia.getId() + "," + provincia.getNombre() + "," + provincia.getPais().getId();
 			

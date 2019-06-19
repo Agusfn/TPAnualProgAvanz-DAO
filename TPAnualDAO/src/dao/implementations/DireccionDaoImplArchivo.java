@@ -7,6 +7,7 @@ import modelo.Direccion;
 import modelo.Pais;
 import modelo.Provincia;
 import util.Archivo;
+import util.PropertiesUtil;
 
 public class DireccionDaoImplArchivo implements IDireccion {
 	
@@ -16,7 +17,7 @@ public class DireccionDaoImplArchivo implements IDireccion {
 		/**
 		 * Nombre del archivo que almacenará al objeto.
 		 */
-		private static String nombreArchivo = "direcciones.txt";
+		private static String nombreArchivo;
 		
 		
 		/**
@@ -31,6 +32,7 @@ public class DireccionDaoImplArchivo implements IDireccion {
 		 */
 		public DireccionDaoImplArchivo() throws IOException
 		{
+			nombreArchivo = PropertiesUtil.direccionesFile("archivo");
 			archivo = new Archivo(nombreArchivo);
 			
 			if(!archivo.existe()) {
@@ -101,18 +103,18 @@ public class DireccionDaoImplArchivo implements IDireccion {
 		@Override
 		public void eliminar(Direccion direccionAEliminar) throws IOException {
 			
-			List<String> lineas = new ArrayList<String>();
+			String contenido ="";
 			
 			String linea;
 			while ((linea = archivo.siguienteLinea() ) != null) {
 				
 				Direccion direccion = csvToDireccion(linea);
 				if(direccion.getId() != direccionAEliminar.getId()) {
-					lineas.add(linea);
+					contenido += direccionToCsv(direccion) + System.lineSeparator();
 				}
 				
 			}
-			
+			archivo.guardarContenido(contenido);
 		}
 
 		/**
