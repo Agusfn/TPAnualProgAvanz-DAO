@@ -1,11 +1,17 @@
 package dao.implementations;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import dao.interfaces.IVentaDao;
+import modelo.Aerolinea;
+import modelo.Cliente;
 import modelo.Venta;
+import modelo.Vuelo;
 import util.Archivo;
+import util.Dates;
 
 public class VentaDaoImplArchivo implements IVentaDao {
 
@@ -165,17 +171,27 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	 * @return
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
-	// ESTA MAL ESTA MAL ESTA MAL ESTA MAL -----------------------------------------------------------------------------
-	// no tocar
 	
-	
-	private Venta csvToVenta(String csv) throws ArrayIndexOutOfBoundsException
+	private Venta csvToVenta(String csv) throws ArrayIndexOutOfBoundsException , IOException
 	{
 		String[] props = csv.split(",");
 		
 		Venta venta = new Venta();
+		
 		venta.setId(Integer.parseInt(props[0]));
-		venta.(props[1]);
+		
+		ClienteDaoImpArchivo dao = new ClienteDaoImpArchivo();
+		venta.setCliente(dao.obtener(Integer.parseInt(props[1])));
+		
+		VueloDaoImplArchivo dao2 = new VueloDaoImplArchivo();
+		venta.setVuelo(dao2.obtener(Integer.parseInt(props [2])));
+		
+		AerolineaDaoImpArchivo dao3 = new AerolineaDaoImpArchivo();
+		venta.setAerolinea(dao3.obtener(Integer.parseInt(props [3])));
+		
+		venta.setFechaHora((LocalDateTime) Dates.fromString(props [4]));
+		
+		venta.setFormaDePago(props[5]);
 		
 		return venta;
 	}
@@ -183,11 +199,9 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	
 	private String ventaToCsv(Venta venta)
 	{
-		return venta.getId() + "," + venta.getCliente().getId() + "," + venta.getVuelo().getId() + "," + venta.getAerolinea().getId() + "," + 
+		return venta.getId() + "," + venta.getCliente().getId() + "," + venta.getVuelo().getId() + "," + venta.getAerolinea().getId() + "," + Dates.toString(venta.getFechaHora()) + "," + venta.getFormaDePago();
 		
-			String hola= parseString(venta.getFechaHora())
-				
-				; }
+	}
 	
 	
 	

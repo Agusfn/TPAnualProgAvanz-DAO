@@ -1,5 +1,7 @@
 package modelo;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Vuelo {
@@ -9,14 +11,16 @@ public class Vuelo {
 	private int cantAsientos;
 	private Aeropuerto aeropSalida;
 	private Aeropuerto aeropLlegada;
-	private Date fechaHoraSalida;
-	private Date fechaHoraLlegada;
+	private LocalDateTime fechaHoraSalida;
+	private LocalDateTime fechaHoraLlegada;
 	private String tiempoDeVuelo;
 	
-	
+	public Vuelo() {
+		
+	}
 	
 	public Vuelo(int id, String numero, int cantAsientos, Aeropuerto aeropSalida, Aeropuerto aeropLlegada,
-			Date fechaHoraSalida, Date fechaHoraLlegada, String tiempoDeVuelo) {
+			LocalDateTime fechaHoraSalida, LocalDateTime fechaHoraLlegada, String tiempoDeVuelo) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -57,16 +61,16 @@ public class Vuelo {
 	public void setAeropLlegada(Aeropuerto aeropLlegada) {
 		this.aeropLlegada = aeropLlegada;
 	}
-	public Date getFechaHoraSalida() {
+	public LocalDateTime getFechaHoraSalida() {
 		return fechaHoraSalida;
 	}
-	public void setFechaHoraSalida(Date fechaHoraSalida) {
+	public void setFechaHoraSalida(LocalDateTime fechaHoraSalida) {
 		this.fechaHoraSalida = fechaHoraSalida;
 	}
-	public Date getFechaHoraLlegada() {
+	public LocalDateTime getFechaHoraLlegada() {
 		return fechaHoraLlegada;
 	}
-	public void setFechaHoraLlegada(Date fechaHoraLlegada) {
+	public void setFechaHoraLlegada(LocalDateTime fechaHoraLlegada) {
 		this.fechaHoraLlegada = fechaHoraLlegada;
 	}
 	public String getTiempoDeVuelo() {

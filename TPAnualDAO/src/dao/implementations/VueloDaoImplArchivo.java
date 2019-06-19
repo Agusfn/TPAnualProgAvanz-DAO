@@ -1,20 +1,20 @@
 package dao.implementations;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import dao.interfaces.IPaisDao;
-import modelo.Pais;
-import util.Archivo;
+import dao.interfaces.IVueloDao;
+import modelo.Vuelo;
+import util.*;
 
-public class VueloDaoImplArchivo implements IPaisDao {
+public class VueloDaoImplArchivo implements IVueloDao {
 
-	//hola
 	
 	/**
 	 * Nombre del archivo que almacenará al objeto.
 	 */
-	private static String nombreArchivo = "paises.txt";
+	private static String nombreArchivo = "Vuelos.txt";
 	
 	
 	/**
@@ -38,20 +38,20 @@ public class VueloDaoImplArchivo implements IPaisDao {
 	
 	
 	/**
-	 * Obtener un pais del archivo a partir de su id.
+	 * Obtener un vuelo del archivo a partir de su id.
 	 */
 	@Override
-	public Pais obtener(int id) throws IOException {
+	public Vuelo obtener(int id) throws IOException {
 		
 		String linea;
 
 		while ((linea = archivo.siguienteLinea() ) != null) {
 			
-			Pais pais = csvToPais(linea);
+			Vuelo vuelo = csvToVuelo(linea);
 			
-			if(pais.getId() == id) {
+			if(vuelo.getId() == id) {
 				archivo.reiniciarReader();
-				return pais;
+				return vuelo;
 			}	
 		}
 		
@@ -60,33 +60,33 @@ public class VueloDaoImplArchivo implements IPaisDao {
 	
 	
 	/**
-	 * Obtener lista de todos los paises del archivo.
+	 * Obtener lista de todos los vuelos del archivo.
 	 */
 	@Override
-	public List<Pais> obtenerTodos() throws IOException {
+	public List<Vuelo> obtenerTodos() throws IOException {
 		
-		List<Pais> paises = new ArrayList<Pais>();
+		List<Vuelo> vuelos = new ArrayList<Vuelo>();
 		
 		String linea;
 		
 		while ((linea = archivo.siguienteLinea() ) != null) {
-			paises.add(csvToPais(linea));
+			vuelos.add(csvToVuelo(linea));
 		}
 		
-		return paises;
+		return vuelos;
 	}
 
 	
 	/**
-	 * Agregar nuevo pais al archivo. Se le asigna una id nueva auto-incremental.
+	 * Agregar nuevo vuelo al archivo. Se le asigna una id nueva auto-incremental.
 	 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
 	 */
 	@Override
-	public void agregar(Pais pais) throws IOException {
+	public void agregar(Vuelo vuelo) throws IOException {
 
-		pais.setId(obtenerSiguienteId());
+		vuelo.setId(obtenerSiguienteId());
 		
-		String lineaCsv = paisToCsv(pais);
+		String lineaCsv = VueloToCsv(vuelo);
 		
 		archivo.agregarLinea(lineaCsv);
 	}
@@ -94,18 +94,18 @@ public class VueloDaoImplArchivo implements IPaisDao {
 	
 	/**
 	 * Eliminar país de archivo.
-	 * Se elimina la linea del pais que posea la id del pais dado.
+	 * Se elimina la linea del vuelo que posea la id del vuelo dado.
 	 */
 	@Override
-	public void eliminar(Pais paisAEliminar) throws IOException {
+	public void eliminar(Vuelo vueloAEliminar) throws IOException {
 		
 		List<String> lineas = new ArrayList<String>();
 		
 		String linea;
 		while ((linea = archivo.siguienteLinea() ) != null) {
 			
-			Pais pais = csvToPais(linea);
-			if(pais.getId() != paisAEliminar.getId()) {
+			Vuelo vuelo = csvToVuelo(linea);
+			if(vuelo.getId() != vueloAEliminar.getId()) {
 				lineas.add(linea);
 			}
 			
@@ -114,19 +114,19 @@ public class VueloDaoImplArchivo implements IPaisDao {
 	}
 
 	/**
-	 * Actualizar un pais en el archivo. Se actualiza el país según la id.
+	 * Actualizar un vuelo en el archivo. Se actualiza el vuelo según la id.
 	 */
 	@Override
-	public void actualizar(Pais pais) throws IOException {
+	public void actualizar(Vuelo vuelo) throws IOException {
 
 		String contenido = "";
 		
 		String linea;
 		
 		while ((linea = archivo.siguienteLinea() ) != null) {
-			Pais paisLinea = csvToPais(linea);
-			if(paisLinea.getId() == pais.getId()) {
-				contenido += paisToCsv(pais) + System.lineSeparator();
+			Vuelo vueloLinea = csvToVuelo(linea);
+			if(vueloLinea.getId() == vuelo.getId()) {
+				contenido += VueloToCsv(vuelo) + System.lineSeparator();
 			}
 			else {
 				contenido += linea + System.lineSeparator();
@@ -146,41 +146,53 @@ public class VueloDaoImplArchivo implements IPaisDao {
 	private int obtenerSiguienteId() throws IOException
 	{
 
-		Pais ultimoPais = null;
+		Vuelo ultimoVuelo = null;
 		
 		String linea;
 		while ((linea = archivo.siguienteLinea() ) != null) {
-			ultimoPais = csvToPais(linea);
+			ultimoVuelo = csvToVuelo(linea);
 		}
 		
-		if(ultimoPais == null)
+		if(ultimoVuelo == null)
 			return 1;
 		else 
-			return ultimoPais.getId() + 1;
+			return ultimoVuelo.getId() + 1;
 	}
 	
 	
 	/**
-	 * Convierte una línea CSV de archivo a un país.
+	 * Convierte una línea CSV de archivo a un vuelo.
 	 * @param csv
 	 * @return
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
-	private Pais csvToPais(String csv) throws ArrayIndexOutOfBoundsException
+	
+	private Vuelo csvToVuelo(String csv) throws ArrayIndexOutOfBoundsException, IOException 
 	{
 		String[] props = csv.split(",");
 		
-		Pais pais = new Pais();
-		pais.setId(Integer.parseInt(props[0]));
-		pais.setNombre(props[1]);
+		Vuelo vuelo = new Vuelo();
 		
-		return pais;
+		vuelo.setId(Integer.parseInt(props[0]));
+		
+		AeropuertoDaoImplArchivo dao = new AeropuertoDaoImplArchivo();
+		vuelo.setAeropSalida(dao.obtener(Integer.parseInt(props[1])));
+		vuelo.setAeropLlegada(dao.obtener(Integer.parseInt(props[2])));
+		vuelo.setCantAsientos(Integer.parseInt(props[3]));
+		vuelo.setTiempoDeVuelo(props[4]);
+		
+		vuelo.setFechaHoraLlegada( (LocalDateTime)Dates.fromString(props[5]) );
+		vuelo.setFechaHoraSalida( (LocalDateTime)Dates.fromString(props[6]) );
+		
+		
+		return vuelo;
 	}
 	
 	
-	private String paisToCsv(Pais pais)
+	private String VueloToCsv(Vuelo vuelo)
 	{
-		return pais.getId() + "," + pais.getNombre();
+		return vuelo.getId() + "," + vuelo.getAeropSalida().getId()  + "," + vuelo.getAeropLlegada().getId()  + "," + vuelo.getCantAsientos()   + "," + vuelo.getTiempoDeVuelo()  + "," + Dates.toString(vuelo.getFechaHoraLlegada()) + "," + Dates.toString(vuelo.getFechaHoraSalida());  		
+	
 	}
 	
 	
