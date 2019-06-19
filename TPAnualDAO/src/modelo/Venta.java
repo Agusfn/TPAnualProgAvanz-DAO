@@ -1,9 +1,10 @@
 package modelo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class Venta {
+public class Venta implements Serializable {
 
 	private int id;
 	private Cliente cliente;
@@ -16,9 +17,8 @@ public class Venta {
 	}
 	
 	
-	public Venta(int id, Cliente cliente, Vuelo vuelo, Aerolinea aerolinea, LocalDateTime fechaHora, String formaDePago) {
+	public Venta(Cliente cliente, Vuelo vuelo, Aerolinea aerolinea, LocalDateTime fechaHora, String formaDePago) {
 		super();
-		this.id = id;
 		this.cliente = cliente;
 		this.vuelo = vuelo;
 		this.aerolinea = aerolinea;

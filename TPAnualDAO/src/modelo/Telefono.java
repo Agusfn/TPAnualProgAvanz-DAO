@@ -1,6 +1,8 @@
 package modelo;
 
-public class Telefono {
+import java.io.Serializable;
+
+public class Telefono implements Serializable {
 
 	private int id;
 	private String nroPersonal;
@@ -9,9 +11,8 @@ public class Telefono {
 
 	
 	
-	public Telefono(int id, String nroPersonal, String nroCelular, String nroLaboral) {
+	public Telefono(String nroPersonal, String nroCelular, String nroLaboral) {
 		super();
-		this.id = id;
 		this.nroPersonal = nroPersonal;
 		this.nroCelular = nroCelular;
 		this.nroLaboral = nroLaboral;

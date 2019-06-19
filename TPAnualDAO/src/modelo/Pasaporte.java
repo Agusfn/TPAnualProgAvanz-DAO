@@ -1,8 +1,9 @@
 package modelo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Pasaporte {
+public class Pasaporte implements Serializable {
 
 	private int id;
 	private String numero;
@@ -15,10 +16,9 @@ public class Pasaporte {
 	{
 	}
 
-	public Pasaporte(int id, String numero, Pais paisEmision, String autoridadEmision, LocalDate fechaEmision,
+	public Pasaporte(String numero, Pais paisEmision, String autoridadEmision, LocalDate fechaEmision,
 			LocalDate fechVencimiento) {
 		super();
-		this.id = id;
 		this.numero = numero;
 		this.paisEmision = paisEmision;
 		this.autoridadEmision = autoridadEmision;

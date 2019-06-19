@@ -1,8 +1,9 @@
 package modelo;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Aerolinea {
+public class Aerolinea implements Serializable {
 
 	private int id;
 	private String nombre;
@@ -10,9 +11,8 @@ public class Aerolinea {
 	private List<Vuelo> vuelos;
 	
 	
-	public Aerolinea(int id, String nombre, String alianza, List<Vuelo> vuelos) {
+	public Aerolinea(String nombre, String alianza, List<Vuelo> vuelos) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.alianza = alianza;
 		this.vuelos = vuelos;

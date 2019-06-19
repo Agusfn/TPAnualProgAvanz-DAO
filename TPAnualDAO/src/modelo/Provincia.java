@@ -1,6 +1,8 @@
 package modelo;
 
-public class Provincia {
+import java.io.Serializable;
+
+public class Provincia implements Serializable {
 
 	private int id;
 	private String nombre;
@@ -10,9 +12,8 @@ public class Provincia {
 		
 	}
 	
-	public Provincia(int id, String nombre, Pais pais) {
+	public Provincia(String nombre, Pais pais) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.pais = pais;
 	}
