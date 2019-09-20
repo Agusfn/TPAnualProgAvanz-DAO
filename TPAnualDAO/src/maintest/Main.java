@@ -1,39 +1,54 @@
 package maintest;
 
-import java.io.IOException;
+import java.util.List;
 
-import dao.implementations.PaisDaoImplArchivo;
+import dao.implementations.db.PaisDaoImplDB;
+import dao.implementations.db.ProvinciaDaoImplDB;
 import modelo.Pais;
-import util.Archivo;
+import modelo.Provincia;
+import util.DbQuery;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException
+	public static void main(String[] args)
 	{
-	
-		// Ejemplo uso del DAO (con pais)
-		
-		PaisDaoImplArchivo dao = new PaisDaoImplArchivo();
-		
-		Pais pais;
-		// Agregamos paises
-		pais = new Pais();
-		pais.setNombre("Argentina");
-		dao.agregar(pais);
-		
-		pais = new Pais();
-		pais.setNombre("Chile");
-		dao.agregar(pais);
-		
-		
-		pais = dao.obtener(2); // obtenemos pais id 2
-		System.out.println(pais.getNombre());
-		
-		pais.setNombre("China");
-		dao.actualizar(pais);
 		
 		
 		
+		DbQuery query = new DbQuery();
+		
+		ProvinciaDaoImplDB provinciaDao = new ProvinciaDaoImplDB(query);
+		PaisDaoImplDB paisDao = new PaisDaoImplDB(query);
+		
+		
+		Pais pais = paisDao.obtener(1);
+		
+		Provincia provincia = new Provincia();
+		provincia.setNombre("Neuquén");
+		provincia.setPais(pais);
+		
+		provinciaDao.agregar(provincia);
+		
+		/*provincia.setPais(paisDao.obtener(provincia.getPais().getId()));
+		
+		System.out.println(provincia.getPais().getNombre());*/
+		
+		
+		
+		
+		
+		query.close();
+		
+		
+		//List<Pais> paises = paisDao.obtenerTodos();
+		
+		/*for(Pais pais: paises) {
+			System.out.println(pais.getNombre());
+		}*/
+		
+		/*paisDao.agregar(pais);
+		
+		*/
 		
 		
 	}
