@@ -1,5 +1,4 @@
 package dao.interfaces;
-import java.io.IOException;
 import java.util.List;
 
 import modelo.Venta;
@@ -7,10 +6,10 @@ import modelo.Venta;
 public interface IVentaDao {
 
 
-	public Venta obtener(int id) throws IOException;
-	public List<Venta> obtenerTodos() throws IOException;	
-	public void agregar(Venta venta) throws IOException;
-	public void eliminar(Venta venta) throws IOException;
-	public void actualizar(Venta venta) throws IOException;
+	public Venta obtener(int id);
+	public List<Venta> obtenerTodos();	
+	public void agregar(Venta venta);
+	public void eliminar(Venta venta);
+	public void actualizar(Venta venta);
 	
 }

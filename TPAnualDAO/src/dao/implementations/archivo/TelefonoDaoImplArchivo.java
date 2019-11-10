@@ -1,21 +1,21 @@
-package dao.implementations;
+package dao.implementations.archivo;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import dao.interfaces.ITelefonoDao;
 import modelo.Telefono;
 import util.Archivo;
+import util.Properties;
 
-public class TelefonoDaoImpArchivo implements ITelefonoDao {
+public class TelefonoDaoImplArchivo implements ITelefonoDao {
 
 	
 
 	/**
 	 * Nombre del archivo que almacenará al objeto.
 	 */
-	private static String nombreArchivo = "telefono.txt";
+	private static String nombreArchivo = Properties.getProperty("csv_telefonos");
 	
 	
 	/**
@@ -26,9 +26,8 @@ public class TelefonoDaoImpArchivo implements ITelefonoDao {
 	
 	/**
 	 * Inicializar DAO, creando archivo si no existe.
-	 * @throws IOException
 	 */
-	public TelefonoDaoImpArchivo() throws IOException
+	public TelefonoDaoImplArchivo()
 	{
 		archivo = new Archivo(nombreArchivo);
 		
@@ -42,7 +41,7 @@ public class TelefonoDaoImpArchivo implements ITelefonoDao {
 	 * Obtener un telefono del archivo a partir de su id.
 	 */
 	@Override
-	public Telefono obtener(int id) throws IOException {
+	public Telefono obtener(int id) {
 		
 		String linea;
 
@@ -64,7 +63,7 @@ public class TelefonoDaoImpArchivo implements ITelefonoDao {
 	 * Obtener lista de todos los telefonos del archivo.
 	 */
 	@Override
-	public List<Telefono> obtenerTodos() throws IOException {
+	public List<Telefono> obtenerTodos() {
 		
 		List<Telefono> telefonos = new ArrayList<Telefono>();
 		
@@ -83,7 +82,7 @@ public class TelefonoDaoImpArchivo implements ITelefonoDao {
 	 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
 	 */
 	@Override
-	public void agregar(Telefono telefono) throws IOException {
+	public void agregar(Telefono telefono) {
 
 		telefono.setId(obtenerSiguienteId());
 		
@@ -98,7 +97,7 @@ public class TelefonoDaoImpArchivo implements ITelefonoDao {
 	 * Se elimina la linea del telefono que posea la id del telefono dado.
 	 */
 	@Override
-	public void eliminar(Telefono telefonoAEliminar) throws IOException {
+	public void eliminar(Telefono telefonoAEliminar) {
 		
 		List<String> lineas = new ArrayList<String>();
 		
@@ -118,7 +117,7 @@ public class TelefonoDaoImpArchivo implements ITelefonoDao {
 	 * Actualizar un telefono en el archivo. Se actualiza el telefono según la id.
 	 */
 	@Override
-	public void actualizar(Telefono telefono) throws IOException {
+	public void actualizar(Telefono telefono) {
 
 		String contenido = "";
 		
@@ -142,9 +141,8 @@ public class TelefonoDaoImpArchivo implements ITelefonoDao {
 	 * Obtiene id del siguiente objeto a agregar al archivo.
 	 * Esta id es la id del ultimo objeto + 1. Si no hay elementos, devuelve 1.
 	 * @return
-	 * @throws IOException
 	 */
-	private int obtenerSiguienteId() throws IOException
+	private int obtenerSiguienteId()
 	{
 
 		Telefono ultimoTelefono = null;

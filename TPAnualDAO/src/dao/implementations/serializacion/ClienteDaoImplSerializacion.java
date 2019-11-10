@@ -1,4 +1,4 @@
-package dao.implementations;
+package dao.implementations.serializacion;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,19 +9,17 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Cliente;
-import util.PropertiesUtil;
+import util.Properties;
 //
-public class ClienteDaoImpSerializacion {
+public class ClienteDaoImplSerializacion {
 
 
 	
-	private static String nombreArchivo;
+	private static String nombreArchivo = Properties.getProperty("serial_clientes");
 	
 	
-	public ClienteDaoImpSerializacion() throws IOException
-	{
-		nombreArchivo = PropertiesUtil.clientesFile("serializacion");
-		
+	public ClienteDaoImplSerializacion()
+	{		
 		File archivo = new File(nombreArchivo);
 		
 		if(!archivo.exists()) {
@@ -33,7 +31,7 @@ public class ClienteDaoImpSerializacion {
 	/**
 	 * Obtener cliente con id determinado de la lista del archivo.
 	 */
-	public Cliente obtener(int id) throws IOException
+	public Cliente obtener(int id)
 	{
 		List<Cliente> clientes = obtenerTodos();
 		
@@ -50,26 +48,36 @@ public class ClienteDaoImpSerializacion {
 	 * Obtener lista de clientes del archivo serializado.
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Cliente> obtenerTodos() throws IOException
+	public List<Cliente> obtenerTodos()
 	{
-		FileInputStream fis = new FileInputStream(nombreArchivo);
-		ObjectInputStream ois = new ObjectInputStream(fis);
-
+		
 		try {
-			return (ArrayList<Cliente>)ois.readObject();
-		} catch (ClassNotFoundException e) {
-			return new ArrayList<Cliente>();
+			FileInputStream fis = new FileInputStream(nombreArchivo);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+	
+			try {
+				return (ArrayList<Cliente>)ois.readObject();
+			} catch (ClassNotFoundException e) {
+				return new ArrayList<Cliente>();
+			}
+			finally {
+				ois.close();
+			}
 		}
-		finally {
-			ois.close();
-		}
+		catch(IOException e) 
+		{
+			System.out.println("Error leyendo lista de objetos serializados de " + nombreArchivo + System.lineSeparator() + "Stack:");
+			e.printStackTrace();
+			System.exit(1);
+			return null;
+		}		
 	}
 	
 	
 	/**
 	 * Agregar un cliente al archivo de lista de paises serializado.
 	 */
-	public void agregar(Cliente cliente) throws IOException
+	public void agregar(Cliente cliente)
 	{
 		cliente.setId(obtenerSiguienteId());
 		
@@ -83,7 +91,7 @@ public class ClienteDaoImpSerializacion {
 	/**
 	 * Eliminar cliente de lista de clientes en archivo. Se elimina el elemento con la id del elemento dado.
 	 */
-	public void eliminar(Cliente clienteAEliminar) throws IOException
+	public void eliminar(Cliente clienteAEliminar)
 	{
 		List<Cliente> clientes = obtenerTodos();
 		
@@ -100,7 +108,7 @@ public class ClienteDaoImpSerializacion {
 	/**
 	 * Actualizar un cliente de la lista del archivo serializado. Se actualiza según el id.
 	 */
-	public void actualizar(Cliente clienteActualizado) throws IOException
+	public void actualizar(Cliente clienteActualizado)
 	{
 		List<Cliente> clientes = obtenerTodos();
 		
@@ -118,7 +126,7 @@ public class ClienteDaoImpSerializacion {
 	/**
 	 * Obtener siguiente id de cliente a guardar (id del ultimo de la lista+1).
 	 */
-	private int obtenerSiguienteId() throws IOException
+	private int obtenerSiguienteId()
 	{
 		List<Cliente> clientes = obtenerTodos();
 		
@@ -135,12 +143,19 @@ public class ClienteDaoImpSerializacion {
 	 * @param clientes
 	 * @throws IOException 
 	 */
-	private void guardarLista(List<Cliente> clientes) throws IOException
+	private void guardarLista(List<Cliente> clientes)
 	{
-		FileOutputStream fos = new FileOutputStream(nombreArchivo);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(clientes);
-		oos.close();
+		try {
+			FileOutputStream fos = new FileOutputStream(nombreArchivo);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(clientes);
+			oos.close();
+		} 
+		catch(IOException e) {
+			System.out.println("Error guardando lista de objetos serializados en " + nombreArchivo + System.lineSeparator() + "Stack:");
+			e.printStackTrace();
+			System.exit(1);
+		}		
 	}
 	
 }

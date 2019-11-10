@@ -3,6 +3,7 @@ package modelo;
 import java.io.Serializable;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class Aerolinea implements Serializable {
 
 	private int id;

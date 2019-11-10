@@ -1,21 +1,21 @@
-package dao.implementations;
+package dao.implementations.archivo;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import dao.interfaces.IAerolineaDao;
 import modelo.Aerolinea;
 import util.Archivo;
+import util.Properties;
 
-public class AerolineaDaoImpArchivo implements IAerolineaDao {
+public class AerolineaDaoImplArchivo implements IAerolineaDao {
 
 
 	
 	/*
 	 * Nombre del archivo que almacenará al objeto.
 	 */
-	private static String nombreArchivo = "aerolineas.txt";
+	private static String nombreArchivo = Properties.getProperty("csv_aerolineas");
 	
 	
 	/**
@@ -26,10 +26,10 @@ public class AerolineaDaoImpArchivo implements IAerolineaDao {
 	
 	/**
 	 * Inicializar DAO, creando archivo si no existe.
-	 * @throws IOException
 	 */
-	public AerolineaDaoImpArchivo() throws IOException
+	public AerolineaDaoImplArchivo()
 	{
+		
 		archivo = new Archivo(nombreArchivo);
 		
 		if(!archivo.existe()) {
@@ -42,7 +42,7 @@ public class AerolineaDaoImpArchivo implements IAerolineaDao {
 	 * Obtener una aerolinea del archivo a partir de su id.
 	 */
 	@Override
-	public Aerolinea obtener (int id) throws IOException {
+	public Aerolinea obtener (int id) {
 		
 		String linea;
 
@@ -64,7 +64,7 @@ public class AerolineaDaoImpArchivo implements IAerolineaDao {
 	 * Obtener lista de todos las aerolineas del archivo.
 	 */
 	@Override
-	public List<Aerolinea> obtenerTodos() throws IOException {
+	public List<Aerolinea> obtenerTodos() {
 		
 		List<Aerolinea> aerolineas = new ArrayList<Aerolinea>();
 		
@@ -83,7 +83,7 @@ public class AerolineaDaoImpArchivo implements IAerolineaDao {
 	 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
 	 */
 	@Override
-	public void agregar(Aerolinea aerolinea) throws IOException {
+	public void agregar(Aerolinea aerolinea) {
 
 		aerolinea.setId(obtenerSiguienteId());
 		
@@ -98,7 +98,7 @@ public class AerolineaDaoImpArchivo implements IAerolineaDao {
 	 * Se elimina la linea de la aerolinea que posea la id de la aerolinea dada.
 	 */
 	@Override
-	public void eliminar(Aerolinea aerolineaAEliminar) throws IOException {
+	public void eliminar(Aerolinea aerolineaAEliminar) {
 		
 		List<String> lineas = new ArrayList<String>();
 		
@@ -118,7 +118,7 @@ public class AerolineaDaoImpArchivo implements IAerolineaDao {
 	 * Actualizar una aerolinea en el archivo. Se actualiza la aerolinea según la id.
 	 */
 	@Override
-	public void actualizar(Aerolinea aerolinea) throws IOException {
+	public void actualizar(Aerolinea aerolinea) {
 
 		String contenido = "";
 		
@@ -142,9 +142,8 @@ public class AerolineaDaoImpArchivo implements IAerolineaDao {
 	 * Obtiene id del siguiente objeto a agregar al archivo.
 	 * Esta id es la id del ultimo objeto + 1. Si no hay elementos, devuelve 1.
 	 * @return
-	 * @throws IOException
 	 */
-	private int obtenerSiguienteId() throws IOException
+	private int obtenerSiguienteId()
 	{
 
 		Aerolinea ultimoAerolinea = null;

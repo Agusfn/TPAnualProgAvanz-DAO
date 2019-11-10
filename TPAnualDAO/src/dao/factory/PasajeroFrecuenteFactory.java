@@ -1,8 +1,9 @@
 package dao.factory;
 
 import java.io.IOException;
-import dao.implementations.PasajeroFrecuenteDaoImplArchivo;
-import dao.implementations.PasajeroFrecuenteDaoImplSerializacion;
+
+import dao.implementations.archivo.PasajeroFrecuenteDaoImplArchivo;
+import dao.implementations.serializacion.PasajeroFrecuenteDaoImplSerializacion;
 import dao.interfaces.IPasajeroFrecuenteDao;
 
 public class PasajeroFrecuenteFactory {

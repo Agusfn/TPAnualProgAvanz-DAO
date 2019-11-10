@@ -2,8 +2,8 @@ package dao.factory;
 
 import java.io.IOException;
 
-import dao.implementations.VueloDaoImplArchivo;
-import dao.implementations.VueloDaoImplSerializacion;
+import dao.implementations.archivo.VueloDaoImplArchivo;
+import dao.implementations.serializacion.VueloDaoImplSerializacion;
 import dao.interfaces.IVueloDao;
 
 public class VueloFactory {

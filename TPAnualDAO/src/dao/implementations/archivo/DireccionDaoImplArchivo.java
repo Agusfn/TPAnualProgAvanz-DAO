@@ -1,5 +1,4 @@
-package dao.implementations;
-import java.io.IOException;
+package dao.implementations.archivo;
 import java.util.ArrayList;
 import java.util.List;
 import dao.interfaces.IDireccionDao;
@@ -7,7 +6,7 @@ import modelo.Direccion;
 import modelo.Pais;
 import modelo.Provincia;
 import util.Archivo;
-import util.PropertiesUtil;
+import util.Properties;
 
 public class DireccionDaoImplArchivo implements IDireccionDao {
 	
@@ -17,7 +16,7 @@ public class DireccionDaoImplArchivo implements IDireccionDao {
 		/**
 		 * Nombre del archivo que almacenará al objeto.
 		 */
-		private static String nombreArchivo;
+		private static String nombreArchivo = Properties.getProperty("csv_direcciones");
 		
 		
 		/**
@@ -28,11 +27,9 @@ public class DireccionDaoImplArchivo implements IDireccionDao {
 		
 		/**
 		 * Inicializar DAO, creando archivo si no existe.
-		 * @throws IOException
 		 */
-		public DireccionDaoImplArchivo() throws IOException
+		public DireccionDaoImplArchivo()
 		{
-			nombreArchivo = PropertiesUtil.direccionesFile("archivo");
 			archivo = new Archivo(nombreArchivo);
 			
 			if(!archivo.existe()) {
@@ -45,7 +42,7 @@ public class DireccionDaoImplArchivo implements IDireccionDao {
 		 * Obtener una direccion del archivo a partir de su id.
 		 */
 		@Override
-		public Direccion obtener(int id) throws IOException {
+		public Direccion obtener(int id) {
 			
 			String linea;
 
@@ -67,7 +64,7 @@ public class DireccionDaoImplArchivo implements IDireccionDao {
 		 * Obtener lista de todos las direcciones del archivo.
 		 */
 		@Override
-		public List<Direccion> obtenerTodos() throws IOException {
+		public List<Direccion> obtenerTodos() {
 			
 			List<Direccion> direcciones = new ArrayList<Direccion>();
 			
@@ -86,7 +83,7 @@ public class DireccionDaoImplArchivo implements IDireccionDao {
 		 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
 		 */
 		@Override
-		public void agregar(Direccion direccion) throws IOException {
+		public void agregar(Direccion direccion) {
 
 			direccion.setId(obtenerSiguienteId());
 			
@@ -101,7 +98,7 @@ public class DireccionDaoImplArchivo implements IDireccionDao {
 		 * Se elimina la linea de la direccion que posea la id del pais dado.
 		 */
 		@Override
-		public void eliminar(Direccion direccionAEliminar) throws IOException {
+		public void eliminar(Direccion direccionAEliminar) {
 			
 			String contenido ="";
 			
@@ -121,7 +118,7 @@ public class DireccionDaoImplArchivo implements IDireccionDao {
 		 * Actualizar una direccion en el archivo. Se actualiza la direccion según la id.
 		 */
 		@Override
-		public void actualizar(Direccion direccion) throws IOException {
+		public void actualizar(Direccion direccion) {
 
 			String contenido = "";
 			
@@ -145,9 +142,8 @@ public class DireccionDaoImplArchivo implements IDireccionDao {
 		 * Obtiene id del siguiente objeto a agregar al archivo.
 		 * Esta id es la id del ultimo objeto + 1. Si no hay elementos, devuelve 1.
 		 * @return
-		 * @throws IOException
 		 */
-		private int obtenerSiguienteId() throws IOException
+		private int obtenerSiguienteId()
 		{
 
 			Direccion ultimoDireccion = null;
@@ -169,9 +165,8 @@ public class DireccionDaoImplArchivo implements IDireccionDao {
 		 * @param csv
 		 * @return
 		 * @throws ArrayIndexOutOfBoundsException
-		 * @throws IOException 
 		 */
-		private Direccion csvToDireccion(String csv) throws ArrayIndexOutOfBoundsException, IOException
+		private Direccion csvToDireccion(String csv) throws ArrayIndexOutOfBoundsException
 		{
 			String[] props = csv.split(",");
 			

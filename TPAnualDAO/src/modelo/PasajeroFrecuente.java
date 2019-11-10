@@ -2,6 +2,7 @@ package modelo;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class PasajeroFrecuente implements Serializable {
 
 	private int id;
@@ -16,7 +17,6 @@ public class PasajeroFrecuente implements Serializable {
 
 	public PasajeroFrecuente(String alianza, Aerolinea aerolinea, String numero, String categoria) {
 		super();
-		this.id = id;
 		this.alianza = alianza;
 		this.aerolinea = aerolinea;
 		this.numero = numero;

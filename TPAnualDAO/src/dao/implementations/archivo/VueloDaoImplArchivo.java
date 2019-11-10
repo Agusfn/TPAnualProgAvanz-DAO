@@ -1,11 +1,9 @@
-package dao.implementations;
+package dao.implementations.archivo;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import dao.interfaces.IVueloDao;
-import modelo.Pais;
 import modelo.Vuelo;
 import util.*;
 
@@ -15,7 +13,7 @@ public class VueloDaoImplArchivo implements IVueloDao {
 	/**
 	 * Nombre del archivo que almacenará al objeto.
 	 */
-	private static String nombreArchivo;
+	private static String nombreArchivo = Properties.getProperty("csv_vuelos");
 	
 	
 	/**
@@ -26,9 +24,8 @@ public class VueloDaoImplArchivo implements IVueloDao {
 	
 	/**
 	 * Inicializar DAO, creando archivo si no existe.
-	 * @throws IOException
 	 */
-	public VueloDaoImplArchivo() throws IOException
+	public VueloDaoImplArchivo()
 	{
 		archivo = new Archivo(nombreArchivo);
 		
@@ -42,7 +39,7 @@ public class VueloDaoImplArchivo implements IVueloDao {
 	 * Obtener un vuelo del archivo a partir de su id.
 	 */
 	@Override
-	public Vuelo obtener(int id) throws IOException {
+	public Vuelo obtener(int id) {
 		
 		String linea;
 
@@ -64,7 +61,7 @@ public class VueloDaoImplArchivo implements IVueloDao {
 	 * Obtener lista de todos los vuelos del archivo.
 	 */
 	@Override
-	public List<Vuelo> obtenerTodos() throws IOException {
+	public List<Vuelo> obtenerTodos() {
 		
 		List<Vuelo> vuelos = new ArrayList<Vuelo>();
 		
@@ -83,7 +80,7 @@ public class VueloDaoImplArchivo implements IVueloDao {
 	 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
 	 */
 	@Override
-	public void agregar(Vuelo vuelo) throws IOException {
+	public void agregar(Vuelo vuelo) {
 
 		vuelo.setId(obtenerSiguienteId());
 		
@@ -98,7 +95,7 @@ public class VueloDaoImplArchivo implements IVueloDao {
 	 * Se elimina la linea del vuelo que posea la id del vuelo dado.
 	 */
 	@Override
-	public void eliminar(Vuelo vueloAEliminar) throws IOException {
+	public void eliminar(Vuelo vueloAEliminar) {
 		
 		String contenido = "";
 		
@@ -117,7 +114,7 @@ public class VueloDaoImplArchivo implements IVueloDao {
 	 * Actualizar un vuelo en el archivo. Se actualiza el vuelo según la id.
 	 */
 	@Override
-	public void actualizar(Vuelo vuelo) throws IOException {
+	public void actualizar(Vuelo vuelo) {
 
 		String contenido = "";
 		
@@ -141,9 +138,8 @@ public class VueloDaoImplArchivo implements IVueloDao {
 	 * Obtiene id del siguiente objeto a agregar al archivo.
 	 * Esta id es la id del ultimo objeto + 1. Si no hay elementos, devuelve 1.
 	 * @return
-	 * @throws IOException
 	 */
-	private int obtenerSiguienteId() throws IOException
+	private int obtenerSiguienteId()
 	{
 
 		Vuelo ultimoVuelo = null;
@@ -167,7 +163,7 @@ public class VueloDaoImplArchivo implements IVueloDao {
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
 	
-	private Vuelo csvToVuelo(String csv) throws ArrayIndexOutOfBoundsException, IOException 
+	private Vuelo csvToVuelo(String csv) throws ArrayIndexOutOfBoundsException 
 	{
 		String[] props = csv.split(",");
 		

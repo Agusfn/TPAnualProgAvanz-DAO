@@ -40,9 +40,15 @@ public class Archivo {
 	 * Crea archivo vacío.
 	 * @throws IOException
 	 */
-	public void crear() throws IOException
+	public void crear()
 	{
-		archivo.createNewFile();
+		try {
+			archivo.createNewFile();
+		} catch (IOException e) {
+			System.out.println("Error creando archivo " + archivo.getName() + System.lineSeparator() + "Stack:");
+			e.printStackTrace();
+			System.exit(1);
+		}
 	}
 	
 	
@@ -50,12 +56,19 @@ public class Archivo {
 	 * Cerramos reader, para volver a empezar de la primera linea al llamar siguienteLinea()
 	 * @throws IOException
 	 */
-	public void reiniciarReader() throws IOException
+	public void reiniciarReader()
 	{
-		reader.close();
-		bufferedReader.close();
-		reader = null;
-		bufferedReader = null;
+		try
+		{
+			reader.close();
+			bufferedReader.close();
+			reader = null;
+			bufferedReader = null;
+		} catch (IOException e) {
+			System.out.println("Error cerrando FileReader o BufferedReader." + System.lineSeparator() + "Stack:");
+			e.printStackTrace();
+			System.exit(1);
+		}
 	}
 	
 	
@@ -64,22 +77,32 @@ public class Archivo {
 	 * @return
 	 * @throws IOException
 	 */
-	public String siguienteLinea() throws IOException
+	public String siguienteLinea()
 	{
-		if(bufferedReader == null)
+		
+		try
 		{
-			reader = new FileReader(archivo);
-			bufferedReader = new BufferedReader(reader);
+			if(bufferedReader == null)
+			{
+				reader = new FileReader(archivo);
+				bufferedReader = new BufferedReader(reader);
+			}
+			
+			String line = bufferedReader.readLine();
+			
+			if(line == null) {
+				reiniciarReader();
+			}
+			
+			return line;
+		} catch (IOException e) {
+			
+			System.out.println("Error leyendo contenido de archivo " + archivo.getName() + System.lineSeparator() + "Stack:");
+			e.printStackTrace();
+			System.exit(1);
+			
+			return null;
 		}
-		
-		String line = bufferedReader.readLine();
-		
-		if(line == null) {
-			reiniciarReader();
-		}
-		
-		return line;
-		
 	}
 	
 	
@@ -88,7 +111,7 @@ public class Archivo {
 	 * @return
 	 * @throws IOException
 	 */
-	public String leerContenido() throws IOException
+	public String leerContenido()
 	{
 		String contenido = "";
 		
@@ -105,7 +128,7 @@ public class Archivo {
 	 * Agrega una linea de texto al final de un archivo.
 	 * @param linea
 	 */
-	public void agregarLinea(String linea) throws IOException
+	public void agregarLinea(String linea)
 	{
 		String contenido = leerContenido();
 		contenido = contenido + linea + System.lineSeparator();
@@ -118,15 +141,23 @@ public class Archivo {
 	 * @param contenido
 	 * @throws IOException
 	 */
-	public void guardarContenido(String contenido) throws IOException
+	public void guardarContenido(String contenido)
 	{
-		FileWriter writer = new FileWriter(archivo);
-		BufferedWriter bufferedWriter = new BufferedWriter(writer);
-				
-		bufferedWriter.write(contenido);
-		
-		bufferedWriter.close();
-		writer.close();
+		try
+		{
+			FileWriter writer = new FileWriter(archivo);
+			BufferedWriter bufferedWriter = new BufferedWriter(writer);
+					
+			bufferedWriter.write(contenido);
+			
+			bufferedWriter.close();
+			writer.close();
+			
+		} catch (IOException e) {
+			System.out.println("Error guardando contenido de texto en archivo " + archivo.getName() + System.lineSeparator() + "Stack:");
+			e.printStackTrace();
+			System.exit(1);
+		}
 	}
 	
 	

@@ -2,8 +2,8 @@ package modelo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
+@SuppressWarnings("serial")
 public class Venta implements Serializable {
 
 	private int id;

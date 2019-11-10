@@ -27,8 +27,9 @@ public class DbQuery {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		}	
 		catch(ClassNotFoundException e) {
+			System.out.println("Ocurrió un error cargando el driver SQL");
 			e.printStackTrace();
-			System.exit(0);
+			System.exit(1);
 		}
 	}
 	
@@ -36,11 +37,11 @@ public class DbQuery {
 	public DbQuery()
 	{
 		try {
-			con = DriverManager.getConnection("jdbc:sqlserver://localhost:54162;databaseName=TPFinalAerolineas;integratedSecurity=true");
+			con = DriverManager.getConnection(Properties.getProperty("sqlserver_connection_string"));
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
+			System.exit(1);
 		}
 	}
 	

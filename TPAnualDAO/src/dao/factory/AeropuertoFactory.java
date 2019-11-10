@@ -1,8 +1,8 @@
 package dao.factory;
 import java.io.IOException;
 
-import dao.implementations.AeropuertoDaoImplArchivo;
-import dao.implementations.AeropuertoDaoImplSerializacion;
+import dao.implementations.archivo.AeropuertoDaoImplArchivo;
+import dao.implementations.serializacion.AeropuertoDaoImplSerializacion;
 import dao.interfaces.IAeropuertoDao;
 
 

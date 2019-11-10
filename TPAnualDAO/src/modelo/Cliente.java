@@ -3,6 +3,7 @@ package modelo;
 import java.io.Serializable;
 import java.util.Date;
 
+@SuppressWarnings("serial")
 public class Cliente implements Serializable {
 
 	private int id;

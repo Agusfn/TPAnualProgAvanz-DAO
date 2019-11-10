@@ -1,10 +1,9 @@
 package modelo;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
+@SuppressWarnings("serial")
 public class Vuelo implements Serializable {
 
 	private int id;

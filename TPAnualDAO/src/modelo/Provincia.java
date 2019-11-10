@@ -2,6 +2,7 @@ package modelo;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Provincia implements Serializable {
 
 	private int id;

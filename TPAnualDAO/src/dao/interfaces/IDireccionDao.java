@@ -1,6 +1,5 @@
 package dao.interfaces;
 
-import java.io.IOException;
 import java.util.List;
 
 import modelo.Direccion;
@@ -8,11 +7,11 @@ import modelo.Direccion;
 public interface IDireccionDao {
 
 	
-	public Direccion obtener(int id) throws IOException;
-	public List<Direccion> obtenerTodos() throws IOException;	
-	public void agregar(Direccion direccion) throws IOException;
-	public void eliminar(Direccion direccion) throws IOException;
-	public void actualizar(Direccion direccion) throws IOException;
+	public Direccion obtener(int id);
+	public List<Direccion> obtenerTodos();	
+	public void agregar(Direccion direccion);
+	public void eliminar(Direccion direccion);
+	public void actualizar(Direccion direccion);
 	
 	
 	

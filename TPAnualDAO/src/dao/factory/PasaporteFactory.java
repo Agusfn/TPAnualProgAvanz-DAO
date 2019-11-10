@@ -1,8 +1,9 @@
 package dao.factory;
 
 import java.io.IOException;
-import dao.implementations.PasaporteDaoImplArchivo;
-import dao.implementations.PasaporteDaoImplSerializacion;
+
+import dao.implementations.archivo.PasaporteDaoImplArchivo;
+import dao.implementations.serializacion.PasaporteDaoImplSerializacion;
 import dao.interfaces.IPasaporteDao;
 
 public class PasaporteFactory {

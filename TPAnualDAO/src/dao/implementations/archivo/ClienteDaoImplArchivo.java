@@ -1,21 +1,21 @@
-package dao.implementations;
+package dao.implementations.archivo;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import dao.interfaces.IClienteDao;
 import modelo.Cliente;
 import util.Archivo;
 import util.Dates;
+import util.Properties;
 
-public class ClienteDaoImpArchivo implements IClienteDao{
+public class ClienteDaoImplArchivo implements IClienteDao{
 
 	
 	
 	/*
 	 * Nombre del archivo que almacenará al objeto.
 	 */
-	private static String nombreArchivo = "cliente.txt";
+	private static String nombreArchivo = Properties.getProperty("csv_clientes");
 	
 	
 	/**
@@ -26,9 +26,8 @@ public class ClienteDaoImpArchivo implements IClienteDao{
 	
 	/**
 	 * Inicializar DAO, creando archivo si no existe.
-	 * @throws IOException
 	 */
-	public ClienteDaoImpArchivo() throws IOException
+	public ClienteDaoImplArchivo()
 	{
 		archivo = new Archivo(nombreArchivo);
 		
@@ -42,7 +41,7 @@ public class ClienteDaoImpArchivo implements IClienteDao{
 	 * Obtener un cliente del archivo a partir de su id.
 	 */
 	@Override
-	public Cliente obtener(int id) throws IOException {
+	public Cliente obtener(int id) {
 		
 		String linea;
 
@@ -64,7 +63,7 @@ public class ClienteDaoImpArchivo implements IClienteDao{
 	 * Obtener lista de todos los clientes del archivo.
 	 */
 	@Override
-	public List<Cliente> obtenerTodos() throws IOException {
+	public List<Cliente> obtenerTodos() {
 		
 		List<Cliente> clientes = new ArrayList<Cliente>();
 		
@@ -83,7 +82,7 @@ public class ClienteDaoImpArchivo implements IClienteDao{
 	 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
 	 */
 	@Override
-	public void agregar(Cliente cliente) throws IOException {
+	public void agregar(Cliente cliente) {
 
 		cliente.setId(obtenerSiguienteId());
 		
@@ -98,7 +97,7 @@ public class ClienteDaoImpArchivo implements IClienteDao{
 	 * Se elimina la linea del pais que posea la id del pais dado.
 	 */
 	@Override
-	public void eliminar(Cliente clienteAEliminar) throws IOException {
+	public void eliminar(Cliente clienteAEliminar) {
 		
 		List<String> lineas = new ArrayList<String>();
 		
@@ -118,7 +117,7 @@ public class ClienteDaoImpArchivo implements IClienteDao{
 	 * Actualizar un cliente en el archivo. Se actualiza el cliente según la id.
 	 */
 	@Override
-	public void actualizar(Cliente cliente) throws IOException {
+	public void actualizar(Cliente cliente) {
 
 		String contenido = "";
 		
@@ -142,9 +141,8 @@ public class ClienteDaoImpArchivo implements IClienteDao{
 	 * Obtiene id del siguiente objeto a agregar al archivo.
 	 * Esta id es la id del ultimo objeto + 1. Si no hay elementos, devuelve 1.
 	 * @return
-	 * @throws IOException
 	 */
-	private int obtenerSiguienteId() throws IOException
+	private int obtenerSiguienteId()
 	{
 
 		Cliente ultimoCliente = null;

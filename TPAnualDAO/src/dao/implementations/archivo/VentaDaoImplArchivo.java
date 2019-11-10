@@ -1,18 +1,14 @@
-package dao.implementations;
+package dao.implementations.archivo;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
 import dao.interfaces.IVentaDao;
-import modelo.Aerolinea;
-import modelo.Cliente;
-import modelo.Pais;
 import modelo.Venta;
-import modelo.Vuelo;
 import util.Archivo;
 import util.Dates;
+import util.Properties;
 
 public class VentaDaoImplArchivo implements IVentaDao {
 
@@ -20,7 +16,7 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	/**
 	 * Nombre del archivo que almacenará al objeto.
 	 */
-	private static String nombreArchivo;
+	private static String nombreArchivo = Properties.getProperty("csv_ventas");
 	
 	
 	/**
@@ -31,9 +27,8 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	
 	/**
 	 * Inicializar DAO, creando archivo si no existe.
-	 * @throws IOException
 	 */
-	public VentaDaoImplArchivo() throws IOException
+	public VentaDaoImplArchivo()
 	{
 		archivo = new Archivo(nombreArchivo);
 		
@@ -47,7 +42,7 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	 * Obtener una venta del archivo a partir de su id.
 	 */
 	@Override
-	public Venta obtener(int id) throws IOException {
+	public Venta obtener(int id) {
 		
 		String linea;
 
@@ -69,7 +64,7 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	 * Obtener lista de todas las ventas del archivo.
 	 */
 	@Override
-	public List<Venta> obtenerTodos() throws IOException {
+	public List<Venta> obtenerTodos() {
 		
 		List<Venta> ventas = new ArrayList<Venta>();
 		
@@ -88,7 +83,7 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
 	 */
 	@Override
-	public void agregar(Venta venta) throws IOException {
+	public void agregar(Venta venta) {
 
 		venta.setId(obtenerSiguienteId());
 		
@@ -103,7 +98,7 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	 * Se elimina la linea de la venta que posea la id de la venta dada.
 	 */
 	@Override
-	public void eliminar(Venta ventaAEliminar) throws IOException {
+	public void eliminar(Venta ventaAEliminar) {
 		
 		String contenido = "";
 		
@@ -122,7 +117,7 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	 * Actualizar una venta en el archivo. Se actualiza el vuelo según la id.
 	 */
 	@Override
-	public void actualizar(Venta venta) throws IOException {
+	public void actualizar(Venta venta) {
 
 		String contenido = "";
 		
@@ -146,9 +141,8 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	 * Obtiene id del siguiente objeto a agregar al archivo.
 	 * Esta id es la id del ultimo objeto + 1. Si no hay elementos, devuelve 1.
 	 * @return
-	 * @throws IOException
 	 */
-	private int obtenerSiguienteId() throws IOException
+	private int obtenerSiguienteId()
 	{
 
 		Venta ultimaVenta = null;
@@ -172,7 +166,7 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
 	
-	private Venta csvToVenta(String csv) throws ArrayIndexOutOfBoundsException , IOException
+	private Venta csvToVenta(String csv) throws ArrayIndexOutOfBoundsException
 	{
 		String[] props = csv.split(",");
 		
@@ -180,13 +174,13 @@ public class VentaDaoImplArchivo implements IVentaDao {
 		
 		venta.setId(Integer.parseInt(props[0]));
 		
-		ClienteDaoImpArchivo dao = new ClienteDaoImpArchivo();
+		ClienteDaoImplArchivo dao = new ClienteDaoImplArchivo();
 		venta.setCliente(dao.obtener(Integer.parseInt(props[1])));
 		
 		VueloDaoImplArchivo dao2 = new VueloDaoImplArchivo();
 		venta.setVuelo(dao2.obtener(Integer.parseInt(props [2])));
 		
-		AerolineaDaoImpArchivo dao3 = new AerolineaDaoImpArchivo();
+		AerolineaDaoImplArchivo dao3 = new AerolineaDaoImplArchivo();
 		venta.setAerolinea(dao3.obtener(Integer.parseInt(props [3])));
 		
 		venta.setFechaHora((LocalDateTime) Dates.fromString(props [4]));

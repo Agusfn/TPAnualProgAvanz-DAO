@@ -1,19 +1,19 @@
-package dao.implementations;
+package dao.implementations.archivo;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import dao.interfaces.IPasajeroFrecuenteDao;
 import modelo.PasajeroFrecuente;
 import util.Archivo;
-import util.PropertiesUtil;
+import util.Properties;
 
 public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 
 	/**
 	 * Nombre del archivo que almacenará al objeto.
 	 */
-	private static String nombreArchivo;
+	private static String nombreArchivo = Properties.getProperty("csv_pasajerosfrecuentes");
 
 	/**
 	 * Clase archivo con simplificaciones de funciones de archivo que se utilizan en
@@ -24,10 +24,9 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	/**
 	 * Inicializar DAO, creando archivo si no existe.
 	 * 
-	 * @throws IOException
 	 */
-	public PasajeroFrecuenteDaoImplArchivo() throws IOException {
-		nombreArchivo = PropertiesUtil.pasajerosFrecuentesFile("archivo");
+	public PasajeroFrecuenteDaoImplArchivo() {
+
 		archivo = new Archivo(nombreArchivo);
 
 		if (!archivo.existe()) {
@@ -39,7 +38,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * Obtener un pasajero frecuente del archivo a partir de su id.
 	 */
 	@Override
-	public PasajeroFrecuente obtener(int id) throws IOException {
+	public PasajeroFrecuente obtener(int id) {
 
 		String linea;
 
@@ -60,7 +59,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * Obtener lista de todos los pasajeros del archivo.
 	 */
 	@Override
-	public List<PasajeroFrecuente> obtenerTodos() throws IOException {
+	public List<PasajeroFrecuente> obtenerTodos() {
 
 		List<PasajeroFrecuente> pasajerosFrecuentes = new ArrayList<PasajeroFrecuente>();
 
@@ -79,7 +78,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * duplica.
 	 */
 	@Override
-	public void agregar(PasajeroFrecuente pasajeroFrecuente) throws IOException {
+	public void agregar(PasajeroFrecuente pasajeroFrecuente) {
 
 		pasajeroFrecuente.setId(obtenerSiguienteId());
 
@@ -94,7 +93,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * pasajero dado.
 	 */
 	@Override
-	public void eliminar(PasajeroFrecuente pasajeroAEliminar) throws IOException {
+	public void eliminar(PasajeroFrecuente pasajeroAEliminar) {
 
 		String contenido = "";
 
@@ -113,7 +112,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * Actualizar un pasajero en el archivo. Se actualiza el pasajero frec. según la id.
 	 */
 	@Override
-	public void actualizar(PasajeroFrecuente pasajeroFrecuente) throws IOException {
+	public void actualizar(PasajeroFrecuente pasajeroFrecuente) {
 
 		String contenido = "";
 
@@ -137,9 +136,8 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * ultimo objeto + 1. Si no hay elementos, devuelve 1.
 	 * 
 	 * @return
-	 * @throws IOException
 	 */
-	private int obtenerSiguienteId() throws IOException {
+	private int obtenerSiguienteId() {
 
 		PasajeroFrecuente ultimoPasajero = null;
 
@@ -161,7 +159,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * @return
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
-	private PasajeroFrecuente csvToPasajeroFrecuente(String csv) throws ArrayIndexOutOfBoundsException, IOException {
+	private PasajeroFrecuente csvToPasajeroFrecuente(String csv) throws ArrayIndexOutOfBoundsException {
 		String[] props = csv.split(",");
 
 		PasajeroFrecuente pasajeroFrecuente = new PasajeroFrecuente();
@@ -170,7 +168,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 		pasajeroFrecuente.setAlianza(props[1]);
 		
 		int idAerolinea = Integer.parseInt(props[2]);
-		AerolineaDaoImpArchivo dao = new AerolineaDaoImpArchivo();
+		AerolineaDaoImplArchivo dao = new AerolineaDaoImplArchivo();
 		pasajeroFrecuente.setAerolinea(dao.obtener(idAerolinea));
 		
 		pasajeroFrecuente.setNumero(props[3]);

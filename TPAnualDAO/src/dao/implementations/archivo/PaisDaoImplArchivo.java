@@ -1,12 +1,11 @@
-package dao.implementations;
+package dao.implementations.archivo;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import dao.interfaces.IPaisDao;
 import modelo.Pais;
 import util.Archivo;
-import util.PropertiesUtil;
+import util.Properties;
 
 public class PaisDaoImplArchivo implements IPaisDao {
 
@@ -14,7 +13,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	/**
 	 * Nombre del archivo que almacenará al objeto.
 	 */
-	private static String nombreArchivo;
+	private static String nombreArchivo = Properties.getProperty("csv_paises");
 	
 	
 	/**
@@ -25,11 +24,9 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	
 	/**
 	 * Inicializar DAO, creando archivo si no existe.
-	 * @throws IOException
 	 */
-	public PaisDaoImplArchivo() throws IOException
+	public PaisDaoImplArchivo()
 	{
-		nombreArchivo = PropertiesUtil.paisesFile("archivo");
 		archivo = new Archivo(nombreArchivo);
 		
 		if(!archivo.existe()) {
@@ -42,7 +39,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	 * Obtener un pais del archivo a partir de su id.
 	 */
 	@Override
-	public Pais obtener(int id) throws IOException {
+	public Pais obtener(int id) {
 		
 		String linea;
 
@@ -63,7 +60,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	 * Obtener lista de todos los paises del archivo.
 	 */
 	@Override
-	public List<Pais> obtenerTodos() throws IOException {
+	public List<Pais> obtenerTodos() {
 		
 		List<Pais> paises = new ArrayList<Pais>();
 		
@@ -82,7 +79,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
 	 */
 	@Override
-	public void agregar(Pais pais) throws IOException {
+	public void agregar(Pais pais) {
 
 		pais.setId(obtenerSiguienteId());
 		
@@ -97,7 +94,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	 * Se elimina la linea del pais que posea la id del pais dado.
 	 */
 	@Override
-	public void eliminar(Pais paisAEliminar) throws IOException {
+	public void eliminar(Pais paisAEliminar) {
 		
 		String contenido = "";
 		
@@ -117,7 +114,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	 * Actualizar un pais en el archivo. Se actualiza el país según la id.
 	 */
 	@Override
-	public void actualizar(Pais pais) throws IOException {
+	public void actualizar(Pais pais) {
 
 		String contenido = "";
 		
@@ -141,9 +138,8 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	 * Obtiene id del siguiente objeto a agregar al archivo.
 	 * Esta id es la id del ultimo objeto + 1. Si no hay elementos, devuelve 1.
 	 * @return
-	 * @throws IOException
 	 */
-	private int obtenerSiguienteId() throws IOException
+	private int obtenerSiguienteId()
 	{
 
 		Pais ultimoPais = null;

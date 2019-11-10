@@ -1,4 +1,4 @@
-package dao.implementations;
+package dao.implementations.serializacion;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,18 +11,16 @@ import java.util.List;
 
 import dao.interfaces.IVentaDao;
 import modelo.Venta;
-import util.PropertiesUtil;
+import util.Properties;
 
 public class VentaDaoImplSerializacion implements IVentaDao {
 
 	
-	private static String nombreArchivo;
+	private static String nombreArchivo = Properties.getProperty("serial_ventas");
 	
 	
-	public VentaDaoImplSerializacion() throws IOException
-	{
-		nombreArchivo = PropertiesUtil.ventasFile("serializacion");
-		
+	public VentaDaoImplSerializacion()
+	{		
 		File archivo = new File(nombreArchivo);
 		
 		if(!archivo.exists()) {
@@ -34,7 +32,7 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 	/**
 	 * Obtener venta con id determinado de la lista del archivo.
 	 */
-	public Venta obtener(int id) throws IOException
+	public Venta obtener(int id)
 	{
 		List<Venta> ventas = obtenerTodos();
 		
@@ -51,26 +49,38 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 	 * Obtener lista de ventas del archivo serializado.
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Venta> obtenerTodos() throws IOException
+	public List<Venta> obtenerTodos()
 	{
-		FileInputStream fis = new FileInputStream(nombreArchivo);
-		ObjectInputStream ois = new ObjectInputStream(fis);
-
+		
 		try {
-			return (ArrayList<Venta>)ois.readObject();
-		} catch (ClassNotFoundException e) {
-			return new ArrayList<Venta>();
+			FileInputStream fis = new FileInputStream(nombreArchivo);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+	
+			try {
+				return (ArrayList<Venta>)ois.readObject();
+			} catch (ClassNotFoundException e) {
+				return new ArrayList<Venta>();
+			}
+			finally {
+				ois.close();
+			}
+			
 		}
-		finally {
-			ois.close();
-		}
+		catch(IOException e) 
+		{
+			System.out.println("Error leyendo lista de objetos serializados de " + nombreArchivo + System.lineSeparator() + "Stack:");
+			e.printStackTrace();
+			System.exit(1);
+			return null;
+		}		
+		
 	}
 	
 	
 	/**
 	 * Agregar una venta al archivo de lista de ventas serializado.
 	 */
-	public void agregar(Venta venta) throws IOException
+	public void agregar(Venta venta)
 	{
 		venta.setId(obtenerSiguienteId());
 		
@@ -84,7 +94,7 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 	/**
 	 * Eliminar venta de lista de ventas en archivo. Se elimina el elemento con la id del elemento dado.
 	 */
-	public void eliminar(Venta ventaAEliminar) throws IOException
+	public void eliminar(Venta ventaAEliminar)
 	{
 		List<Venta> ventas = obtenerTodos();
 		
@@ -101,7 +111,7 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 	/**
 	 * Actualizar un venta de la lista del archivo serializado. Se actualiza según el id.
 	 */
-	public void actualizar(Venta ventaActualizada) throws IOException
+	public void actualizar(Venta ventaActualizada)
 	{
 		List<Venta> ventas = obtenerTodos();
 		
@@ -119,7 +129,7 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 	/**
 	 * Obtener siguiente id de venta a guardar (id del ultimo de la lista+1).
 	 */
-	private int obtenerSiguienteId() throws IOException
+	private int obtenerSiguienteId()
 	{
 		List<Venta> ventas = obtenerTodos();
 		
@@ -136,12 +146,19 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 	 * @param ventas
 	 * @throws IOException 
 	 */
-	private void guardarLista(List<Venta> ventas) throws IOException
+	private void guardarLista(List<Venta> ventas)
 	{
-		FileOutputStream fos = new FileOutputStream(nombreArchivo);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(ventas);
-		oos.close();
+		try {
+			FileOutputStream fos = new FileOutputStream(nombreArchivo);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(ventas);
+			oos.close();
+		} 
+		catch(IOException e) {
+			System.out.println("Error guardando lista de objetos serializados en " + nombreArchivo + System.lineSeparator() + "Stack:");
+			e.printStackTrace();
+			System.exit(1);
+		}		
 	}
 
 }

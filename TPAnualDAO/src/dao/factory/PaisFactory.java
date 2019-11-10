@@ -2,8 +2,8 @@ package dao.factory;
 
 import java.io.IOException;
 
-import dao.implementations.PaisDaoImplArchivo;
-import dao.implementations.PaisDaoImplSerializacion;
+import dao.implementations.archivo.PaisDaoImplArchivo;
+import dao.implementations.serializacion.PaisDaoImplSerializacion;
 import dao.interfaces.IPaisDao;
 
 public class PaisFactory {

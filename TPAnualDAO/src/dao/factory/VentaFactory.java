@@ -2,8 +2,8 @@ package dao.factory;
 
 import java.io.IOException;
 
-import dao.implementations.VentaDaoImplArchivo;
-import dao.implementations.VentaDaoImplSerializacion;
+import dao.implementations.archivo.VentaDaoImplArchivo;
+import dao.implementations.serializacion.VentaDaoImplSerializacion;
 import dao.interfaces.IVentaDao;
 
 public class VentaFactory {

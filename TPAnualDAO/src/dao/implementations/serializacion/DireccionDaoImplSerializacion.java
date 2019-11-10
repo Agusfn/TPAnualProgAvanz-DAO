@@ -1,4 +1,4 @@
-package dao.implementations;
+package dao.implementations.serializacion;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,19 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 import dao.interfaces.IDireccionDao;
 import modelo.Direccion;
-import util.PropertiesUtil;
+import util.Properties;
 
 
 public class DireccionDaoImplSerializacion implements IDireccionDao {
 
 		
-		private static String nombreArchivo;
+		private static String nombreArchivo = Properties.getProperty("serial_direcciones");
 		
 		
-		public DireccionDaoImplSerializacion() throws IOException
-		{
-			nombreArchivo = PropertiesUtil.direccionesFile("serializacion");
-			
+		public DireccionDaoImplSerializacion()
+		{			
 			File archivo = new File(nombreArchivo);
 			
 			if(!archivo.exists()) {
@@ -33,7 +31,7 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 		/**
 		 * Obtener direccion con id determinado de la lista del archivo.
 		 */
-		public Direccion obtener(int id) throws IOException
+		public Direccion obtener(int id)
 		{
 			List<Direccion> direcciones = obtenerTodos();
 			
@@ -50,26 +48,37 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 		 * Obtener lista de direcciones del archivo serializado.
 		 */
 		@SuppressWarnings("unchecked")
-		public List<Direccion> obtenerTodos() throws IOException
+		public List<Direccion> obtenerTodos()
 		{
-			FileInputStream fis = new FileInputStream(nombreArchivo);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-
+			
 			try {
-				return (ArrayList<Direccion>)ois.readObject();
-			} catch (ClassNotFoundException e) {
-				return new ArrayList<Direccion>();
+				FileInputStream fis = new FileInputStream(nombreArchivo);
+				ObjectInputStream ois = new ObjectInputStream(fis);
+	
+				try {
+					return (ArrayList<Direccion>)ois.readObject();
+				} catch (ClassNotFoundException e) {
+					return new ArrayList<Direccion>();
+				}
+				finally {
+					ois.close();
+				}
 			}
-			finally {
-				ois.close();
-			}
+			catch(IOException e) 
+			{
+				System.out.println("Error leyendo lista de objetos serializados de " + nombreArchivo + System.lineSeparator() + "Stack:");
+				e.printStackTrace();
+				System.exit(1);
+				return null;
+			}			
+			
 		}
 		
 		
 		/**
 		 * Agregar un direccion al archivo de lista de direcciones serializado.
 		 */
-		public void agregar(Direccion direccion) throws IOException
+		public void agregar(Direccion direccion)
 		{
 			direccion.setId(obtenerSiguienteId());
 			
@@ -83,7 +92,7 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 		/**
 		 * Eliminar direccion de lista de direcciones en archivo. Se elimina el elemento con la id del elemento dado.
 		 */
-		public void eliminar(Direccion direccionAEliminar) throws IOException
+		public void eliminar(Direccion direccionAEliminar)
 		{
 			List<Direccion> direcciones = obtenerTodos();
 			
@@ -100,7 +109,7 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 		/**
 		 * Actualizar una direccion de la lista del archivo serializado. Se actualiza según el id.
 		 */
-		public void actualizar(Direccion direccionActualizado) throws IOException
+		public void actualizar(Direccion direccionActualizado)
 		{
 			List<Direccion> direcciones = obtenerTodos();
 			
@@ -118,7 +127,7 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 		/**
 		 * Obtener siguiente id de direccion a guardar (id del ultimo de la lista+1).
 		 */
-		private int obtenerSiguienteId() throws IOException
+		private int obtenerSiguienteId()
 		{
 			List<Direccion> direcciones = obtenerTodos();
 			
@@ -135,12 +144,19 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 		 * @param direcciones
 		 * @throws IOException 
 		 */
-		private void guardarLista(List<Direccion> direcciones) throws IOException
+		private void guardarLista(List<Direccion> direcciones)
 		{
-			FileOutputStream fos = new FileOutputStream(nombreArchivo);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(direcciones);
-			oos.close();
+			try {
+				FileOutputStream fos = new FileOutputStream(nombreArchivo);
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				oos.writeObject(direcciones);
+				oos.close();
+			} 
+			catch(IOException e) {
+				System.out.println("Error guardando lista de objetos serializados en " + nombreArchivo + System.lineSeparator() + "Stack:");
+				e.printStackTrace();
+				System.exit(1);
+			}
 		}
 		
 }

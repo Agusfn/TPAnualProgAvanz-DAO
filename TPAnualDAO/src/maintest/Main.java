@@ -2,20 +2,42 @@ package maintest;
 
 import java.util.List;
 
+import dao.implementations.archivo.PaisDaoImplArchivo;
 import dao.implementations.db.PaisDaoImplDB;
 import dao.implementations.db.ProvinciaDaoImplDB;
 import modelo.Pais;
 import modelo.Provincia;
 import util.DbQuery;
+import util.Properties;
 
 public class Main {
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		
 		
 		
-		DbQuery query = new DbQuery();
+		
+		
+		
+		/*PaisDaoImplArchivo daoPais = new PaisDaoImplArchivo();
+		
+		
+		
+		Pais pais = daoPais.obtener(1);
+		
+		System.out.println(pais.getNombre());*/
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*DbQuery query = new DbQuery();
 		
 		ProvinciaDaoImplDB provinciaDao = new ProvinciaDaoImplDB(query);
 		PaisDaoImplDB paisDao = new PaisDaoImplDB(query);
@@ -27,7 +49,7 @@ public class Main {
 		provincia.setNombre("Neuquén");
 		provincia.setPais(pais);
 		
-		provinciaDao.agregar(provincia);
+		provinciaDao.agregar(provincia);*/
 		
 		/*provincia.setPais(paisDao.obtener(provincia.getPais().getId()));
 		
@@ -37,7 +59,7 @@ public class Main {
 		
 		
 		
-		query.close();
+		//query.close();
 		
 		
 		//List<Pais> paises = paisDao.obtenerTodos();

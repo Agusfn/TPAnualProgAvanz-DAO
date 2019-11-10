@@ -1,8 +1,8 @@
 package dao.factory;
 import java.io.IOException;
 
-import dao.implementations.DireccionDaoImplArchivo;
-import dao.implementations.DireccionDaoImplSerializacion;
+import dao.implementations.archivo.DireccionDaoImplArchivo;
+import dao.implementations.serializacion.DireccionDaoImplSerializacion;
 import dao.interfaces.IDireccionDao;
 
 
