@@ -16,7 +16,7 @@ public class AeropuertoDaoImplSerializacion implements IAeropuertoDao {
 		private static String nombreArchivo = Properties.getProperty("serial_aeropuertos");
 		
 		
-		public AeropuertoDaoImplSerializacion()
+		public AeropuertoDaoImplSerializacion() throws IOException
 		{			
 			File archivo = new File(nombreArchivo);
 			
@@ -28,8 +28,9 @@ public class AeropuertoDaoImplSerializacion implements IAeropuertoDao {
 		
 		/**
 		 * Obtener aeropuerto con id determinado de la lista del archivo.
+		 * @throws IOException 
 		 */
-		public Aeropuerto obtener(int id)
+		public Aeropuerto obtener(int id) throws IOException
 		{
 			List<Aeropuerto> aeropuertos = obtenerTodos();
 			
@@ -44,38 +45,31 @@ public class AeropuertoDaoImplSerializacion implements IAeropuertoDao {
 		
 		/**
 		 * Obtener lista de aeropuertos del archivo serializado.
+		 * @throws IOException 
 		 */
 		@SuppressWarnings("unchecked")
-		public List<Aeropuerto> obtenerTodos()
+		public List<Aeropuerto> obtenerTodos() throws IOException
 		{
+			FileInputStream fis = new FileInputStream(nombreArchivo);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+
 			try {
-				FileInputStream fis = new FileInputStream(nombreArchivo);
-				ObjectInputStream ois = new ObjectInputStream(fis);
-	
-				try {
-					return (ArrayList<Aeropuerto>)ois.readObject();
-				} catch (ClassNotFoundException e) {
-					return new ArrayList<Aeropuerto>();
-				}
-				finally {
-					ois.close();
-				}
+				return (ArrayList<Aeropuerto>)ois.readObject();
+			} catch (ClassNotFoundException e) {
+				return new ArrayList<Aeropuerto>();
 			}
-			catch(IOException e) 
-			{
-				System.out.println("Error leyendo lista de objetos serializados de " + nombreArchivo + System.lineSeparator() + "Stack:");
-				e.printStackTrace();
-				System.exit(1);
-				return null;
+			finally {
+				ois.close();
 			}
-			
+		
 		}
 		
 		
 		/**
 		 * Agregar un aeropuerto al archivo de lista de aeropuertos serializado.
+		 * @throws IOException 
 		 */
-		public void agregar(Aeropuerto aeropuerto)
+		public void agregar(Aeropuerto aeropuerto) throws IOException
 		{
 			aeropuerto.setId(obtenerSiguienteId());
 			
@@ -88,8 +82,9 @@ public class AeropuertoDaoImplSerializacion implements IAeropuertoDao {
 		
 		/**
 		 * Eliminar aeropuerto de lista de aeropuertos en archivo. Se elimina el elemento con la id del elemento dado.
+		 * @throws IOException 
 		 */
-		public void eliminar(Aeropuerto aeropuertoAEliminar)
+		public void eliminar(Aeropuerto aeropuertoAEliminar) throws IOException
 		{
 			List<Aeropuerto> aeropuertos = obtenerTodos();
 			
@@ -105,8 +100,9 @@ public class AeropuertoDaoImplSerializacion implements IAeropuertoDao {
 		
 		/**
 		 * Actualizar un aeropuerto de la lista del archivo serializado. Se actualiza según el id.
+		 * @throws IOException 
 		 */
-		public void actualizar(Aeropuerto aeropuertoActualizado)
+		public void actualizar(Aeropuerto aeropuertoActualizado) throws IOException
 		{
 			List<Aeropuerto> aeropuertos = obtenerTodos();
 			
@@ -123,8 +119,9 @@ public class AeropuertoDaoImplSerializacion implements IAeropuertoDao {
 		
 		/**
 		 * Obtener siguiente id de aeropuerto a guardar (id del ultimo de la lista+1).
+		 * @throws IOException 
 		 */
-		private int obtenerSiguienteId()
+		private int obtenerSiguienteId() throws IOException
 		{
 			List<Aeropuerto> aeropuertos = obtenerTodos();
 			
@@ -141,19 +138,12 @@ public class AeropuertoDaoImplSerializacion implements IAeropuertoDao {
 		 * @param aeropuertos
 		 * @throws IOException 
 		 */
-		private void guardarLista(List<Aeropuerto> aeropuertos)
+		private void guardarLista(List<Aeropuerto> aeropuertos) throws IOException
 		{
-			try {
-				FileOutputStream fos = new FileOutputStream(nombreArchivo);
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				oos.writeObject(aeropuertos);
-				oos.close();
-			} 
-			catch(IOException e) {
-				System.out.println("Error guardando lista de objetos serializados en " + nombreArchivo + System.lineSeparator() + "Stack:");
-				e.printStackTrace();
-				System.exit(1);
-			}
+			FileOutputStream fos = new FileOutputStream(nombreArchivo);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(aeropuertos);
+			oos.close();
 		}
 		
 }

@@ -20,7 +20,7 @@ public class AerolineaDaoImplSerializacion implements IAerolineaDao {
 	private static String nombreArchivo = Properties.getProperty("serial_aerolineas");;
 	
 	
-	public AerolineaDaoImplSerializacion()
+	public AerolineaDaoImplSerializacion() throws IOException
 	{		
 		File archivo = new File(nombreArchivo);
 		
@@ -32,8 +32,9 @@ public class AerolineaDaoImplSerializacion implements IAerolineaDao {
 	
 	/**
 	 * Obtener aerolinea con id determinado de la lista del archivo.
+	 * @throws IOException 
 	 */
-	public Aerolinea obtener(int id)
+	public Aerolinea obtener(int id) throws IOException
 	{
 		List<Aerolinea> aerolineas = obtenerTodos();
 		
@@ -48,39 +49,32 @@ public class AerolineaDaoImplSerializacion implements IAerolineaDao {
 	
 	/**
 	 * Obtener lista de aerolineas del archivo serializado.
+	 * @throws IOException 
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Aerolinea> obtenerTodos()
+	public List<Aerolinea> obtenerTodos() throws IOException
 	{
 		
+		FileInputStream fis = new FileInputStream(nombreArchivo);
+		ObjectInputStream ois = new ObjectInputStream(fis);
+
 		try {
-			FileInputStream fis = new FileInputStream(nombreArchivo);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-	
-			try {
-				return (ArrayList<Aerolinea>)ois.readObject();
-			} catch (ClassNotFoundException e) {
-				return new ArrayList<Aerolinea>();
-			}
-			finally {
-				ois.close();
-			}
+			return (ArrayList<Aerolinea>)ois.readObject();
+		} catch (ClassNotFoundException e) {
+			return new ArrayList<Aerolinea>();
 		}
-		catch(IOException e) 
-		{
-			System.out.println("Error leyendo lista de objetos serializados de " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-			return null;
+		finally {
+			ois.close();
 		}
-		
+
 	}
 	
 	
 	/**
 	 * Agregar un aerolinea al archivo de lista de paises serializado.
+	 * @throws IOException 
 	 */
-	public void agregar(Aerolinea aerolinea)
+	public void agregar(Aerolinea aerolinea) throws IOException
 	{
 		aerolinea.setId(obtenerSiguienteId());
 		
@@ -93,8 +87,9 @@ public class AerolineaDaoImplSerializacion implements IAerolineaDao {
 	
 	/**
 	 * Eliminar aerolinea de lista de aerolineas en archivo. Se elimina el elemento con la id del elemento dado.
+	 * @throws IOException 
 	 */
-	public void eliminar(Aerolinea aerolineaAEliminar)
+	public void eliminar(Aerolinea aerolineaAEliminar) throws IOException
 	{
 		List<Aerolinea> aerolineas = obtenerTodos();
 		
@@ -110,8 +105,9 @@ public class AerolineaDaoImplSerializacion implements IAerolineaDao {
 	
 	/**
 	 * Actualizar una aerolinea de la lista del archivo serializado. Se actualiza según el id.
+	 * @throws IOException 
 	 */
-	public void actualizar(Aerolinea aerolineaActualizado)
+	public void actualizar(Aerolinea aerolineaActualizado) throws IOException
 	{
 		List<Aerolinea> aerolineas = obtenerTodos();
 		
@@ -128,8 +124,9 @@ public class AerolineaDaoImplSerializacion implements IAerolineaDao {
 	
 	/**
 	 * Obtener siguiente id de aerolinea a guardar (id del ultimo de la lista+1).
+	 * @throws IOException 
 	 */
-	private int obtenerSiguienteId()
+	private int obtenerSiguienteId() throws IOException
 	{
 		List<Aerolinea> aerolineas = obtenerTodos();
 		
@@ -144,21 +141,15 @@ public class AerolineaDaoImplSerializacion implements IAerolineaDao {
 	/**
 	 * Guardar lista de aerolineas en su archivo correspondiente (pisando el contenido anterior).
 	 * @param aerolineas
+	 * @throws IOException 
 
 	 */
-	private void guardarLista(List<Aerolinea> aerolineas)
+	private void guardarLista(List<Aerolinea> aerolineas) throws IOException
 	{
-		try {
-			FileOutputStream fos = new FileOutputStream(nombreArchivo);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(aerolineas);
-			oos.close();
-		} 
-		catch(IOException e) {
-			System.out.println("Error guardando lista de objetos serializados en " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-		}
+		FileOutputStream fos = new FileOutputStream(nombreArchivo);
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(aerolineas);
+		oos.close();
 	}
 	
 

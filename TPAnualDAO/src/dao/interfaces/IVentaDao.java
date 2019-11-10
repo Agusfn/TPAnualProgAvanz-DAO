@@ -6,10 +6,10 @@ import modelo.Venta;
 public interface IVentaDao {
 
 
-	public Venta obtener(int id);
-	public List<Venta> obtenerTodos();	
-	public void agregar(Venta venta);
-	public void eliminar(Venta venta);
-	public void actualizar(Venta venta);
+	public Venta obtener(int id) throws Exception;
+	public List<Venta> obtenerTodos() throws Exception;	
+	public void agregar(Venta venta) throws Exception;
+	public void eliminar(Venta venta) throws Exception;
+	public void actualizar(Venta venta) throws Exception;
 	
 }

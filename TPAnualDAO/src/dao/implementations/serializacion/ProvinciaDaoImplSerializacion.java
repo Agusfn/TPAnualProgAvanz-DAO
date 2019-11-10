@@ -17,7 +17,7 @@ public class ProvinciaDaoImplSerializacion implements IProvinciaDao {
 		private static String nombreArchivo = Properties.getProperty("serial_provincias");
 		
 		
-		public ProvinciaDaoImplSerializacion()
+		public ProvinciaDaoImplSerializacion() throws IOException
 		{			
 			File archivo = new File(nombreArchivo);
 			
@@ -29,8 +29,9 @@ public class ProvinciaDaoImplSerializacion implements IProvinciaDao {
 		
 		/**
 		 * Obtener provincia con id determinado de la lista del archivo.
+		 * @throws IOException 
 		 */
-		public Provincia obtener(int id)
+		public Provincia obtener(int id) throws IOException
 		{
 			List<Provincia> provincias = obtenerTodos();
 			
@@ -45,31 +46,22 @@ public class ProvinciaDaoImplSerializacion implements IProvinciaDao {
 		
 		/**
 		 * Obtener lista de provincias del archivo serializado.
+		 * @throws IOException 
 		 */
 		@SuppressWarnings("unchecked")
-		public List<Provincia> obtenerTodos()
+		public List<Provincia> obtenerTodos() throws IOException
 		{
-			
+		
+			FileInputStream fis = new FileInputStream(nombreArchivo);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+
 			try {
-				FileInputStream fis = new FileInputStream(nombreArchivo);
-				ObjectInputStream ois = new ObjectInputStream(fis);
-	
-				try {
-					return (ArrayList<Provincia>)ois.readObject();
-				} catch (ClassNotFoundException e) {
-					return new ArrayList<Provincia>();
-				}
-				finally {
-					ois.close();
-				}
-	
+				return (ArrayList<Provincia>)ois.readObject();
+			} catch (ClassNotFoundException e) {
+				return new ArrayList<Provincia>();
 			}
-			catch(IOException e) 
-			{
-				System.out.println("Error leyendo lista de objetos serializados de " + nombreArchivo + System.lineSeparator() + "Stack:");
-				e.printStackTrace();
-				System.exit(1);
-				return null;
+			finally {
+				ois.close();
 			}
 			
 		}
@@ -77,8 +69,9 @@ public class ProvinciaDaoImplSerializacion implements IProvinciaDao {
 		
 		/**
 		 * Agregar un provincia al archivo de lista de provincias serializado.
+		 * @throws IOException 
 		 */
-		public void agregar(Provincia provincia)
+		public void agregar(Provincia provincia) throws IOException
 		{
 			provincia.setId(obtenerSiguienteId());
 			
@@ -91,8 +84,9 @@ public class ProvinciaDaoImplSerializacion implements IProvinciaDao {
 		
 		/**
 		 * Eliminar provincia de lista de provincias en archivo. Se elimina el elemento con la id del elemento dado.
+		 * @throws IOException 
 		 */
-		public void eliminar(Provincia provinciaAEliminar)
+		public void eliminar(Provincia provinciaAEliminar) throws IOException
 		{
 			List<Provincia> provincias = obtenerTodos();
 			
@@ -108,8 +102,9 @@ public class ProvinciaDaoImplSerializacion implements IProvinciaDao {
 		
 		/**
 		 * Actualizar un provincia de la lista del archivo serializado. Se actualiza según el id.
+		 * @throws IOException 
 		 */
-		public void actualizar(Provincia provinciaActualizado)
+		public void actualizar(Provincia provinciaActualizado) throws IOException
 		{
 			List<Provincia> provincias = obtenerTodos();
 			
@@ -126,8 +121,9 @@ public class ProvinciaDaoImplSerializacion implements IProvinciaDao {
 		
 		/**
 		 * Obtener siguiente id de provincia a guardar (id del ultimo de la lista+1).
+		 * @throws IOException 
 		 */
-		private int obtenerSiguienteId()
+		private int obtenerSiguienteId() throws IOException
 		{
 			List<Provincia> provincias = obtenerTodos();
 			
@@ -144,18 +140,11 @@ public class ProvinciaDaoImplSerializacion implements IProvinciaDao {
 		 * @param provincias
 		 * @throws IOException 
 		 */
-		private void guardarLista(List<Provincia> provincias)
+		private void guardarLista(List<Provincia> provincias) throws IOException
 		{
-			try {
-				FileOutputStream fos = new FileOutputStream(nombreArchivo);
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				oos.writeObject(provincias);
-				oos.close();
-			} 
-			catch(IOException e) {
-				System.out.println("Error guardando lista de objetos serializados en " + nombreArchivo + System.lineSeparator() + "Stack:");
-				e.printStackTrace();
-				System.exit(1);
-			}
+			FileOutputStream fos = new FileOutputStream(nombreArchivo);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(provincias);
+			oos.close();
 		}
 }

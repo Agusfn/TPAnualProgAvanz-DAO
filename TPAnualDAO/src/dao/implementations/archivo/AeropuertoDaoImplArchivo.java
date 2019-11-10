@@ -1,4 +1,5 @@
 package dao.implementations.archivo;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class AeropuertoDaoImplArchivo implements IAeropuertoDao{
 		/**
 		 * Inicializar DAO, creando archivo si no existe.
 		 */
-		public AeropuertoDaoImplArchivo()
+		public AeropuertoDaoImplArchivo() throws IOException
 		{
 			archivo = new Archivo(nombreArchivo);
 			
@@ -40,7 +41,7 @@ public class AeropuertoDaoImplArchivo implements IAeropuertoDao{
 		 * Obtener un aeropuerto del archivo a partir de su id.
 		 */
 		@Override
-		public Aeropuerto obtener(int id) {
+		public Aeropuerto obtener(int id) throws IOException {
 			
 			String linea;
 
@@ -62,7 +63,7 @@ public class AeropuertoDaoImplArchivo implements IAeropuertoDao{
 		 * Obtener lista de todos los aeropuertos del archivo.
 		 */
 		@Override
-		public List<Aeropuerto> obtenerTodos() {
+		public List<Aeropuerto> obtenerTodos() throws IOException {
 			
 			List<Aeropuerto> aeropuertos = new ArrayList<Aeropuerto>();
 			
@@ -81,7 +82,7 @@ public class AeropuertoDaoImplArchivo implements IAeropuertoDao{
 		 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
 		 */
 		@Override
-		public void agregar(Aeropuerto aeropuerto) {
+		public void agregar(Aeropuerto aeropuerto) throws IOException {
 
 			aeropuerto.setId(obtenerSiguienteId());
 			
@@ -96,7 +97,7 @@ public class AeropuertoDaoImplArchivo implements IAeropuertoDao{
 		 * Se elimina la linea del aeropuerto que posea la id del aeropuerto dado.
 		 */
 		@Override
-		public void eliminar(Aeropuerto aeropuertoAEliminar) {
+		public void eliminar(Aeropuerto aeropuertoAEliminar) throws IOException {
 			
 			String contenido  = "";
 			
@@ -116,7 +117,7 @@ public class AeropuertoDaoImplArchivo implements IAeropuertoDao{
 		 * Actualizar un aeropuerto en el archivo. Se actualiza el aeropuerto según la id.
 		 */
 		@Override
-		public void actualizar(Aeropuerto aeropuerto) {
+		public void actualizar(Aeropuerto aeropuerto) throws IOException {
 
 			String contenido = "";
 			
@@ -141,7 +142,7 @@ public class AeropuertoDaoImplArchivo implements IAeropuertoDao{
 		 * Esta id es la id del ultimo objeto + 1. Si no hay elementos, devuelve 1.
 		 * @return
 		 */
-		private int obtenerSiguienteId()
+		private int obtenerSiguienteId() throws IOException
 		{
 
 			Aeropuerto ultimoAeropuerto = null;
@@ -164,7 +165,7 @@ public class AeropuertoDaoImplArchivo implements IAeropuertoDao{
 		 * @return
 		 * @throws ArrayIndexOutOfBoundsException
 		 */
-		private Aeropuerto csvToAeropuerto(String csv) throws ArrayIndexOutOfBoundsException
+		private Aeropuerto csvToAeropuerto(String csv) throws ArrayIndexOutOfBoundsException, IOException
 		{
 			String[] props = csv.split(",");
 						

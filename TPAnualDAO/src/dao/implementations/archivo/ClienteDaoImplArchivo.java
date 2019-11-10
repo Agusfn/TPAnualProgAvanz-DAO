@@ -1,5 +1,6 @@
 package dao.implementations.archivo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import dao.interfaces.IClienteDao;
@@ -27,7 +28,7 @@ public class ClienteDaoImplArchivo implements IClienteDao{
 	/**
 	 * Inicializar DAO, creando archivo si no existe.
 	 */
-	public ClienteDaoImplArchivo()
+	public ClienteDaoImplArchivo() throws IOException
 	{
 		archivo = new Archivo(nombreArchivo);
 		
@@ -41,7 +42,7 @@ public class ClienteDaoImplArchivo implements IClienteDao{
 	 * Obtener un cliente del archivo a partir de su id.
 	 */
 	@Override
-	public Cliente obtener(int id) {
+	public Cliente obtener(int id) throws IOException {
 		
 		String linea;
 
@@ -63,7 +64,7 @@ public class ClienteDaoImplArchivo implements IClienteDao{
 	 * Obtener lista de todos los clientes del archivo.
 	 */
 	@Override
-	public List<Cliente> obtenerTodos() {
+	public List<Cliente> obtenerTodos() throws IOException {
 		
 		List<Cliente> clientes = new ArrayList<Cliente>();
 		
@@ -82,7 +83,7 @@ public class ClienteDaoImplArchivo implements IClienteDao{
 	 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
 	 */
 	@Override
-	public void agregar(Cliente cliente) {
+	public void agregar(Cliente cliente) throws IOException {
 
 		cliente.setId(obtenerSiguienteId());
 		
@@ -97,7 +98,7 @@ public class ClienteDaoImplArchivo implements IClienteDao{
 	 * Se elimina la linea del pais que posea la id del pais dado.
 	 */
 	@Override
-	public void eliminar(Cliente clienteAEliminar) {
+	public void eliminar(Cliente clienteAEliminar) throws IOException {
 		
 		List<String> lineas = new ArrayList<String>();
 		
@@ -117,7 +118,7 @@ public class ClienteDaoImplArchivo implements IClienteDao{
 	 * Actualizar un cliente en el archivo. Se actualiza el cliente según la id.
 	 */
 	@Override
-	public void actualizar(Cliente cliente) {
+	public void actualizar(Cliente cliente) throws IOException {
 
 		String contenido = "";
 		
@@ -142,7 +143,7 @@ public class ClienteDaoImplArchivo implements IClienteDao{
 	 * Esta id es la id del ultimo objeto + 1. Si no hay elementos, devuelve 1.
 	 * @return
 	 */
-	private int obtenerSiguienteId()
+	private int obtenerSiguienteId() throws IOException
 	{
 
 		Cliente ultimoCliente = null;

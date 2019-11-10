@@ -19,7 +19,7 @@ public class PasaporteDaoImplSerializacion implements IPasaporteDao {
 	private static String nombreArchivo = Properties.getProperty("serial_pasaportes");
 	
 	
-	public PasaporteDaoImplSerializacion()
+	public PasaporteDaoImplSerializacion() throws IOException
 	{		
 		File archivo = new File(nombreArchivo);
 		
@@ -31,8 +31,9 @@ public class PasaporteDaoImplSerializacion implements IPasaporteDao {
 	
 	/**
 	 * Obtener pasaporte con id determinado de la lista del archivo.
+	 * @throws IOException 
 	 */
-	public Pasaporte obtener(int id)
+	public Pasaporte obtener(int id) throws IOException
 	{
 		List<Pasaporte> pasaportes = obtenerTodos();
 		
@@ -47,39 +48,33 @@ public class PasaporteDaoImplSerializacion implements IPasaporteDao {
 	
 	/**
 	 * Obtener lista de pasaportes del archivo serializado.
+	 * @throws IOException 
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Pasaporte> obtenerTodos()
+	public List<Pasaporte> obtenerTodos() throws IOException
 	{
-		
-		try {
-			FileInputStream fis = new FileInputStream(nombreArchivo);
-			ObjectInputStream ois = new ObjectInputStream(fis);
 	
-			try {
-				return (ArrayList<Pasaporte>)ois.readObject();
-			} catch (ClassNotFoundException e) {
-				return new ArrayList<Pasaporte>();
-			}
-			finally {
-				ois.close();
-			}
+		FileInputStream fis = new FileInputStream(nombreArchivo);
+		ObjectInputStream ois = new ObjectInputStream(fis);
+
+		try {
+			return (ArrayList<Pasaporte>)ois.readObject();
+		} catch (ClassNotFoundException e) {
+			return new ArrayList<Pasaporte>();
 		}
-		catch(IOException e) 
-		{
-			System.out.println("Error leyendo lista de objetos serializados de " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-			return null;
-		}		
+		finally {
+			ois.close();
+		}
+
 		
 	}
 	
 	
 	/**
 	 * Agregar un pasaporte al archivo de lista de pasaportes serializado.
+	 * @throws IOException 
 	 */
-	public void agregar(Pasaporte pasaporte)
+	public void agregar(Pasaporte pasaporte) throws IOException
 	{
 		pasaporte.setId(obtenerSiguienteId());
 		
@@ -92,8 +87,9 @@ public class PasaporteDaoImplSerializacion implements IPasaporteDao {
 	
 	/**
 	 * Eliminar pasaporte de lista de pasaportes en archivo. Se elimina el elemento con la id del elemento dado.
+	 * @throws IOException 
 	 */
-	public void eliminar(Pasaporte pasaporteAEliminar)
+	public void eliminar(Pasaporte pasaporteAEliminar) throws IOException
 	{
 		List<Pasaporte> pasaportes = obtenerTodos();
 		
@@ -109,8 +105,9 @@ public class PasaporteDaoImplSerializacion implements IPasaporteDao {
 	
 	/**
 	 * Actualizar un pasaporte de la lista del archivo serializado. Se actualiza según el id.
+	 * @throws IOException 
 	 */
-	public void actualizar(Pasaporte pasaporteActualizado)
+	public void actualizar(Pasaporte pasaporteActualizado) throws IOException
 	{
 		List<Pasaporte> pasaportes = obtenerTodos();
 		
@@ -127,8 +124,9 @@ public class PasaporteDaoImplSerializacion implements IPasaporteDao {
 	
 	/**
 	 * Obtener siguiente id de pasaporte a guardar (id del ultimo de la lista+1).
+	 * @throws IOException 
 	 */
-	private int obtenerSiguienteId()
+	private int obtenerSiguienteId() throws IOException
 	{
 		List<Pasaporte> pasaportes = obtenerTodos();
 		
@@ -145,19 +143,13 @@ public class PasaporteDaoImplSerializacion implements IPasaporteDao {
 	 * @param pasaportes
 	 * @throws IOException 
 	 */
-	private void guardarLista(List<Pasaporte> pasaportes)
+	private void guardarLista(List<Pasaporte> pasaportes) throws IOException
 	{
-		try {
-			FileOutputStream fos = new FileOutputStream(nombreArchivo);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(pasaportes);
-			oos.close();
-		} 
-		catch(IOException e) {
-			System.out.println("Error guardando lista de objetos serializados en " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-		}			
+		FileOutputStream fos = new FileOutputStream(nombreArchivo);
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(pasaportes);
+		oos.close();
+		
 	}
 	
 	

@@ -1,5 +1,6 @@
 package dao.implementations.archivo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import dao.interfaces.IPaisDao;
@@ -25,7 +26,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	/**
 	 * Inicializar DAO, creando archivo si no existe.
 	 */
-	public PaisDaoImplArchivo()
+	public PaisDaoImplArchivo() throws IOException
 	{
 		archivo = new Archivo(nombreArchivo);
 		
@@ -39,7 +40,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	 * Obtener un pais del archivo a partir de su id.
 	 */
 	@Override
-	public Pais obtener(int id) {
+	public Pais obtener(int id) throws IOException {
 		
 		String linea;
 
@@ -60,7 +61,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	 * Obtener lista de todos los paises del archivo.
 	 */
 	@Override
-	public List<Pais> obtenerTodos() {
+	public List<Pais> obtenerTodos() throws IOException {
 		
 		List<Pais> paises = new ArrayList<Pais>();
 		
@@ -79,7 +80,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
 	 */
 	@Override
-	public void agregar(Pais pais) {
+	public void agregar(Pais pais) throws IOException {
 
 		pais.setId(obtenerSiguienteId());
 		
@@ -94,7 +95,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	 * Se elimina la linea del pais que posea la id del pais dado.
 	 */
 	@Override
-	public void eliminar(Pais paisAEliminar) {
+	public void eliminar(Pais paisAEliminar) throws IOException {
 		
 		String contenido = "";
 		
@@ -114,7 +115,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	 * Actualizar un pais en el archivo. Se actualiza el país según la id.
 	 */
 	@Override
-	public void actualizar(Pais pais) {
+	public void actualizar(Pais pais) throws IOException {
 
 		String contenido = "";
 		
@@ -139,7 +140,7 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	 * Esta id es la id del ultimo objeto + 1. Si no hay elementos, devuelve 1.
 	 * @return
 	 */
-	private int obtenerSiguienteId()
+	private int obtenerSiguienteId() throws IOException
 	{
 
 		Pais ultimoPais = null;

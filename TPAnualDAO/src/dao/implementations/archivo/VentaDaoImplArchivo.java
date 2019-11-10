@@ -1,5 +1,6 @@
 package dao.implementations.archivo;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,9 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	
 	/**
 	 * Inicializar DAO, creando archivo si no existe.
+	 * @throws IOException 
 	 */
-	public VentaDaoImplArchivo()
+	public VentaDaoImplArchivo() throws IOException
 	{
 		archivo = new Archivo(nombreArchivo);
 		
@@ -40,9 +42,11 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	
 	/**
 	 * Obtener una venta del archivo a partir de su id.
+	 * @throws IOException 
+	 * @throws ArrayIndexOutOfBoundsException 
 	 */
 	@Override
-	public Venta obtener(int id) {
+	public Venta obtener(int id) throws ArrayIndexOutOfBoundsException, IOException {
 		
 		String linea;
 
@@ -62,9 +66,11 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	
 	/**
 	 * Obtener lista de todas las ventas del archivo.
+	 * @throws IOException 
+	 * @throws ArrayIndexOutOfBoundsException 
 	 */
 	@Override
-	public List<Venta> obtenerTodos() {
+	public List<Venta> obtenerTodos() throws ArrayIndexOutOfBoundsException, IOException {
 		
 		List<Venta> ventas = new ArrayList<Venta>();
 		
@@ -81,9 +87,10 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	/**
 	 * Agregar una nueva venta al archivo. Se le asigna una id nueva auto-incremental.
 	 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
+	 * @throws IOException 
 	 */
 	@Override
-	public void agregar(Venta venta) {
+	public void agregar(Venta venta) throws IOException {
 
 		venta.setId(obtenerSiguienteId());
 		
@@ -96,9 +103,11 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	/**
 	 * Eliminar venta de archivo.
 	 * Se elimina la linea de la venta que posea la id de la venta dada.
+	 * @throws IOException 
+	 * @throws ArrayIndexOutOfBoundsException 
 	 */
 	@Override
-	public void eliminar(Venta ventaAEliminar) {
+	public void eliminar(Venta ventaAEliminar) throws ArrayIndexOutOfBoundsException, IOException {
 		
 		String contenido = "";
 		
@@ -115,9 +124,11 @@ public class VentaDaoImplArchivo implements IVentaDao {
 
 	/**
 	 * Actualizar una venta en el archivo. Se actualiza el vuelo según la id.
+	 * @throws IOException 
+	 * @throws ArrayIndexOutOfBoundsException 
 	 */
 	@Override
-	public void actualizar(Venta venta) {
+	public void actualizar(Venta venta) throws ArrayIndexOutOfBoundsException, IOException {
 
 		String contenido = "";
 		
@@ -141,8 +152,10 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	 * Obtiene id del siguiente objeto a agregar al archivo.
 	 * Esta id es la id del ultimo objeto + 1. Si no hay elementos, devuelve 1.
 	 * @return
+	 * @throws IOException 
+	 * @throws ArrayIndexOutOfBoundsException 
 	 */
-	private int obtenerSiguienteId()
+	private int obtenerSiguienteId() throws ArrayIndexOutOfBoundsException, IOException
 	{
 
 		Venta ultimaVenta = null;
@@ -164,9 +177,10 @@ public class VentaDaoImplArchivo implements IVentaDao {
 	 * @param csv
 	 * @return
 	 * @throws ArrayIndexOutOfBoundsException
+	 * @throws IOException 
 	 */
 	
-	private Venta csvToVenta(String csv) throws ArrayIndexOutOfBoundsException
+	private Venta csvToVenta(String csv) throws ArrayIndexOutOfBoundsException, IOException
 	{
 		String[] props = csv.split(",");
 		

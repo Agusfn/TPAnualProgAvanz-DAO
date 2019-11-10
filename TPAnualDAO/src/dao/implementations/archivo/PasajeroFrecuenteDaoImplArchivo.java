@@ -1,5 +1,6 @@
 package dao.implementations.archivo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * Inicializar DAO, creando archivo si no existe.
 	 * 
 	 */
-	public PasajeroFrecuenteDaoImplArchivo() {
+	public PasajeroFrecuenteDaoImplArchivo() throws IOException {
 
 		archivo = new Archivo(nombreArchivo);
 
@@ -38,7 +39,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * Obtener un pasajero frecuente del archivo a partir de su id.
 	 */
 	@Override
-	public PasajeroFrecuente obtener(int id) {
+	public PasajeroFrecuente obtener(int id) throws IOException {
 
 		String linea;
 
@@ -59,7 +60,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * Obtener lista de todos los pasajeros del archivo.
 	 */
 	@Override
-	public List<PasajeroFrecuente> obtenerTodos() {
+	public List<PasajeroFrecuente> obtenerTodos() throws IOException {
 
 		List<PasajeroFrecuente> pasajerosFrecuentes = new ArrayList<PasajeroFrecuente>();
 
@@ -78,7 +79,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * duplica.
 	 */
 	@Override
-	public void agregar(PasajeroFrecuente pasajeroFrecuente) {
+	public void agregar(PasajeroFrecuente pasajeroFrecuente) throws IOException {
 
 		pasajeroFrecuente.setId(obtenerSiguienteId());
 
@@ -93,7 +94,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * pasajero dado.
 	 */
 	@Override
-	public void eliminar(PasajeroFrecuente pasajeroAEliminar) {
+	public void eliminar(PasajeroFrecuente pasajeroAEliminar) throws IOException {
 
 		String contenido = "";
 
@@ -112,7 +113,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * Actualizar un pasajero en el archivo. Se actualiza el pasajero frec. según la id.
 	 */
 	@Override
-	public void actualizar(PasajeroFrecuente pasajeroFrecuente) {
+	public void actualizar(PasajeroFrecuente pasajeroFrecuente) throws IOException {
 
 		String contenido = "";
 
@@ -137,7 +138,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * 
 	 * @return
 	 */
-	private int obtenerSiguienteId() {
+	private int obtenerSiguienteId() throws IOException {
 
 		PasajeroFrecuente ultimoPasajero = null;
 
@@ -159,7 +160,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 	 * @return
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
-	private PasajeroFrecuente csvToPasajeroFrecuente(String csv) throws ArrayIndexOutOfBoundsException {
+	private PasajeroFrecuente csvToPasajeroFrecuente(String csv) throws ArrayIndexOutOfBoundsException, IOException {
 		String[] props = csv.split(",");
 
 		PasajeroFrecuente pasajeroFrecuente = new PasajeroFrecuente();

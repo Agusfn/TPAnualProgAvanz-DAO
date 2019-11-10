@@ -20,7 +20,7 @@ public class TelefonoDaoImpSerializacion implements ITelefonoDao {
 	private static String nombreArchivo = Properties.getProperty("serial_telefonos");
 	
 	
-	public TelefonoDaoImpSerializacion()
+	public TelefonoDaoImpSerializacion() throws IOException
 	{		
 		File archivo = new File(nombreArchivo);
 		
@@ -32,8 +32,9 @@ public class TelefonoDaoImpSerializacion implements ITelefonoDao {
 	
 	/**
 	 * Obtener telefono con id determinado de la lista del archivo.
+	 * @throws IOException 
 	 */
-	public Telefono obtener(int id)
+	public Telefono obtener(int id) throws IOException
 	{
 		List<Telefono> telefonos = obtenerTodos();
 		
@@ -48,40 +49,32 @@ public class TelefonoDaoImpSerializacion implements ITelefonoDao {
 	
 	/**
 	 * Obtener lista de paises del archivo serializado.
+	 * @throws IOException 
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Telefono> obtenerTodos()
+	public List<Telefono> obtenerTodos() throws IOException
 	{
 		
+		FileInputStream fis = new FileInputStream(nombreArchivo);
+		ObjectInputStream ois = new ObjectInputStream(fis);
+
 		try {
-			FileInputStream fis = new FileInputStream(nombreArchivo);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-	
-			try {
-				return (ArrayList<Telefono>)ois.readObject();
-			} catch (ClassNotFoundException e) {
-				return new ArrayList<Telefono>();
-			}
-			finally {
-				ois.close();
-			}
+			return (ArrayList<Telefono>)ois.readObject();
+		} catch (ClassNotFoundException e) {
+			return new ArrayList<Telefono>();
 		}
-		catch(IOException e) 
-		{
-			System.out.println("Error leyendo lista de objetos serializados de " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-			return null;
-		}		
-		
-		
+		finally {
+			ois.close();
+		}
+
 	}
 	
 	
 	/**
 	 * Agregar un telefono al archivo de lista de telefonos serializado.
+	 * @throws IOException 
 	 */
-	public void agregar(Telefono telefono)
+	public void agregar(Telefono telefono) throws IOException
 	{
 		telefono.setId(obtenerSiguienteId());
 		
@@ -94,8 +87,9 @@ public class TelefonoDaoImpSerializacion implements ITelefonoDao {
 	
 	/**
 	 * Eliminar telefono de lista de paises en archivo. Se elimina el elemento con la id del elemento dado.
+	 * @throws IOException 
 	 */
-	public void eliminar(Telefono telefonoAEliminar)
+	public void eliminar(Telefono telefonoAEliminar) throws IOException
 	{
 		List<Telefono> telefonos = obtenerTodos();
 		
@@ -111,8 +105,9 @@ public class TelefonoDaoImpSerializacion implements ITelefonoDao {
 	
 	/**
 	 * Actualizar un telefono de la lista del archivo serializado. Se actualiza según el id.
+	 * @throws IOException 
 	 */
-	public void actualizar(Telefono telefonoActualizado)
+	public void actualizar(Telefono telefonoActualizado) throws IOException
 	{
 		List<Telefono> telefonos = obtenerTodos();
 		
@@ -129,8 +124,9 @@ public class TelefonoDaoImpSerializacion implements ITelefonoDao {
 	
 	/**
 	 * Obtener siguiente id de telefono a guardar (id del ultimo de la lista+1).
+	 * @throws IOException 
 	 */
-	private int obtenerSiguienteId()
+	private int obtenerSiguienteId() throws IOException
 	{
 		List<Telefono> telefonos = obtenerTodos();
 		
@@ -147,19 +143,12 @@ public class TelefonoDaoImpSerializacion implements ITelefonoDao {
 	 * @param telefonos
 	 * @throws IOException 
 	 */
-	private void guardarLista(List<Telefono> telefonos)
+	private void guardarLista(List<Telefono> telefonos) throws IOException
 	{
-		try {
-			FileOutputStream fos = new FileOutputStream(nombreArchivo);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(telefonos);
-			oos.close();
-		} 
-		catch(IOException e) {
-			System.out.println("Error guardando lista de objetos serializados en " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-		}			
+		FileOutputStream fos = new FileOutputStream(nombreArchivo);
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(telefonos);
+		oos.close();
 	}
 
 }

@@ -17,7 +17,7 @@ public class PasajeroFrecuenteDaoImplSerializacion implements IPasajeroFrecuente
 	private static String nombreArchivo = Properties.getProperty("serial_pasajerosfrecuentes");
 	
 	
-	public PasajeroFrecuenteDaoImplSerializacion()
+	public PasajeroFrecuenteDaoImplSerializacion() throws IOException
 	{		
 		File archivo = new File(nombreArchivo);
 		
@@ -29,8 +29,9 @@ public class PasajeroFrecuenteDaoImplSerializacion implements IPasajeroFrecuente
 	
 	/**
 	 * Obtener pasajero frecuente con id determinado de la lista del archivo.
+	 * @throws IOException 
 	 */
-	public PasajeroFrecuente obtener(int id)
+	public PasajeroFrecuente obtener(int id) throws IOException
 	{
 		List<PasajeroFrecuente> pasajerosFrecuentes = obtenerTodos();
 		
@@ -45,40 +46,32 @@ public class PasajeroFrecuenteDaoImplSerializacion implements IPasajeroFrecuente
 	
 	/**
 	 * Obtener lista de pasajeros frecuentes del archivo serializado.
+	 * @throws IOException 
 	 */
 	@SuppressWarnings("unchecked")
-	public List<PasajeroFrecuente> obtenerTodos()
+	public List<PasajeroFrecuente> obtenerTodos() throws IOException
 	{
 		
+		FileInputStream fis = new FileInputStream(nombreArchivo);
+		ObjectInputStream ois = new ObjectInputStream(fis);
+
 		try {
-			FileInputStream fis = new FileInputStream(nombreArchivo);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-	
-			try {
-				return (ArrayList<PasajeroFrecuente>)ois.readObject();
-			} catch (ClassNotFoundException e) {
-				return new ArrayList<PasajeroFrecuente>();
-			}
-			finally {
-				ois.close();
-			}
-			
+			return (ArrayList<PasajeroFrecuente>)ois.readObject();
+		} catch (ClassNotFoundException e) {
+			return new ArrayList<PasajeroFrecuente>();
 		}
-		catch(IOException e) 
-		{
-			System.out.println("Error leyendo lista de objetos serializados de " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-			return null;
-		}		
+		finally {
+			ois.close();
+		}
 		
 	}
 	
 	
 	/**
 	 * Agregar un pasajero frecuente al archivo de lista de pasajeros frecuentes serializado.
+	 * @throws IOException 
 	 */
-	public void agregar(PasajeroFrecuente pasajeroFrecuente)
+	public void agregar(PasajeroFrecuente pasajeroFrecuente) throws IOException
 	{
 		pasajeroFrecuente.setId(obtenerSiguienteId());
 		
@@ -91,8 +84,9 @@ public class PasajeroFrecuenteDaoImplSerializacion implements IPasajeroFrecuente
 	
 	/**
 	 * Eliminar pasajero frecuente de lista de paises en archivo. Se elimina el elemento con la id del elemento dado.
+	 * @throws IOException 
 	 */
-	public void eliminar(PasajeroFrecuente pasajeroFrecuenteAEliminar)
+	public void eliminar(PasajeroFrecuente pasajeroFrecuenteAEliminar) throws IOException
 	{
 		List<PasajeroFrecuente> pasajerosFrecuentes = obtenerTodos();
 		
@@ -108,8 +102,9 @@ public class PasajeroFrecuenteDaoImplSerializacion implements IPasajeroFrecuente
 	
 	/**
 	 * Actualizar un pasajero frecuente de la lista del archivo serializado. Se actualiza según el id.
+	 * @throws IOException 
 	 */
-	public void actualizar(PasajeroFrecuente pasajeroFrecuenteActualizado)
+	public void actualizar(PasajeroFrecuente pasajeroFrecuenteActualizado) throws IOException
 	{
 		List<PasajeroFrecuente> pasajerosFrecuentes = obtenerTodos();
 		
@@ -126,8 +121,9 @@ public class PasajeroFrecuenteDaoImplSerializacion implements IPasajeroFrecuente
 	
 	/**
 	 * Obtener siguiente id de pasajero frecuente a guardar (id del ultimo de la lista+1).
+	 * @throws IOException 
 	 */
-	private int obtenerSiguienteId()
+	private int obtenerSiguienteId() throws IOException
 	{
 		List<PasajeroFrecuente> pasajerosFrecuentes = obtenerTodos();
 		
@@ -144,22 +140,12 @@ public class PasajeroFrecuenteDaoImplSerializacion implements IPasajeroFrecuente
 	 * @param pasajerosFrecuentes
 	 * @throws IOException 
 	 */
-	private void guardarLista(List<PasajeroFrecuente> pasajerosFrecuentes)
+	private void guardarLista(List<PasajeroFrecuente> pasajerosFrecuentes) throws IOException
 	{
-		try {
-			FileOutputStream fos = new FileOutputStream(nombreArchivo);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(pasajerosFrecuentes);
-			oos.close();
-		} 
-		catch(IOException e) {
-			System.out.println("Error guardando lista de objetos serializados en " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-		}
-		
-		
-		
+		FileOutputStream fos = new FileOutputStream(nombreArchivo);
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(pasajerosFrecuentes);
+		oos.close();
 	}
 
 }

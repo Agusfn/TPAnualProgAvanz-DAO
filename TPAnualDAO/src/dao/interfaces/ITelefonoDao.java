@@ -6,11 +6,11 @@ import modelo.Telefono;
 
 public interface ITelefonoDao {
 
-	public Telefono obtener(int id);
-	public List<Telefono> obtenerTodos();	
-	public void agregar(Telefono telefono);
-	public void eliminar(Telefono telefono);
-	public void actualizar(Telefono telefono);
+	public Telefono obtener(int id) throws Exception;
+	public List<Telefono> obtenerTodos() throws Exception;	
+	public void agregar(Telefono telefono) throws Exception;
+	public void eliminar(Telefono telefono) throws Exception;
+	public void actualizar(Telefono telefono) throws Exception;
 	
 		
 

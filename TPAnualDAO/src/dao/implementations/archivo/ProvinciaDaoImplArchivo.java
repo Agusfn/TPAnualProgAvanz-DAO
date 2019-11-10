@@ -1,4 +1,5 @@
 package dao.implementations.archivo;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +27,9 @@ public class ProvinciaDaoImplArchivo implements IProvinciaDao{
 		
 		/**
 		 * Inicializar DAO, creando archivo si no existe.
+		 * @throws IOException 
 		 */
-		public ProvinciaDaoImplArchivo()
+		public ProvinciaDaoImplArchivo() throws IOException
 		{
 			archivo = new Archivo(nombreArchivo);
 			
@@ -39,9 +41,12 @@ public class ProvinciaDaoImplArchivo implements IProvinciaDao{
 		
 		/**
 		 * Obtener una Provincia del archivo a partir de su id.
+		 * @throws IOException 
+		 * @throws NumberFormatException 
+		 * @throws ArrayIndexOutOfBoundsException 
 		 */
 		@Override
-		public Provincia obtener (int id) {
+		public Provincia obtener (int id) throws ArrayIndexOutOfBoundsException, NumberFormatException, IOException {
 			
 			String linea;
 
@@ -61,9 +66,12 @@ public class ProvinciaDaoImplArchivo implements IProvinciaDao{
 		
 		/**
 		 * Obtener lista de todos las Provincias del archivo.
+		 * @throws IOException 
+		 * @throws NumberFormatException 
+		 * @throws ArrayIndexOutOfBoundsException 
 		 */
 		@Override
-		public List<Provincia> obtenerTodos() {
+		public List<Provincia> obtenerTodos() throws ArrayIndexOutOfBoundsException, NumberFormatException, IOException {
 			
 			List<Provincia> provincias = new ArrayList<Provincia>();
 			
@@ -80,9 +88,10 @@ public class ProvinciaDaoImplArchivo implements IProvinciaDao{
 		/**
 		 * Agregar nueva Provincia al archivo. Se le asigna una id nueva auto-incremental.
 		 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
+		 * @throws IOException 
 		 */
 		@Override
-		public void agregar(Provincia provincia) {
+		public void agregar(Provincia provincia) throws IOException {
 
 			provincia.setId(obtenerSiguienteId());
 			
@@ -95,9 +104,12 @@ public class ProvinciaDaoImplArchivo implements IProvinciaDao{
 		/**
 		 * Eliminar Provincia de archivo.
 		 * Se elimina la linea de la Provincia que posea la id de la Provincia dada.
+		 * @throws IOException 
+		 * @throws NumberFormatException 
+		 * @throws ArrayIndexOutOfBoundsException 
 		 */
 		@Override
-		public void eliminar(Provincia provinciaAEliminar) {
+		public void eliminar(Provincia provinciaAEliminar) throws ArrayIndexOutOfBoundsException, NumberFormatException, IOException {
 			
 			String contenido="";
 			
@@ -120,7 +132,7 @@ public class ProvinciaDaoImplArchivo implements IProvinciaDao{
 		 * Actualizar una Provincia en el archivo. Se actualiza la Provincia según la id.
 		 */
 		@Override
-		public void actualizar(Provincia provincia) {
+		public void actualizar(Provincia provincia) throws IOException {
 
 			String contenido = "";
 			
@@ -145,7 +157,7 @@ public class ProvinciaDaoImplArchivo implements IProvinciaDao{
 		 * Esta id es la id del ultimo objeto + 1. Si no hay elementos, devuelve 1.
 		 * @return
 		 */
-		private int obtenerSiguienteId()
+		private int obtenerSiguienteId() throws IOException
 		{
 
 			Provincia ultimoProvincia = null;
@@ -170,7 +182,7 @@ public class ProvinciaDaoImplArchivo implements IProvinciaDao{
 		 * @throws IOException 
 		 * @throws NumberFormatException 
 		 */
-		private Provincia csvToProvincia(String csv) throws ArrayIndexOutOfBoundsException, NumberFormatException
+		private Provincia csvToProvincia(String csv) throws ArrayIndexOutOfBoundsException, NumberFormatException, IOException
 		{
 			String[] props = csv.split(",");
 			

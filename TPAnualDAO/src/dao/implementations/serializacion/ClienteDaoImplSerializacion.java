@@ -18,7 +18,7 @@ public class ClienteDaoImplSerializacion {
 	private static String nombreArchivo = Properties.getProperty("serial_clientes");
 	
 	
-	public ClienteDaoImplSerializacion()
+	public ClienteDaoImplSerializacion() throws IOException
 	{		
 		File archivo = new File(nombreArchivo);
 		
@@ -30,8 +30,9 @@ public class ClienteDaoImplSerializacion {
 	
 	/**
 	 * Obtener cliente con id determinado de la lista del archivo.
+	 * @throws IOException 
 	 */
-	public Cliente obtener(int id)
+	public Cliente obtener(int id) throws IOException
 	{
 		List<Cliente> clientes = obtenerTodos();
 		
@@ -46,38 +47,31 @@ public class ClienteDaoImplSerializacion {
 	
 	/**
 	 * Obtener lista de clientes del archivo serializado.
+	 * @throws IOException 
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Cliente> obtenerTodos()
+	public List<Cliente> obtenerTodos() throws IOException
 	{
 		
+		FileInputStream fis = new FileInputStream(nombreArchivo);
+		ObjectInputStream ois = new ObjectInputStream(fis);
+
 		try {
-			FileInputStream fis = new FileInputStream(nombreArchivo);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-	
-			try {
-				return (ArrayList<Cliente>)ois.readObject();
-			} catch (ClassNotFoundException e) {
-				return new ArrayList<Cliente>();
-			}
-			finally {
-				ois.close();
-			}
+			return (ArrayList<Cliente>)ois.readObject();
+		} catch (ClassNotFoundException e) {
+			return new ArrayList<Cliente>();
 		}
-		catch(IOException e) 
-		{
-			System.out.println("Error leyendo lista de objetos serializados de " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-			return null;
-		}		
+		finally {
+			ois.close();
+		}	
 	}
 	
 	
 	/**
 	 * Agregar un cliente al archivo de lista de paises serializado.
+	 * @throws IOException 
 	 */
-	public void agregar(Cliente cliente)
+	public void agregar(Cliente cliente) throws IOException
 	{
 		cliente.setId(obtenerSiguienteId());
 		
@@ -90,8 +84,9 @@ public class ClienteDaoImplSerializacion {
 	
 	/**
 	 * Eliminar cliente de lista de clientes en archivo. Se elimina el elemento con la id del elemento dado.
+	 * @throws IOException 
 	 */
-	public void eliminar(Cliente clienteAEliminar)
+	public void eliminar(Cliente clienteAEliminar) throws IOException
 	{
 		List<Cliente> clientes = obtenerTodos();
 		
@@ -107,8 +102,9 @@ public class ClienteDaoImplSerializacion {
 	
 	/**
 	 * Actualizar un cliente de la lista del archivo serializado. Se actualiza según el id.
+	 * @throws IOException 
 	 */
-	public void actualizar(Cliente clienteActualizado)
+	public void actualizar(Cliente clienteActualizado) throws IOException
 	{
 		List<Cliente> clientes = obtenerTodos();
 		
@@ -125,8 +121,9 @@ public class ClienteDaoImplSerializacion {
 	
 	/**
 	 * Obtener siguiente id de cliente a guardar (id del ultimo de la lista+1).
+	 * @throws IOException 
 	 */
-	private int obtenerSiguienteId()
+	private int obtenerSiguienteId() throws IOException
 	{
 		List<Cliente> clientes = obtenerTodos();
 		
@@ -143,19 +140,12 @@ public class ClienteDaoImplSerializacion {
 	 * @param clientes
 	 * @throws IOException 
 	 */
-	private void guardarLista(List<Cliente> clientes)
+	private void guardarLista(List<Cliente> clientes) throws IOException
 	{
-		try {
-			FileOutputStream fos = new FileOutputStream(nombreArchivo);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(clientes);
-			oos.close();
-		} 
-		catch(IOException e) {
-			System.out.println("Error guardando lista de objetos serializados en " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-		}		
+		FileOutputStream fos = new FileOutputStream(nombreArchivo);
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(clientes);
+		oos.close();	
 	}
 	
 }

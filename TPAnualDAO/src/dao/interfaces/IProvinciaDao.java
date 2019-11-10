@@ -6,11 +6,11 @@ import modelo.Provincia;
 
 public interface IProvinciaDao {
 	
-	public Provincia obtener(int id);
-	public List<Provincia> obtenerTodos();	
-	public void agregar(Provincia provincia);
-	public void eliminar(Provincia provincia);
-	public void actualizar(Provincia provincia);
+	public Provincia obtener(int id) throws Exception;
+	public List<Provincia> obtenerTodos() throws Exception;	
+	public void agregar(Provincia provincia) throws Exception;
+	public void eliminar(Provincia provincia) throws Exception;
+	public void actualizar(Provincia provincia) throws Exception;
 	
 
 }

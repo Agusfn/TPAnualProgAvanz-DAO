@@ -19,7 +19,7 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 	private static String nombreArchivo = Properties.getProperty("serial_ventas");
 	
 	
-	public VentaDaoImplSerializacion()
+	public VentaDaoImplSerializacion() throws IOException
 	{		
 		File archivo = new File(nombreArchivo);
 		
@@ -31,8 +31,9 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 	
 	/**
 	 * Obtener venta con id determinado de la lista del archivo.
+	 * @throws IOException 
 	 */
-	public Venta obtener(int id)
+	public Venta obtener(int id) throws IOException
 	{
 		List<Venta> ventas = obtenerTodos();
 		
@@ -47,40 +48,32 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 	
 	/**
 	 * Obtener lista de ventas del archivo serializado.
+	 * @throws IOException 
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Venta> obtenerTodos()
+	public List<Venta> obtenerTodos() throws IOException
 	{
-		
+		FileInputStream fis = new FileInputStream(nombreArchivo);
+		ObjectInputStream ois = new ObjectInputStream(fis);
+
 		try {
-			FileInputStream fis = new FileInputStream(nombreArchivo);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-	
-			try {
-				return (ArrayList<Venta>)ois.readObject();
-			} catch (ClassNotFoundException e) {
-				return new ArrayList<Venta>();
-			}
-			finally {
-				ois.close();
-			}
-			
+			return (ArrayList<Venta>)ois.readObject();
+		} catch (ClassNotFoundException e) {
+			return new ArrayList<Venta>();
 		}
-		catch(IOException e) 
-		{
-			System.out.println("Error leyendo lista de objetos serializados de " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-			return null;
-		}		
+		finally {
+			ois.close();
+		}
+		
 		
 	}
 	
 	
 	/**
 	 * Agregar una venta al archivo de lista de ventas serializado.
+	 * @throws IOException 
 	 */
-	public void agregar(Venta venta)
+	public void agregar(Venta venta) throws IOException
 	{
 		venta.setId(obtenerSiguienteId());
 		
@@ -93,8 +86,9 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 	
 	/**
 	 * Eliminar venta de lista de ventas en archivo. Se elimina el elemento con la id del elemento dado.
+	 * @throws IOException 
 	 */
-	public void eliminar(Venta ventaAEliminar)
+	public void eliminar(Venta ventaAEliminar) throws IOException
 	{
 		List<Venta> ventas = obtenerTodos();
 		
@@ -110,8 +104,9 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 	
 	/**
 	 * Actualizar un venta de la lista del archivo serializado. Se actualiza según el id.
+	 * @throws IOException 
 	 */
-	public void actualizar(Venta ventaActualizada)
+	public void actualizar(Venta ventaActualizada) throws IOException
 	{
 		List<Venta> ventas = obtenerTodos();
 		
@@ -128,8 +123,9 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 	
 	/**
 	 * Obtener siguiente id de venta a guardar (id del ultimo de la lista+1).
+	 * @throws IOException 
 	 */
-	private int obtenerSiguienteId()
+	private int obtenerSiguienteId() throws IOException
 	{
 		List<Venta> ventas = obtenerTodos();
 		
@@ -146,19 +142,12 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 	 * @param ventas
 	 * @throws IOException 
 	 */
-	private void guardarLista(List<Venta> ventas)
+	private void guardarLista(List<Venta> ventas) throws IOException
 	{
-		try {
-			FileOutputStream fos = new FileOutputStream(nombreArchivo);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(ventas);
-			oos.close();
-		} 
-		catch(IOException e) {
-			System.out.println("Error guardando lista de objetos serializados en " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-		}		
+		FileOutputStream fos = new FileOutputStream(nombreArchivo);
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(ventas);
+		oos.close();		
 	}
 
 }

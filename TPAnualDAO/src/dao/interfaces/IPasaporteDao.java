@@ -6,11 +6,11 @@ import modelo.Pasaporte;
 public interface IPasaporteDao {
 
 
-	public Pasaporte obtener(int id);
-	public List<Pasaporte> obtenerTodos();	
-	public void agregar(Pasaporte pais);
-	public void eliminar(Pasaporte pais);
-	public void actualizar(Pasaporte pais);
+	public Pasaporte obtener(int id) throws Exception;
+	public List<Pasaporte> obtenerTodos() throws Exception;	
+	public void agregar(Pasaporte pais) throws Exception;
+	public void eliminar(Pasaporte pais) throws Exception;
+	public void actualizar(Pasaporte pais) throws Exception;
 	
 	
 }

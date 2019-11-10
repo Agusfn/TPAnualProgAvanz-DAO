@@ -1,5 +1,6 @@
 package dao.implementations.archivo;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class PasaporteDaoImplArchivo implements IPasaporteDao {
 	/**
 	 * Inicializar DAO, creando archivo si no existe.
 	 */
-	public PasaporteDaoImplArchivo()
+	public PasaporteDaoImplArchivo() throws IOException
 	{
 		archivo = new Archivo(nombreArchivo);
 		
@@ -42,7 +43,7 @@ public class PasaporteDaoImplArchivo implements IPasaporteDao {
 	 * Obtener un pais del archivo a partir de su id.
 	 */
 	@Override
-	public Pasaporte obtener(int id) {
+	public Pasaporte obtener(int id) throws IOException {
 		
 		String linea;
 
@@ -64,7 +65,7 @@ public class PasaporteDaoImplArchivo implements IPasaporteDao {
 	 * Obtener lista de todos los paises del archivo.
 	 */
 	@Override
-	public List<Pasaporte> obtenerTodos() {
+	public List<Pasaporte> obtenerTodos() throws IOException {
 		
 		List<Pasaporte> pasaportes = new ArrayList<Pasaporte>();
 		
@@ -83,7 +84,7 @@ public class PasaporteDaoImplArchivo implements IPasaporteDao {
 	 * No se debe usar este metodo con un objeto ya existente en el archivo porque se duplica.
 	 */
 	@Override
-	public void agregar(Pasaporte pasaporte) {
+	public void agregar(Pasaporte pasaporte) throws IOException {
 
 		pasaporte.setId(obtenerSiguienteId());
 		
@@ -98,7 +99,7 @@ public class PasaporteDaoImplArchivo implements IPasaporteDao {
 	 * Se elimina la linea del pais que posea la id del pais dado.
 	 */
 	@Override
-	public void eliminar(Pasaporte pasaporteAEliminar) {
+	public void eliminar(Pasaporte pasaporteAEliminar) throws IOException {
 		
 		String contenido = "";
 		
@@ -117,7 +118,7 @@ public class PasaporteDaoImplArchivo implements IPasaporteDao {
 	 * Actualizar un pais en el archivo. Se actualiza el país según la id.
 	 */
 	@Override
-	public void actualizar(Pasaporte pasaporte) {
+	public void actualizar(Pasaporte pasaporte) throws IOException {
 
 		String contenido = "";
 		
@@ -142,7 +143,7 @@ public class PasaporteDaoImplArchivo implements IPasaporteDao {
 	 * Esta id es la id del ultimo objeto + 1. Si no hay elementos, devuelve 1.
 	 * @return
 	 */
-	private int obtenerSiguienteId()
+	private int obtenerSiguienteId() throws IOException
 	{
 
 		Pasaporte ultimoPasaporte = null;
@@ -164,8 +165,9 @@ public class PasaporteDaoImplArchivo implements IPasaporteDao {
 	 * @param csv
 	 * @return
 	 * @throws ArrayIndexOutOfBoundsException
+	 * @throws IOException 
 	 */
-	private Pasaporte csvToPasaporte(String csv) throws ArrayIndexOutOfBoundsException
+	private Pasaporte csvToPasaporte(String csv) throws ArrayIndexOutOfBoundsException, IOException
 	{
 		String[] props = csv.split(",");
 		

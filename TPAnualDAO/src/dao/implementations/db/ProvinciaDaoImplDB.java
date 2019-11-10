@@ -1,8 +1,8 @@
 package dao.implementations.db;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import dao.interfaces.IPaisDao;
 import modelo.Pais;
 import modelo.Provincia;
 import util.DbQuery;
@@ -15,7 +15,7 @@ public class ProvinciaDaoImplDB {
 	
 	
 
-	public ProvinciaDaoImplDB()
+	public ProvinciaDaoImplDB() throws SQLException
 	{
 		query = new DbQuery();
 	}
@@ -26,7 +26,7 @@ public class ProvinciaDaoImplDB {
 	}
 	
 	
-	public Provincia obtener(int id)
+	public Provincia obtener(int id) throws SQLException
 	{
 		query.select("SELECT * FROM " + tableName + " WHERE id = ?", id);
 		
@@ -38,7 +38,7 @@ public class ProvinciaDaoImplDB {
 	}
 	
 	
-	public List<Provincia> obtenerTodos() {
+	public List<Provincia> obtenerTodos() throws SQLException {
 		
 		List<Provincia> provincias = new ArrayList<Provincia>();
 		
@@ -52,7 +52,7 @@ public class ProvinciaDaoImplDB {
 	}
 	
 	
-	public void agregar(Provincia provincia)
+	public void agregar(Provincia provincia) throws SQLException
 	{
 		query.update("INSERT INTO " + tableName + " (nombre, id_pais) VALUES (?, ?)", provincia.getNombre(), provincia.getPais().getId());
 
@@ -60,19 +60,19 @@ public class ProvinciaDaoImplDB {
 	}
 	
 	
-	public void eliminar(Provincia provincia)
+	public void eliminar(Provincia provincia) throws SQLException
 	{
 		query.execute("DELETE FROM " + tableName + " WHERE id = ?", provincia.getId());
 	}
 	
 	
-	public void actualizar(Provincia provincia)
+	public void actualizar(Provincia provincia) throws SQLException
 	{
 		query.update("UPDATE " + tableName + "SET nombre = ?, id_pais = ? WHERE id = ?", provincia.getNombre(), provincia.getPais().getId(), provincia.getId());
 	}
 	
 	
-	public void closeDb()
+	public void closeDb() throws SQLException
 	{
 		query.close();
 	}
@@ -81,8 +81,9 @@ public class ProvinciaDaoImplDB {
 	/**
 	 * Crear un objecto pais a partir del resultado de la fila actual de la consulta this.query
 	 * @return
+	 * @throws SQLException 
 	 */
-	private Provincia createProvinciaFromQueryRow()
+	private Provincia createProvinciaFromQueryRow() throws SQLException
 	{
 		Provincia nuevaProvincia = new Provincia();
 		

@@ -19,7 +19,7 @@ public class PaisDaoImplSerializacion implements IPaisDao {
 	private static String nombreArchivo = Properties.getProperty("serial_paises");
 	
 	
-	public PaisDaoImplSerializacion()
+	public PaisDaoImplSerializacion() throws IOException
 	{		
 		File archivo = new File(nombreArchivo);
 		
@@ -31,8 +31,9 @@ public class PaisDaoImplSerializacion implements IPaisDao {
 	
 	/**
 	 * Obtener pais con id determinado de la lista del archivo.
+	 * @throws IOException 
 	 */
-	public Pais obtener(int id)
+	public Pais obtener(int id) throws IOException
 	{
 		List<Pais> paises = obtenerTodos();
 		
@@ -47,40 +48,32 @@ public class PaisDaoImplSerializacion implements IPaisDao {
 	
 	/**
 	 * Obtener lista de paises del archivo serializado.
+	 * @throws IOException 
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Pais> obtenerTodos()
+	public List<Pais> obtenerTodos() throws IOException
 	{
 		
-		try
-		{
-			FileInputStream fis = new FileInputStream(nombreArchivo);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-	
-			try {
-				return (ArrayList<Pais>)ois.readObject();
-			} catch (ClassNotFoundException e) {
-				return new ArrayList<Pais>();
-			}
-			finally {
-				ois.close();
-			}			
+		FileInputStream fis = new FileInputStream(nombreArchivo);
+		ObjectInputStream ois = new ObjectInputStream(fis);
+
+		try {
+			return (ArrayList<Pais>)ois.readObject();
+		} catch (ClassNotFoundException e) {
+			return new ArrayList<Pais>();
 		}
-		catch(IOException e) 
-		{
-			System.out.println("Error leyendo lista de objetos serializados de " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-			return null;
-		}
+		finally {
+			ois.close();
+		}			
 		
 	}
 	
 	
 	/**
 	 * Agregar un pais al archivo de lista de paises serializado.
+	 * @throws IOException 
 	 */
-	public void agregar(Pais pais)
+	public void agregar(Pais pais) throws IOException
 	{
 		pais.setId(obtenerSiguienteId());
 		
@@ -93,8 +86,9 @@ public class PaisDaoImplSerializacion implements IPaisDao {
 	
 	/**
 	 * Eliminar pais de lista de paises en archivo. Se elimina el elemento con la id del elemento dado.
+	 * @throws IOException 
 	 */
-	public void eliminar(Pais paisAEliminar)
+	public void eliminar(Pais paisAEliminar) throws IOException
 	{
 		List<Pais> paises = obtenerTodos();
 		
@@ -110,8 +104,9 @@ public class PaisDaoImplSerializacion implements IPaisDao {
 	
 	/**
 	 * Actualizar un pais de la lista del archivo serializado. Se actualiza según el id.
+	 * @throws IOException 
 	 */
-	public void actualizar(Pais paisActualizado)
+	public void actualizar(Pais paisActualizado) throws IOException
 	{
 		List<Pais> paises = obtenerTodos();
 		
@@ -128,8 +123,9 @@ public class PaisDaoImplSerializacion implements IPaisDao {
 	
 	/**
 	 * Obtener siguiente id de pais a guardar (id del ultimo de la lista+1).
+	 * @throws IOException 
 	 */
-	private int obtenerSiguienteId()
+	private int obtenerSiguienteId() throws IOException
 	{
 		List<Pais> paises = obtenerTodos();
 		
@@ -146,20 +142,12 @@ public class PaisDaoImplSerializacion implements IPaisDao {
 	 * @param paises
 	 * @throws IOException 
 	 */
-	private void guardarLista(List<Pais> paises)
+	private void guardarLista(List<Pais> paises) throws IOException
 	{
-		try 
-		{
-			FileOutputStream fos = new FileOutputStream(nombreArchivo);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(paises);
-			oos.close();
-		} 
-		catch(IOException e) {
-			System.out.println("Error guardando lista de objetos serializados en " + nombreArchivo + System.lineSeparator() + "Stack:");
-			e.printStackTrace();
-			System.exit(1);
-		}
+		FileOutputStream fos = new FileOutputStream(nombreArchivo);
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(paises);
+		oos.close();
 	}
 	
 }

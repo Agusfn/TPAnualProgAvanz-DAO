@@ -18,7 +18,7 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 		private static String nombreArchivo = Properties.getProperty("serial_direcciones");
 		
 		
-		public DireccionDaoImplSerializacion()
+		public DireccionDaoImplSerializacion() throws IOException
 		{			
 			File archivo = new File(nombreArchivo);
 			
@@ -30,8 +30,9 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 		
 		/**
 		 * Obtener direccion con id determinado de la lista del archivo.
+		 * @throws IOException 
 		 */
-		public Direccion obtener(int id)
+		public Direccion obtener(int id) throws IOException
 		{
 			List<Direccion> direcciones = obtenerTodos();
 			
@@ -46,39 +47,32 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 		
 		/**
 		 * Obtener lista de direcciones del archivo serializado.
+		 * @throws IOException 
 		 */
 		@SuppressWarnings("unchecked")
-		public List<Direccion> obtenerTodos()
+		public List<Direccion> obtenerTodos() throws IOException
 		{
-			
+
+			FileInputStream fis = new FileInputStream(nombreArchivo);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+
 			try {
-				FileInputStream fis = new FileInputStream(nombreArchivo);
-				ObjectInputStream ois = new ObjectInputStream(fis);
-	
-				try {
-					return (ArrayList<Direccion>)ois.readObject();
-				} catch (ClassNotFoundException e) {
-					return new ArrayList<Direccion>();
-				}
-				finally {
-					ois.close();
-				}
+				return (ArrayList<Direccion>)ois.readObject();
+			} catch (ClassNotFoundException e) {
+				return new ArrayList<Direccion>();
 			}
-			catch(IOException e) 
-			{
-				System.out.println("Error leyendo lista de objetos serializados de " + nombreArchivo + System.lineSeparator() + "Stack:");
-				e.printStackTrace();
-				System.exit(1);
-				return null;
-			}			
-			
+			finally {
+				ois.close();
+			}		
+		
 		}
 		
 		
 		/**
 		 * Agregar un direccion al archivo de lista de direcciones serializado.
+		 * @throws IOException 
 		 */
-		public void agregar(Direccion direccion)
+		public void agregar(Direccion direccion) throws IOException
 		{
 			direccion.setId(obtenerSiguienteId());
 			
@@ -91,8 +85,9 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 		
 		/**
 		 * Eliminar direccion de lista de direcciones en archivo. Se elimina el elemento con la id del elemento dado.
+		 * @throws IOException 
 		 */
-		public void eliminar(Direccion direccionAEliminar)
+		public void eliminar(Direccion direccionAEliminar) throws IOException
 		{
 			List<Direccion> direcciones = obtenerTodos();
 			
@@ -108,8 +103,9 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 		
 		/**
 		 * Actualizar una direccion de la lista del archivo serializado. Se actualiza según el id.
+		 * @throws IOException 
 		 */
-		public void actualizar(Direccion direccionActualizado)
+		public void actualizar(Direccion direccionActualizado) throws IOException
 		{
 			List<Direccion> direcciones = obtenerTodos();
 			
@@ -126,8 +122,9 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 		
 		/**
 		 * Obtener siguiente id de direccion a guardar (id del ultimo de la lista+1).
+		 * @throws IOException 
 		 */
-		private int obtenerSiguienteId()
+		private int obtenerSiguienteId() throws IOException
 		{
 			List<Direccion> direcciones = obtenerTodos();
 			
@@ -144,19 +141,12 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 		 * @param direcciones
 		 * @throws IOException 
 		 */
-		private void guardarLista(List<Direccion> direcciones)
+		private void guardarLista(List<Direccion> direcciones) throws IOException
 		{
-			try {
-				FileOutputStream fos = new FileOutputStream(nombreArchivo);
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				oos.writeObject(direcciones);
-				oos.close();
-			} 
-			catch(IOException e) {
-				System.out.println("Error guardando lista de objetos serializados en " + nombreArchivo + System.lineSeparator() + "Stack:");
-				e.printStackTrace();
-				System.exit(1);
-			}
+			FileOutputStream fos = new FileOutputStream(nombreArchivo);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(direcciones);
+			oos.close();
 		}
 		
 }

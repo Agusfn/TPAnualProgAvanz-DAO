@@ -34,15 +34,9 @@ public class DbQuery {
 	}
 	
 	
-	public DbQuery()
+	public DbQuery() throws SQLException
 	{
-		try {
-			con = DriverManager.getConnection(Properties.getProperty("sqlserver_connection_string"));
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+		con = DriverManager.getConnection(Properties.getProperty("sqlserver_connection_string"));
 	}
 	
 	
@@ -51,8 +45,9 @@ public class DbQuery {
 	 * @param sql
 	 * @param params
 	 * @return ResultSet resultados devueltos.
+	 * @throws SQLException 
 	 */
-	public void select(String sql, Object... params)
+	public void select(String sql, Object... params) throws SQLException
 	{
 		try {
 			ps = makePreparedStatement(sql, false, params);
@@ -61,15 +56,10 @@ public class DbQuery {
 		} catch (SQLException e) {
 			
 			if(onTransaction) {
-				try {
-					con.rollback();
-					onTransaction = false;
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				con.rollback(); // throws SQLException
+				onTransaction = false;
 			}
-			
-			e.printStackTrace();
+			throw e;
 		}
 	}
 	
@@ -79,8 +69,9 @@ public class DbQuery {
 	 * @param sql
 	 * @param params
 	 * @return
+	 * @throws SQLException 
 	 */
-	public int update(String sql, Object... params)
+	public int update(String sql, Object... params) throws SQLException
 	{		
 		try {
 			ps = makePreparedStatement(sql, true, params);
@@ -89,16 +80,10 @@ public class DbQuery {
 		} catch (SQLException e) {
 			
 			if(onTransaction) {
-				try {
-					con.rollback();
-					onTransaction = false;
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				con.rollback(); // throws SQLException
+				onTransaction = false;
 			}
-			
-			e.printStackTrace();
-			return -1;
+			throw e;
 		}
 	}
 	
@@ -108,8 +93,9 @@ public class DbQuery {
 	 * @param sql
 	 * @param params
 	 * @return
+	 * @throws SQLException 
 	 */
-	public boolean execute(String sql, Object... params)
+	public boolean execute(String sql, Object... params) throws SQLException
 	{
 		try {
 			ps = makePreparedStatement(sql, true, params);
@@ -118,16 +104,10 @@ public class DbQuery {
 		} catch (SQLException e) {
 			
 			if(onTransaction) {
-				try {
-					con.rollback();
-					onTransaction = false;
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				con.rollback(); // throws SQLException
+				onTransaction = false;
 			}
-			
-			e.printStackTrace();
-			return false;
+			throw e;
 		}
 	}
 	
@@ -137,15 +117,11 @@ public class DbQuery {
 	/**
 	 * Pasa el puntero al siguiente resultado (si lo hay).
 	 * @return boolean TRUE si hay resultado siguiente, FALSE si no.
+	 * @throws SQLException 
 	 */
-	public boolean nextResult()
+	public boolean nextResult() throws SQLException
 	{
-		try {
-			return results.next();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
+		return results.next();
 	}
 	
 	
@@ -153,15 +129,11 @@ public class DbQuery {
 	 * Obtener el valor de una columna dada cuyo tipo de dato es un string, sobre la fila de resultados actual.
 	 * @param column	nombre de la columna
 	 * @return
+	 * @throws SQLException 
 	 */
-	public String getString(String column)
+	public String getString(String column) throws SQLException
 	{
-		try {
-			return results.getString(column);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return results.getString(column);
 	}
 	
 
@@ -169,60 +141,44 @@ public class DbQuery {
 	 * Obtener el valor de una columna dada cuyo tipo de dato es un int, sobre la fila de resultados actual.
 	 * @param column	nombre de la columna
 	 * @return
+	 * @throws SQLException 
 	 */
-	public int getInt(String column)
+	public int getInt(String column) throws SQLException
 	{
-		try {
-			return results.getInt(column);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return -1;
-		}
+		return results.getInt(column);
 	}	
 	
 	
-	public long getLastInsertedId()
+	public long getLastInsertedId() throws SQLException
 	{
-		try {
-			ResultSet generatedKeys = ps.getGeneratedKeys();
-			
-            if (generatedKeys.next())
-            	return generatedKeys.getLong(1);
-            else
-            	throw new SQLException("Last inserted ID couldn't be obtained.");
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return -1l;
-		}
+		ResultSet generatedKeys = ps.getGeneratedKeys();
+		
+        if (generatedKeys.next())
+        	return generatedKeys.getLong(1);
+        else
+        	throw new SQLException("Last inserted ID couldn't be obtained.");
 	}
 	
 	
 	/**
 	 * Iniciar transacción. Las queries que se hagan se procesan todas al final (excepto aparentemente los selects?)
+	 * @throws SQLException 
 	 */
-	public void startTransaction()
+	public void startTransaction() throws SQLException
 	{
-		try {
-			con.setAutoCommit(false);
-			onTransaction = true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		con.setAutoCommit(false);
+		onTransaction = true;
 	}
 
 	
 	/**
 	 * Finalizar y procesar transacción (conjunto de consultas)
+	 * @throws SQLException 
 	 */
-	public void finishTransaction()
+	public void finishTransaction() throws SQLException
 	{
-		try {
-			con.commit();
-			onTransaction = false;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		con.commit();
+		onTransaction = false;
 	}
 	
 	
@@ -230,16 +186,12 @@ public class DbQuery {
 	 * Preparar consulta para llamar a un procedure.
 	 * @param	sql puede ser "exec nombre_procedure ?, ?, .." o "{call nombre_procedure(?,?,...)}" Los "?" corresponden a inputs Y outputs.
 	 * @param inputParams	array de objetos que se proporcionan como INPUT unicamente al procedure
+	 * @throws SQLException 
 	 */
-	public void prepareProcedureCall(String sql, Object... inputParams)
+	public void prepareProcedureCall(String sql, Object... inputParams) throws SQLException
 	{
-		try {
-			callableStm = con.prepareCall(sql);
-			setInputToCallableStatement(callableStm, inputParams);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		callableStm = con.prepareCall(sql);
+		setInputToCallableStatement(callableStm, inputParams);
 	}
 	
 	
@@ -247,29 +199,23 @@ public class DbQuery {
 	 * Agregar un output al procedure llamado con prepareProcedureCall()
 	 * @param paramName		nombre de parámetro igual al nombre de parámetro de salida del procedure en SQL
 	 * @param sqlType		Tipo de dato de salida. Están en java.sql.Types
+	 * @throws SQLException 
 	 */
-	public void addOutParamToProcedure(String paramName, int sqlType)
+	public void addOutParamToProcedure(String paramName, int sqlType) throws SQLException
 	{
-		try {
-			callableStm.registerOutParameter(paramName, sqlType);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		callableStm.registerOutParameter(paramName, sqlType);
 	}
 	
 	/**
 	 * Ejecutar llamado al procedimiento. Se debe haber preparado previamente con prepareProcedureCall()
 	 * Si devuelve una tabla pero sin variables de output, se puede utilizar el ResultSet igual que como se hace con un select() ordinario. 
 	 * Si se quiere obtener una variable de output se debe usar getProcedureOutput() posteriormente.
+	 * @throws SQLException 
 	 */
-	public void execProcedure()
+	public void execProcedure() throws SQLException
 	{
-		try {
-			callableStm.execute();
-			results = callableStm.getResultSet();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		callableStm.execute();
+		results = callableStm.getResultSet();
 	}
 	
 	
@@ -277,30 +223,22 @@ public class DbQuery {
 	 * Obtener el valor de una variable de salida de un procedure ya ejecutado con execProcedure()
 	 * @param paramName		nombre de la variable de salida asignada en addOutParamToProcedure() previamente.
 	 * @return Object	Se debe castear al tipo de dato necesario.
+	 * @throws SQLException 
 	 */
-	public Object getProcedureOutput(String paramName)
+	public Object getProcedureOutput(String paramName) throws SQLException
 	{
-		try {
-			return callableStm.getObject(paramName);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return callableStm.getObject(paramName);
 	}
 	
 	
 	
 	/**
 	 * Cerrar conexión de la base de datos (uso interno de la clase)
+	 * @throws SQLException 
 	 */
-	public void close() 
+	public void close() throws SQLException 
 	{
-		try {
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
+		con.close();
 	}
 	
 	
