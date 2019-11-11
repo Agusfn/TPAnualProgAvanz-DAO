@@ -189,7 +189,7 @@ public class VueloDaoImplArchivo implements IVueloDao {
 		vuelo.setAeropSalida(dao.obtener(Integer.parseInt(props[1])));
 		vuelo.setAeropLlegada(dao.obtener(Integer.parseInt(props[2])));
 		vuelo.setCantAsientos(Integer.parseInt(props[3]));
-		vuelo.setTiempoDeVuelo(props[4]);
+		vuelo.setTiempoVueloMinutos(Integer.parseInt(props[4]));
 		
 		vuelo.setFechaHoraLlegada( (LocalDateTime)Dates.fromString(props[5]) );
 		vuelo.setFechaHoraSalida( (LocalDateTime)Dates.fromString(props[6]) );
@@ -201,7 +201,7 @@ public class VueloDaoImplArchivo implements IVueloDao {
 	
 	private String VueloToCsv(Vuelo vuelo)
 	{
-		return vuelo.getId() + "," + vuelo.getAeropSalida().getId()  + "," + vuelo.getAeropLlegada().getId()  + "," + vuelo.getCantAsientos()   + "," + vuelo.getTiempoDeVuelo()  + "," + Dates.toString(vuelo.getFechaHoraLlegada()) + "," + Dates.toString(vuelo.getFechaHoraSalida());  		
+		return vuelo.getId() + "," + vuelo.getAeropSalida().getId()  + "," + vuelo.getAeropLlegada().getId()  + "," + vuelo.getCantAsientos()   + "," + vuelo.getTiempoVueloMinutos()  + "," + Dates.toString(vuelo.getFechaHoraLlegada()) + "," + Dates.toString(vuelo.getFechaHoraSalida());  		
 	
 	}
 	

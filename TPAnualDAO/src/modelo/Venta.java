@@ -16,7 +16,10 @@ public class Venta implements Serializable {
 	public Venta () {
 	}
 	
-	
+	public Venta(int id) 
+	{
+		this.id = id;
+	}
 	public Venta(Cliente cliente, Vuelo vuelo, Aerolinea aerolinea, LocalDateTime fechaHora, String formaDePago) {
 		super();
 		this.cliente = cliente;

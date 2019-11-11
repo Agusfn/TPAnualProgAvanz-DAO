@@ -14,10 +14,13 @@ public class Direccion implements Serializable {
 	private String codigoPostal;
 	
 	
-	public Direccion() {
-		
+	public Direccion() 
+	{
+	}		
+	public Direccion(int id) 
+	{
+		this.id = id;
 	}
-	
 	public Direccion(String calle, String altura, String ciudad, Provincia provincia, Pais pais,
 			String codigoPostal) {
 		super();

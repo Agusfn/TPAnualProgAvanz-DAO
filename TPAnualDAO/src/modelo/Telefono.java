@@ -11,7 +11,10 @@ public class Telefono implements Serializable {
 	private String nroLaboral;
 
 	
-	
+	public Telefono(int id) 
+	{
+		this.id = id;
+	}
 	public Telefono(String nroPersonal, String nroCelular, String nroLaboral) {
 		super();
 		this.nroPersonal = nroPersonal;

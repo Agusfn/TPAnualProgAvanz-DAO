@@ -13,10 +13,13 @@ public class Pasaporte implements Serializable {
 	private LocalDate fechaEmision;
 	private LocalDate fechVencimiento;
 	
-	public Pasaporte()
+	public Pasaporte() 
 	{
 	}
-
+	public Pasaporte(int id) 
+	{
+		this.id = id;
+	}
 	public Pasaporte(String numero, Pais paisEmision, String autoridadEmision, LocalDate fechaEmision,
 			LocalDate fechVencimiento) {
 		super();

@@ -11,10 +11,13 @@ public class PasajeroFrecuente implements Serializable {
 	private String numero;
 	private String categoria;
 	
-	public PasajeroFrecuente()
+	public PasajeroFrecuente() 
 	{
+	}	
+	public PasajeroFrecuente(int id) 
+	{
+		this.id = id;
 	}
-
 	public PasajeroFrecuente(String alianza, Aerolinea aerolinea, String numero, String categoria) {
 		super();
 		this.alianza = alianza;

@@ -1,7 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @SuppressWarnings("serial")
 public class Cliente implements Serializable {
@@ -11,15 +11,19 @@ public class Cliente implements Serializable {
 	private String dni;
 	private Pasaporte pasaporte;
 	private String cuitOCuil;
-	private Date fechaNacimiento;
+	private LocalDate fechaNacimiento;
 	private String email;
 	private Telefono telefono;
 	private PasajeroFrecuente pasajeroFrecuente;
 	private Direccion direccion;
 	
-
+	
+	public Cliente(int id) 
+	{
+		this.id = id;
+	}
 	public Cliente(String nombreYApellido, String dni, Pasaporte pasaporte, String cuitOCuil,
-			Date fechaNacimiento, String email, Telefono telefono, PasajeroFrecuente pasajeroFrecuente,
+			LocalDate fechaNacimiento, String email, Telefono telefono, PasajeroFrecuente pasajeroFrecuente,
 			Direccion direccion) {
 		super();
 		this.nombreYApellido = nombreYApellido;
@@ -65,11 +69,11 @@ public class Cliente implements Serializable {
 	public void setCuitOCuil(String cuitOCuil) {
 		this.cuitOCuil = cuitOCuil;
 	}
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNacimiento(Object object) {
-		this.fechaNacimiento = (Date) object;
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 	public String getEmail() {
 		return email;

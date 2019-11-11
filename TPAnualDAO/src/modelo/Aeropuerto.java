@@ -11,10 +11,13 @@ public class Aeropuerto implements Serializable {
 	private Provincia provincia;
 	private Pais pais;
 	
-	public Aeropuerto() {
-		
+	public Aeropuerto() 
+	{
 	}
-	
+	public Aeropuerto(int id) 
+	{
+		this.id = id;
+	}
 	public Aeropuerto(String identificacion, String ciudad, Provincia provincia, Pais pais) {
 		super();
 		this.identificacion = identificacion;

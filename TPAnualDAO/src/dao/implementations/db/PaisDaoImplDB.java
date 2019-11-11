@@ -52,7 +52,7 @@ public class PaisDaoImplDB {
 	
 	public void agregar(Pais pais) throws SQLException
 	{
-		query.update("INSERT INTO " + tableName + " (nombre) VALUES (?)", pais.getNombre());
+		query.execute("INSERT INTO " + tableName + " (nombre) VALUES (?)", pais.getNombre());
 
 		pais.setId((int)query.getLastInsertedId());
 	}

@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class DbQuery {
 
@@ -148,6 +151,38 @@ public class DbQuery {
 		return results.getInt(column);
 	}	
 	
+
+	/**
+	 * Obtener el valor de una columna dada cuyo tipo de dato es un double, sobre la fila de resultados actual.
+	 * @param column	nombre de la columna
+	 * @return
+	 */
+	public double getDouble(String column) throws SQLException
+	{
+		return results.getDouble(column);
+	}	
+	
+	
+	/**
+	 * Obtener el valor de una columna con determinado nombre, de tipo date, datetime, o timestamp, en formato LocalDateTime.
+	 * @param column
+	 * @return
+	 */
+	public LocalDateTime getLocalDateTime(String column) throws SQLException
+	{
+		return results.getTimestamp(column).toLocalDateTime();
+	}
+	
+	/**
+	 * Obtener el valor de una columna con determinado nombre, de tipo date, datetime, o timestamp, en formato LocalDate.
+	 * @param column
+	 * @return
+	 */
+	public LocalDate getLocalDate(String column) throws SQLException
+	{
+		return results.getTimestamp(column).toLocalDateTime().toLocalDate();
+	}
+	
 	
 	public long getLastInsertedId() throws SQLException
 	{
@@ -272,7 +307,16 @@ public class DbQuery {
 			else if(param instanceof Double) {
 				ps.setDouble(paramNumber, (double)param);
 			}
-
+			else if(param instanceof LocalDate) {
+				ps.setDate(paramNumber, java.sql.Date.valueOf((LocalDate)param));
+			}
+			else if(param instanceof LocalDateTime) {
+				ps.setTimestamp(paramNumber, Timestamp.valueOf((LocalDateTime)param));
+			}
+			else if(param == null) {
+				ps.setObject(paramNumber, null);
+			}
+			
 			paramNumber += 1;
 		}
 		

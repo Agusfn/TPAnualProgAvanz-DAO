@@ -13,14 +13,16 @@ public class Vuelo implements Serializable {
 	private Aeropuerto aeropLlegada;
 	private LocalDateTime fechaHoraSalida;
 	private LocalDateTime fechaHoraLlegada;
-	private String tiempoDeVuelo;
+	private int tiempoVueloMinutos;
 	
 	public Vuelo() {
-		
 	}
-	
+	public Vuelo(int id) 
+	{
+		this.id = id;
+	}
 	public Vuelo(String numero, int cantAsientos, Aeropuerto aeropSalida, Aeropuerto aeropLlegada,
-			LocalDateTime fechaHoraSalida, LocalDateTime fechaHoraLlegada, String tiempoDeVuelo) {
+			LocalDateTime fechaHoraSalida, LocalDateTime fechaHoraLlegada, int tiempoVueloMinutos) {
 		super();
 		this.numero = numero;
 		this.cantAsientos = cantAsientos;
@@ -28,7 +30,7 @@ public class Vuelo implements Serializable {
 		this.aeropLlegada = aeropLlegada;
 		this.fechaHoraSalida = fechaHoraSalida;
 		this.fechaHoraLlegada = fechaHoraLlegada;
-		this.tiempoDeVuelo = tiempoDeVuelo;
+		this.tiempoVueloMinutos = tiempoVueloMinutos;
 	}
 	public int getId() {
 		return id;
@@ -72,11 +74,11 @@ public class Vuelo implements Serializable {
 	public void setFechaHoraLlegada(LocalDateTime fechaHoraLlegada) {
 		this.fechaHoraLlegada = fechaHoraLlegada;
 	}
-	public String getTiempoDeVuelo() {
-		return tiempoDeVuelo;
+	public int getTiempoVueloMinutos() {
+		return tiempoVueloMinutos;
 	}
-	public void setTiempoDeVuelo(String tiempoDeVuelo) {
-		this.tiempoDeVuelo = tiempoDeVuelo;
+	public void setTiempoVueloMinutos(int tiempoVueloMinutos) {
+		this.tiempoVueloMinutos = tiempoVueloMinutos;
 	}
 	
 	

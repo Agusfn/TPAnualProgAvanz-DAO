@@ -10,17 +10,21 @@ public class Aerolinea implements Serializable {
 	private String nombre;
 	private String alianza;
 	private List<Vuelo> vuelos;
-	
-	
+
+	public Aerolinea() {
+		// TODO Auto-generated constructor stub
+	}
+	public Aerolinea(int id) 
+	{
+		this.id = id;
+	}
 	public Aerolinea(String nombre, String alianza, List<Vuelo> vuelos) {
 		super();
 		this.nombre = nombre;
 		this.alianza = alianza;
 		this.vuelos = vuelos;
 	}
-	public Aerolinea() {
-		// TODO Auto-generated constructor stub
-	}
+
 	public int getId() {
 		return id;
 	}

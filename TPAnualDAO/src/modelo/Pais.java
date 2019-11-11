@@ -8,8 +8,13 @@ public class Pais implements Serializable {
 	private int id;
 	private String nombre;
 	
-	public Pais()
+	
+	public Pais() 
 	{
+	}		
+	public Pais(int id) 
+	{
+		this.id = id;
 	}
 	
 	public Pais(String nombre) {

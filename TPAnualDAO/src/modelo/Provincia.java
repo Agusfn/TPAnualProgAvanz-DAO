@@ -12,7 +12,10 @@ public class Provincia implements Serializable {
 	public Provincia () {
 		
 	}
-	
+	public Provincia(int id) 
+	{
+		this.id = id;
+	}
 	public Provincia(String nombre, Pais pais) {
 		super();
 		this.nombre = nombre;
