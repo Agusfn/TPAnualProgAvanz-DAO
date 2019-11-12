@@ -205,6 +205,8 @@ public class VueloDaoImplArchivo implements IVueloDao {
 	
 	}
 	
-	
+	public void close() throws Exception
+	{
+	}
 	
 }

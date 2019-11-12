@@ -12,6 +12,7 @@ public interface IClienteDao {
 	public void agregar(Cliente cliente) throws Exception;
 	public void eliminar(Cliente cliente) throws Exception;
 	public void actualizar(Cliente cliente) throws Exception;
+	public void close() throws Exception;
 	//
 	
 }

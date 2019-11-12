@@ -3,6 +3,8 @@ package dao.implementations.db;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import dao.interfaces.IClienteDao;
 import modelo.Cliente;
 import modelo.Direccion;
 import modelo.PasajeroFrecuente;
@@ -10,7 +12,7 @@ import modelo.Pasaporte;
 import modelo.Telefono;
 import util.DbQuery;
 
-public class ClienteDaoImplDB {
+public class ClienteDaoImplDB implements IClienteDao {
 
 	private DbQuery query;
 
@@ -81,7 +83,7 @@ public class ClienteDaoImplDB {
 	}
 	
 	
-	public void closeDb() throws SQLException
+	public void close() throws SQLException
 	{
 		query.close();
 	}

@@ -3,10 +3,12 @@ package dao.implementations.db;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import dao.interfaces.IAerolineaDao;
 import modelo.Aerolinea;
 import util.DbQuery;
 
-public class AerolineaDaoImplDB {
+public class AerolineaDaoImplDB implements IAerolineaDao {
 
 	private DbQuery query;
 
@@ -70,7 +72,7 @@ public class AerolineaDaoImplDB {
 	}
 	
 	
-	public void closeDb() throws SQLException
+	public void close() throws SQLException
 	{
 		query.close();
 	}

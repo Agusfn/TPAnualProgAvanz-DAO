@@ -4,13 +4,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.interfaces.IVentaDao;
 import modelo.Aerolinea;
 import modelo.Cliente;
 import modelo.Venta;
 import modelo.Vuelo;
 import util.DbQuery;
 
-public class VentaDaoImplDB {
+public class VentaDaoImplDB implements IVentaDao {
 
 	private DbQuery query;
 
@@ -76,7 +77,7 @@ public class VentaDaoImplDB {
 	}
 	
 	
-	public void closeDb() throws SQLException
+	public void close() throws SQLException
 	{
 		query.close();
 	}

@@ -197,6 +197,8 @@ public class TelefonoDaoImplArchivo implements ITelefonoDao {
 		return telefono.getId() + "," + telefono.getNroPersonal() + "," + telefono.getNroCelular() + "," + telefono.getNroLaboral();
 	}
 	
-	
+	public void close() throws Exception
+	{
+	}	
 	
 }

@@ -4,11 +4,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.interfaces.IVueloDao;
 import modelo.Aeropuerto;
 import modelo.Vuelo;
 import util.DbQuery;
 
-public class VueloDaoImplDB {
+public class VueloDaoImplDB implements IVueloDao {
 
 	private DbQuery query;
 
@@ -78,7 +79,7 @@ public class VueloDaoImplDB {
 	}
 	
 	
-	public void closeDb() throws SQLException
+	public void close() throws SQLException
 	{
 		query.close();
 	}

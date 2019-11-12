@@ -1,5 +1,6 @@
 package dao.interfaces;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import modelo.Aerolinea;
@@ -11,6 +12,7 @@ public interface IAerolineaDao {
 	public void agregar(Aerolinea aerolinea) throws Exception;
 	public void eliminar(Aerolinea aerolinea) throws Exception;
 	public void actualizar(Aerolinea aerolinea) throws Exception;
+	public void close() throws Exception;
 	//
 	
 }

@@ -199,5 +199,10 @@ public class DireccionDaoImplArchivo implements IDireccionDao {
 			return direccion.getId() + "," + direccion.getCalle()+","+direccion.getAltura()+","+direccion.getCiudad()+","+direccion.getProvincia().getId()+","+direccion.getPais().getId()+","+direccion.getCodigoPostal();
 		}
 	
+		
+		public void close() throws Exception
+		{
+		}
+		
 
 }

@@ -186,6 +186,10 @@ public class AerolineaDaoImplArchivo implements IAerolineaDao {
 		
 	}
 
+	
+	public void close() throws Exception
+	{
+	}
 
 
 }

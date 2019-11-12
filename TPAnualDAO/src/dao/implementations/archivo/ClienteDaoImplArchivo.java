@@ -193,6 +193,8 @@ public class ClienteDaoImplArchivo implements IClienteDao{
 	cliente.getTelefono() + "," + cliente.getPasajeroFrecuente() + "," + cliente.getDireccion();
 	}
 	
-	
+	public void close() throws Exception
+	{
+	}
 	
 }

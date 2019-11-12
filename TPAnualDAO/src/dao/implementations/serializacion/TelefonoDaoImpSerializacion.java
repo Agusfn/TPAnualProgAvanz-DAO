@@ -150,5 +150,10 @@ public class TelefonoDaoImpSerializacion implements ITelefonoDao {
 		oos.writeObject(telefonos);
 		oos.close();
 	}
+	
+	public void close() throws Exception
+	{
+	}
+	
 
 }

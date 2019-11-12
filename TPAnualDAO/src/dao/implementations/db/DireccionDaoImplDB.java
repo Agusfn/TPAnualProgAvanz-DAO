@@ -3,12 +3,14 @@ package dao.implementations.db;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import dao.interfaces.IDireccionDao;
 import modelo.Direccion;
 import modelo.Pais;
 import modelo.Provincia;
 import util.DbQuery;
 
-public class DireccionDaoImplDB {
+public class DireccionDaoImplDB implements IDireccionDao {
 
 	private DbQuery query;
 
@@ -76,7 +78,7 @@ public class DireccionDaoImplDB {
 	}
 	
 	
-	public void closeDb() throws SQLException
+	public void close() throws SQLException
 	{
 		query.close();
 	}

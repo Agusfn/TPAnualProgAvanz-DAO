@@ -148,4 +148,9 @@ public class PasajeroFrecuenteDaoImplSerializacion implements IPasajeroFrecuente
 		oos.close();
 	}
 
+	public void close() throws Exception
+	{
+	}
+	
+	
 }

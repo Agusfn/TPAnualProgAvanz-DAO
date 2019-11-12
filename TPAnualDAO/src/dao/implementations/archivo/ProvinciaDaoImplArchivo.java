@@ -209,7 +209,9 @@ public class ProvinciaDaoImplArchivo implements IProvinciaDao{
 
 		
 		
-		
+		public void close() throws Exception
+		{
+		}
 		
 		
 

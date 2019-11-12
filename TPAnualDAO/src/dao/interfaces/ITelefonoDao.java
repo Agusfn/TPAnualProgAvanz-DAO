@@ -11,6 +11,7 @@ public interface ITelefonoDao {
 	public void agregar(Telefono telefono) throws Exception;
 	public void eliminar(Telefono telefono) throws Exception;
 	public void actualizar(Telefono telefono) throws Exception;
+	public void close() throws Exception;
 	
 		
 

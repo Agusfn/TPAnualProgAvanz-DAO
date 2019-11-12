@@ -153,5 +153,9 @@ public class PasaporteDaoImplSerializacion implements IPasaporteDao {
 	}
 	
 	
+	public void close() throws Exception
+	{
+	}
+	
 	
 }

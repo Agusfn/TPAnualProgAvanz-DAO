@@ -3,11 +3,13 @@ package dao.implementations.db;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import dao.interfaces.IProvinciaDao;
 import modelo.Pais;
 import modelo.Provincia;
 import util.DbQuery;
 
-public class ProvinciaDaoImplDB {
+public class ProvinciaDaoImplDB implements IProvinciaDao {
 
 	private DbQuery query;
 
@@ -72,7 +74,7 @@ public class ProvinciaDaoImplDB {
 	}
 	
 	
-	public void closeDb() throws SQLException
+	public void close() throws SQLException
 	{
 		query.close();
 	}

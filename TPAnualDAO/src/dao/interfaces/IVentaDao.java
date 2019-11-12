@@ -11,5 +11,6 @@ public interface IVentaDao {
 	public void agregar(Venta venta) throws Exception;
 	public void eliminar(Venta venta) throws Exception;
 	public void actualizar(Venta venta) throws Exception;
+	public void close() throws Exception;
 	
 }

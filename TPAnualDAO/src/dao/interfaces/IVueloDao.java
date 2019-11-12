@@ -13,5 +13,6 @@ public interface IVueloDao {
 	public void agregar(Vuelo vuelo) throws Exception;
 	public void eliminar(Vuelo vuelo) throws Exception;
 	public void actualizar(Vuelo vuelo) throws Exception;
+	public void close() throws Exception;
 
 }

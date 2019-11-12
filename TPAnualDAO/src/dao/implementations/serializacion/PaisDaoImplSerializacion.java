@@ -150,4 +150,9 @@ public class PaisDaoImplSerializacion implements IPaisDao {
 		oos.close();
 	}
 	
+	public void close() throws Exception
+	{
+	}
+	
+	
 }

@@ -4,11 +4,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.interfaces.IPasaporteDao;
 import modelo.Pais;
 import modelo.Pasaporte;
 import util.DbQuery;
 
-public class PasaporteDaoImplDB {
+public class PasaporteDaoImplDB implements IPasaporteDao {
 
 	private DbQuery query;
 
@@ -76,7 +77,7 @@ public class PasaporteDaoImplDB {
 	}
 	
 	
-	public void closeDb() throws SQLException
+	public void close() throws SQLException
 	{
 		query.close();
 	}

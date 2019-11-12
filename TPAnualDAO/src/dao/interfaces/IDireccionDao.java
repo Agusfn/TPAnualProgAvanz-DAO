@@ -12,6 +12,7 @@ public interface IDireccionDao {
 	public void agregar(Direccion direccion) throws Exception;
 	public void eliminar(Direccion direccion) throws Exception;
 	public void actualizar(Direccion direccion) throws Exception;
+	public void close() throws Exception;
 	
 	
 	

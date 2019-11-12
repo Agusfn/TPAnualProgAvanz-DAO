@@ -150,4 +150,9 @@ public class VentaDaoImplSerializacion implements IVentaDao {
 		oos.close();		
 	}
 
+	
+	public void close() throws Exception
+	{
+	}
+	
 }

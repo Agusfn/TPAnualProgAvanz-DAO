@@ -149,5 +149,9 @@ public class DireccionDaoImplSerializacion implements IDireccionDao {
 			oos.close();
 		}
 		
+		public void close() throws Exception
+		{
+		}
+		
 }
 

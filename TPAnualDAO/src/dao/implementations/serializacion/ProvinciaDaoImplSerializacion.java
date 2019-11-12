@@ -147,4 +147,10 @@ public class ProvinciaDaoImplSerializacion implements IProvinciaDao {
 			oos.writeObject(provincias);
 			oos.close();
 		}
+		
+		public void close() throws Exception
+		{
+		}
+		
+		
 }

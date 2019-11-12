@@ -214,6 +214,8 @@ public class VentaDaoImplArchivo implements IVentaDao {
 		
 	}
 	
-	
+	public void close() throws Exception
+	{
+	}
 	
 }

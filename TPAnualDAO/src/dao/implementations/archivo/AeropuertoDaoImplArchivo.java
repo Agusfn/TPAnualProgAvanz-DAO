@@ -195,8 +195,9 @@ public class AeropuertoDaoImplArchivo implements IAeropuertoDao{
 			
 		}
 		
-		
-		
+		public void close() throws Exception
+		{
+		}		
 	}
 
 	

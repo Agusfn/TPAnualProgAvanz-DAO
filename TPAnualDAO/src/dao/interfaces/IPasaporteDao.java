@@ -11,6 +11,7 @@ public interface IPasaporteDao {
 	public void agregar(Pasaporte pais) throws Exception;
 	public void eliminar(Pasaporte pais) throws Exception;
 	public void actualizar(Pasaporte pais) throws Exception;
+	public void close() throws Exception;
 	
 	
 }

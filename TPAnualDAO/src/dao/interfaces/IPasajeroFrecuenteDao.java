@@ -10,6 +10,7 @@ public interface IPasajeroFrecuenteDao {
 	public void agregar(PasajeroFrecuente pais) throws Exception;
 	public void eliminar(PasajeroFrecuente pais) throws Exception;
 	public void actualizar(PasajeroFrecuente pais) throws Exception;
+	public void close() throws Exception;
 	
 	
 }

@@ -184,4 +184,8 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 		return pasajFrec.getId() + "," + pasajFrec.getAlianza() + "," + pasajFrec.getAerolinea().getId() + "," + pasajFrec.getNumero() + "," + pasajFrec.getCategoria();
 	}
 
+	public void close() throws Exception
+	{
+	}
+	
 }

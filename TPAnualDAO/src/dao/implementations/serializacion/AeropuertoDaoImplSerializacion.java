@@ -146,4 +146,9 @@ public class AeropuertoDaoImplSerializacion implements IAeropuertoDao {
 			oos.close();
 		}
 		
+		public void close() throws Exception
+		{
+		}
+		
+		
 }

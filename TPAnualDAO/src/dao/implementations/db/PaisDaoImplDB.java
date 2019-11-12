@@ -3,10 +3,12 @@ package dao.implementations.db;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import dao.interfaces.IPaisDao;
 import modelo.Pais;
 import util.DbQuery;
 
-public class PaisDaoImplDB {
+public class PaisDaoImplDB implements IPaisDao {
 
 	private DbQuery query;
 
@@ -70,7 +72,7 @@ public class PaisDaoImplDB {
 	}
 	
 	
-	public void closeDb() throws SQLException
+	public void close() throws SQLException
 	{
 		query.close();
 	}

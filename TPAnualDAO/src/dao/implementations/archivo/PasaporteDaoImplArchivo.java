@@ -196,5 +196,9 @@ public class PasaporteDaoImplArchivo implements IPasaporteDao {
 	}
 	
 	
+	public void close() throws Exception
+	{
+	}
+	
 	
 }

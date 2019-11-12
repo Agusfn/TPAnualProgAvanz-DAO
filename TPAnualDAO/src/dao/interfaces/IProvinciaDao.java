@@ -11,6 +11,7 @@ public interface IProvinciaDao {
 	public void agregar(Provincia provincia) throws Exception;
 	public void eliminar(Provincia provincia) throws Exception;
 	public void actualizar(Provincia provincia) throws Exception;
+	public void close() throws Exception;
 	
 
 }

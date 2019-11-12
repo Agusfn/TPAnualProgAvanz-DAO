@@ -11,6 +11,7 @@ public interface IPaisDao {
 	public void agregar(Pais pais) throws Exception;
 	public void eliminar(Pais pais) throws Exception;
 	public void actualizar(Pais pais) throws Exception;
+	public void close() throws Exception;
 	
 	
 }

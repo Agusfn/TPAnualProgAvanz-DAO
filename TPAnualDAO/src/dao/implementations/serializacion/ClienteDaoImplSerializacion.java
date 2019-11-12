@@ -8,10 +8,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import dao.interfaces.IClienteDao;
 import modelo.Cliente;
 import util.Properties;
 //
-public class ClienteDaoImplSerializacion {
+public class ClienteDaoImplSerializacion implements IClienteDao {
 
 
 	
@@ -146,6 +148,10 @@ public class ClienteDaoImplSerializacion {
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(clientes);
 		oos.close();	
+	}
+	
+	public void close() throws Exception
+	{
 	}
 	
 }

@@ -152,5 +152,9 @@ public class AerolineaDaoImplSerializacion implements IAerolineaDao {
 		oos.close();
 	}
 	
-
+	public void close() throws Exception
+	{
+	}
+	
+	
 }

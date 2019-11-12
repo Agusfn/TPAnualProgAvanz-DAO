@@ -4,11 +4,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.interfaces.IPasajeroFrecuenteDao;
 import modelo.Aerolinea;
 import modelo.PasajeroFrecuente;
 import util.DbQuery;
 
-public class PasajeroFrecuenteDaoImplDB {
+public class PasajeroFrecuenteDaoImplDB implements IPasajeroFrecuenteDao {
 
 	private DbQuery query;
 
@@ -76,7 +77,7 @@ public class PasajeroFrecuenteDaoImplDB {
 	}
 	
 	
-	public void closeDb() throws SQLException
+	public void close() throws SQLException
 	{
 		query.close();
 	}

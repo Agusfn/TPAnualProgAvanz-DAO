@@ -182,4 +182,8 @@ public class PaisDaoImplArchivo implements IPaisDao {
 	
 	
 	
+	public void close() throws Exception
+	{
+	}
+	
 }

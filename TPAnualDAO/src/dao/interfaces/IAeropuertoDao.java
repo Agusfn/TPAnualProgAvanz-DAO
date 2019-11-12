@@ -11,6 +11,7 @@ public interface IAeropuertoDao {
 	public void agregar(Aeropuerto aeropuerto) throws Exception;
 	public void eliminar(Aeropuerto aeropuerto) throws Exception;
 	public void actualizar(Aeropuerto aeropueto) throws Exception;
+	public void close() throws Exception;
 	
 
 }

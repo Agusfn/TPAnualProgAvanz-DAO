@@ -152,4 +152,8 @@ public class VueloDaoImplSerializacion implements IVueloDao {
 	}
 
 	
+	public void close() throws Exception
+	{
+	}
+	
 }
