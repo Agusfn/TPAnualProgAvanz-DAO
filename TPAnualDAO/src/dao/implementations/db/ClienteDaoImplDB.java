@@ -64,7 +64,7 @@ public class ClienteDaoImplDB implements IClienteDao {
 			idPasajFrecuente = cliente.getPasajeroFrecuente().getId();
 		}
 		
-		query.execute("INSERT INTO " + tableName + " (nombre_y_apellido, dni, cuil_o_cuit, fecha_nacimiento, email, id_direccion,"
+		query.execute("INSERT INTO " + tableName + " (nombre_y_apellido, dni, cuit_o_cuil, fecha_nacimiento, email, id_direccion,"
 				+ "id_pasajero_frecuente, id_telefono, id_pasaporte) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
 				cliente.getNombreYApellido(), cliente.getDni(), cliente.getCuitOCuil(), cliente.getFechaNacimiento(), cliente.getEmail(),
 				cliente.getDireccion().getId(), idPasajFrecuente, cliente.getTelefono().getId(), cliente.getPasaporte().getId());
@@ -87,7 +87,7 @@ public class ClienteDaoImplDB implements IClienteDao {
 			idPasajFrecuente = cliente.getPasajeroFrecuente().getId();
 		}
 		
-		query.update("UPDATE " + tableName + "SET nombre_y_apellido = ?, dni = ?, cuil_o_cuit = ?, fecha_nacimiento = ?, email = ?, id_direccion = ?,"
+		query.update("UPDATE " + tableName + "SET nombre_y_apellido = ?, dni = ?, cuit_o_cuil = ?, fecha_nacimiento = ?, email = ?, id_direccion = ?,"
 				+ "id_pasajero_frecuente = ?, id_telefono = ?, id_pasaporte = ? WHERE id = ?", 
 				cliente.getNombreYApellido(), cliente.getDni(), cliente.getCuitOCuil(), cliente.getFechaNacimiento(), cliente.getEmail(), 
 				cliente.getDireccion().getId(), idPasajFrecuente, cliente.getTelefono().getId(), cliente.getPasaporte().getId(),
@@ -113,7 +113,7 @@ public class ClienteDaoImplDB implements IClienteDao {
 		cliente.setId(query.getInt("id"));
 		cliente.setNombreYApellido(query.getString("nombre_y_apellido"));
 		cliente.setDni(query.getString("dni"));
-		cliente.setCuitOCuil(query.getString("cuil_o_cuit"));
+		cliente.setCuitOCuil(query.getString("cuit_o_cuil"));
 		cliente.setFechaNacimiento(query.getLocalDate("fecha_nacimiento"));
 		cliente.setEmail(query.getString("email"));
 		
