@@ -9,6 +9,7 @@ public class Pasaporte implements Serializable {
 	private int id;
 	private String numero;
 	private Pais paisEmision;
+	private String nombrePaisEmision;
 	private String autoridadEmision;
 	private LocalDate fechaEmision;
 	private LocalDate fechVencimiento;
@@ -64,6 +65,12 @@ public class Pasaporte implements Serializable {
 	}
 	public void setFechVencimiento(LocalDate fechVencimiento) {
 		this.fechVencimiento = fechVencimiento;
+	}
+	public String getNombrePaisEmision() {
+		return nombrePaisEmision;
+	}
+	public void setNombrePaisEmision(String nombrePais) {
+		this.nombrePaisEmision = nombrePais;
 	}
 	
 }

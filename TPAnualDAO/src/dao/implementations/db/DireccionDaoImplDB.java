@@ -67,8 +67,9 @@ public class DireccionDaoImplDB implements IDireccionDao {
 			idPais = direccion.getPais().getId();
 		}
 		
-		query.execute("INSERT INTO " + tableName + " (calle, altura, ciudad, id_provincia, id_pais, codigo_postal) VALUES (?, ?, ?, ?, ?, ?)", 
-				direccion.getCalle(), direccion.getAltura(), direccion.getCiudad(), idProvincia, idPais, direccion.getCodigoPostal());
+		query.execute("INSERT INTO " + tableName + " (calle, altura, ciudad, id_provincia, nombre_provincia, id_pais, nombre_pais, codigo_postal) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", 
+				direccion.getCalle(), direccion.getAltura(), direccion.getCiudad(), idProvincia, direccion.getNombreProvincia(), idPais, direccion.getNombrePais(),
+				direccion.getCodigoPostal());
 
 		direccion.setId((int)query.getLastInsertedId());
 	}
@@ -93,8 +94,9 @@ public class DireccionDaoImplDB implements IDireccionDao {
 			idPais = direccion.getPais().getId();
 		}
 		
-		query.update("UPDATE " + tableName + "SET calle = ?, altura = ?, ciudad = ?, id_provincia = ?, id_pais = ?, codigo_postal = ? WHERE id = ?", 
-				direccion.getCalle(), direccion.getAltura(), direccion.getCiudad(), idProvincia, idPais, direccion.getCodigoPostal(), direccion.getId());
+		query.update("UPDATE " + tableName + "SET calle = ?, altura = ?, ciudad = ?, id_provincia = ?, nombre_provincia = ?, id_pais = ?, nombre_pais = ?, codigo_postal = ? WHERE id = ?", 
+				direccion.getCalle(), direccion.getAltura(), direccion.getCiudad(), idProvincia, direccion.getNombreProvincia(), idPais, direccion.getNombrePais(), 
+				direccion.getCodigoPostal(), direccion.getId());
 	}
 	
 	

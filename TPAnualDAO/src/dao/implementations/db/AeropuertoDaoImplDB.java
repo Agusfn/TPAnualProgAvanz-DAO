@@ -67,8 +67,8 @@ public class AeropuertoDaoImplDB implements IAeropuertoDao{
 			idPais = aeropuerto.getPais().getId();
 		}
 		
-		query.execute("INSERT INTO " + tableName + " (identificacion, ciudad, id_provincia, id_pais) VALUES (?, ?, ?, ?)", 
-				aeropuerto.getIdentificacion(), aeropuerto.getCiudad(), idProvincia, idPais);
+		query.execute("INSERT INTO " + tableName + " (identificacion, ciudad, id_provincia, nombre_provincia, id_pais, nombre_pais) VALUES (?, ?, ?, ?, ?, ?)", 
+				aeropuerto.getIdentificacion(), aeropuerto.getCiudad(), idProvincia, aeropuerto.getNombreProvincia(), idPais, aeropuerto.getNombrePais());
 
 		aeropuerto.setId((int)query.getLastInsertedId());
 	}
@@ -93,8 +93,8 @@ public class AeropuertoDaoImplDB implements IAeropuertoDao{
 			idPais = aeropuerto.getPais().getId();
 		}
 		
-		query.update("UPDATE " + tableName + "SET identificacion = ?, ciudad = ?, id_provincia = ?, id_pais = ? WHERE id = ?", 
-				aeropuerto.getIdentificacion(), aeropuerto.getCiudad(), idProvincia, idPais, aeropuerto.getId());
+		query.update("UPDATE " + tableName + "SET identificacion = ?, ciudad = ?, id_provincia = ?, nombre_provincia = ?, id_pais = ?, nombre_pais = ? WHERE id = ?", 
+				aeropuerto.getIdentificacion(), aeropuerto.getCiudad(), idProvincia, aeropuerto.getNombreProvincia(), idPais, aeropuerto.getNombrePais(), aeropuerto.getId());
 	}
 	
 	

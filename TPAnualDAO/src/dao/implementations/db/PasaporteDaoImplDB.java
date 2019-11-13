@@ -55,8 +55,14 @@ public class PasaporteDaoImplDB implements IPasaporteDao {
 	
 	public void agregar(Pasaporte pasaporte) throws SQLException
 	{
-		query.execute("INSERT INTO " + tableName + " (numero, id_pais_emision, autoridad_emision, fecha_emision, fecha_vencimiento) VALUES (?, ?, ?, ?, ?)", 
-				pasaporte.getNumero(), pasaporte.getPaisEmision().getId(), pasaporte.getAutoridadEmision(), pasaporte.getFechaEmision(), 
+		
+		Object idPaisEmision = null;
+		if(pasaporte.getPaisEmision() != null) {
+			idPaisEmision = pasaporte.getPaisEmision().getId();
+		}
+		
+		query.execute("INSERT INTO " + tableName + " (numero, id_pais_emision, nombre_pais, autoridad_emision, fecha_emision, fecha_vencimiento) VALUES (?, ?, ?, ?, ?, ?)", 
+				pasaporte.getNumero(), idPaisEmision, pasaporte.getNombrePaisEmision(), pasaporte.getAutoridadEmision(), pasaporte.getFechaEmision(), 
 				pasaporte.getFechVencimiento());
 
 		pasaporte.setId((int)query.getLastInsertedId());
@@ -71,8 +77,14 @@ public class PasaporteDaoImplDB implements IPasaporteDao {
 	
 	public void actualizar(Pasaporte pasaporte) throws SQLException
 	{
-		query.update("UPDATE " + tableName + "SET numero = ?, id_pais_emision = ?, autoridad_emision = ?, fecha_emision = ?, fecha_vencimiento = ? WHERE id = ?", 
-				pasaporte.getNumero(), pasaporte.getPaisEmision().getId(), pasaporte.getAutoridadEmision(), pasaporte.getFechaEmision(), 
+		
+		Object idPaisEmision = null;
+		if(pasaporte.getPaisEmision() != null) {
+			idPaisEmision = pasaporte.getPaisEmision().getId();
+		}
+		
+		query.update("UPDATE " + tableName + "SET numero = ?, id_pais_emision = ?, nombre_pais = ?, autoridad_emision = ?, fecha_emision = ?, fecha_vencimiento = ? WHERE id = ?", 
+				pasaporte.getNumero(), idPaisEmision, pasaporte.getNombrePaisEmision(), pasaporte.getAutoridadEmision(), pasaporte.getFechaEmision(), 
 				pasaporte.getFechVencimiento(), pasaporte.getId());
 	}
 	
@@ -95,8 +107,12 @@ public class PasaporteDaoImplDB implements IPasaporteDao {
 		pasaporte.setId(query.getInt("id"));
 		pasaporte.setNumero(query.getString("numero"));
 		
-		Pais paisEmision = new Pais(query.getInt("id_pais_emision"));
-		pasaporte.setPaisEmision(paisEmision);
+		int idPaisEmision = query.getInt("id_pais_emision");
+		if(idPaisEmision != 0) {
+			pasaporte.setPaisEmision(new Pais(idPaisEmision));
+		}
+		
+		pasaporte.setNombrePaisEmision(query.getString("nombre_pais"));
 		
 		pasaporte.setAutoridadEmision(query.getString("autoridad_emision"));
 		pasaporte.setFechaEmision(query.getLocalDate("fecha_emision"));
