@@ -187,15 +187,12 @@ public class ProvinciaDaoImplArchivo implements IProvinciaDao{
 			String[] props = csv.split(",");
 			
 			Provincia provincia = new Provincia();
+			
 			provincia.setId(Integer.parseInt(props[0]));
 			provincia.setNombre(props[1]);
 			
-			PaisDaoImplArchivo paisesDao = new PaisDaoImplArchivo();
-			Pais pais = paisesDao.obtener(Integer.parseInt(props[2]));
-			provincia.setPais(pais);
-			
-			
-			
+			int idPais = Integer.parseInt(props[2]);
+			provincia.setPais(new Pais(idPais));
 	
 			return provincia;
 		}
