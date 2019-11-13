@@ -7,7 +7,6 @@ import java.util.List;
 import dao.interfaces.IClienteDao;
 import modelo.Cliente;
 import modelo.Direccion;
-import modelo.Pais;
 import modelo.PasajeroFrecuente;
 import modelo.Pasaporte;
 import modelo.Telefono;
