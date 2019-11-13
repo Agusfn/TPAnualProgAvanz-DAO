@@ -193,9 +193,7 @@ public class VentaDaoImplArchivo implements IVentaDao {
 		
 		VueloDaoImplArchivo dao2 = new VueloDaoImplArchivo();
 		venta.setVuelo(dao2.obtener(Integer.parseInt(props [2])));
-		
-		AerolineaDaoImplArchivo dao3 = new AerolineaDaoImplArchivo();
-		venta.setAerolinea(dao3.obtener(Integer.parseInt(props [3])));
+	
 		
 		venta.setFechaHora((LocalDateTime) Dates.fromString(props [4]));
 		
@@ -210,7 +208,7 @@ public class VentaDaoImplArchivo implements IVentaDao {
 		
 	private String ventaToCsv(Venta venta)
 	{
-		return venta.getId() + "," + venta.getCliente().getId() + "," + venta.getVuelo().getId() + "," + venta.getAerolinea().getId() + "," + Dates.toString(venta.getFechaHora()) + "," + venta.getFormaDePago();
+		return venta.getId() + "," + venta.getCliente().getId() + "," + venta.getVuelo().getId() + "," + Dates.toString(venta.getFechaHora()) + "," + venta.getFormaDePago();
 		
 	}
 	

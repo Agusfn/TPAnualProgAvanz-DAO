@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.interfaces.IVentaDao;
-import modelo.Aerolinea;
 import modelo.Cliente;
 import modelo.Venta;
 import modelo.Vuelo;
@@ -57,8 +56,8 @@ public class VentaDaoImplDB implements IVentaDao {
 	
 	public void agregar(Venta venta) throws SQLException
 	{
-		query.execute("INSERT INTO " + tableName + " (id_cliente, id_vuelo, id_aerolinea, fecha_y_hore, forma_de_pago) VALUES (?, ?, ?, ?, ?)", 
-				venta.getCliente().getId(), venta.getVuelo().getId(), venta.getAerolinea().getId(), venta.getFechaHora(), venta.getFormaDePago());
+		query.execute("INSERT INTO " + tableName + " (id_cliente, id_vuelo, fecha_y_hora, forma_de_pago, monto, cuotas) VALUES (?, ?, ?, ?, ?, ?)", 
+				venta.getCliente().getId(), venta.getVuelo().getId(), venta.getFechaHora(), venta.getFormaDePago(), venta.getMonto(), venta.getCuotas());
 
 		venta.setId((int)query.getLastInsertedId());
 	}
@@ -72,8 +71,8 @@ public class VentaDaoImplDB implements IVentaDao {
 	
 	public void actualizar(Venta venta) throws SQLException
 	{
-		query.update("UPDATE " + tableName + " SET id_cliente = ?, id_vuelo = ?, id_aerolinea = ?, fecha_y_hore = ?, forma_de_pago = ? WHERE id = ?", 
-				venta.getCliente().getId(), venta.getVuelo().getId(), venta.getAerolinea().getId(), venta.getFechaHora(), venta.getFormaDePago(), venta.getId());
+		query.update("UPDATE " + tableName + " SET id_cliente = ?, id_vuelo = ?, fecha_y_hora = ?, forma_de_pago = ?, monto = ?, cuotas = ? WHERE id = ?", 
+				venta.getCliente().getId(), venta.getVuelo().getId(), venta.getFechaHora(), venta.getFormaDePago(), venta.getId(), venta.getMonto(), venta.getCuotas());
 	}
 	
 	
@@ -100,11 +99,10 @@ public class VentaDaoImplDB implements IVentaDao {
 		Vuelo vuelo = new Vuelo(query.getInt("id_vuelo"));
 		nuevoVenta.setVuelo(vuelo);
 		
-		Aerolinea aerolinea = new Aerolinea(query.getInt("id_aerolinea"));
-		nuevoVenta.setAerolinea(aerolinea);
-		
 		nuevoVenta.setFechaHora(query.getLocalDateTime("fecha_y_hora"));
 		nuevoVenta.setFormaDePago(query.getString("forma_de_pago"));
+		nuevoVenta.setMonto(query.getDouble("monto"));
+		nuevoVenta.setCuotas(query.getInt("cuotas"));
 		
 		return nuevoVenta;	
 	}

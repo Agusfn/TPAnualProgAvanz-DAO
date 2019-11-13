@@ -9,9 +9,10 @@ public class Venta implements Serializable {
 	private int id;
 	private Cliente cliente;
 	private Vuelo vuelo;
-	private Aerolinea aerolinea;
 	private LocalDateTime fechaHora;
 	private String formaDePago;
+	private double monto;
+	private int cuotas;
 	
 	public Venta () {
 	}
@@ -20,13 +21,14 @@ public class Venta implements Serializable {
 	{
 		this.id = id;
 	}
-	public Venta(Cliente cliente, Vuelo vuelo, Aerolinea aerolinea, LocalDateTime fechaHora, String formaDePago) {
+	public Venta(Cliente cliente, Vuelo vuelo, LocalDateTime fechaHora, String formaDePago, double monto, int cuotas) {
 		super();
 		this.cliente = cliente;
 		this.vuelo = vuelo;
-		this.aerolinea = aerolinea;
 		this.fechaHora = fechaHora;
 		this.formaDePago = formaDePago;
+		this.monto = monto;
+		this.cuotas = cuotas;
 	}
 	public int getId() {
 		return id;
@@ -46,12 +48,6 @@ public class Venta implements Serializable {
 	public void setVuelo(Vuelo vuelo) {
 		this.vuelo = vuelo;
 	}
-	public Aerolinea getAerolinea() {
-		return aerolinea;
-	}
-	public void setAerolinea(Aerolinea aerolinea) {
-		this.aerolinea = aerolinea;
-	}
 	public LocalDateTime getFechaHora() {
 		return fechaHora;
 	}
@@ -63,6 +59,22 @@ public class Venta implements Serializable {
 	}
 	public void setFormaDePago(String formaDePago) {
 		this.formaDePago = formaDePago;
+	}
+
+	public double getMonto() {
+		return monto;
+	}
+
+	public void setMonto(double monto) {
+		this.monto = monto;
+	}
+
+	public int getCuotas() {
+		return cuotas;
+	}
+
+	public void setCuotas(int cuotas) {
+		this.cuotas = cuotas;
 	}
 	
 	

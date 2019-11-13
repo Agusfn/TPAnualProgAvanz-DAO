@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.interfaces.IVueloDao;
+import modelo.Aerolinea;
 import modelo.Aeropuerto;
 import modelo.Vuelo;
 import util.DbQuery;
@@ -55,8 +56,8 @@ public class VueloDaoImplDB implements IVueloDao {
 	
 	public void agregar(Vuelo vuelo) throws SQLException
 	{
-		query.execute("INSERT INTO " + tableName + " (numero, cantidad_asientos, id_aeropuerto_salida, id_aeropuerto_llegada, fecha_hora_salida, "
-				+ "fecha_hora_llegada, tiempo_vuelo_minutos) VALUES (?, ?, ?, ?, ?, ?, ?)", vuelo.getNumero(), vuelo.getCantAsientos(), 
+		query.execute("INSERT INTO " + tableName + " (id_aerolinea, numero, cantidad_asientos, id_aeropuerto_salida, id_aeropuerto_llegada, fecha_hora_salida, "
+				+ "fecha_hora_llegada, tiempo_vuelo_minutos) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", vuelo.getAerolinea().getId(), vuelo.getNumero(), vuelo.getCantAsientos(), 
 				vuelo.getAeropSalida().getId(), vuelo.getAeropLlegada().getId(), vuelo.getFechaHoraSalida(), vuelo.getFechaHoraLlegada(),
 				vuelo.getTiempoVueloMinutos());
 
@@ -72,9 +73,9 @@ public class VueloDaoImplDB implements IVueloDao {
 	
 	public void actualizar(Vuelo vuelo) throws SQLException
 	{
-		query.update("UPDATE " + tableName + " SET numero = ?, cantidad_asientos = ?, id_aeropuerto_salida = ?, id_aeropuerto_llegada = ?, "
+		query.update("UPDATE " + tableName + " SET id_aerolinea = ?, numero = ?, cantidad_asientos = ?, id_aeropuerto_salida = ?, id_aeropuerto_llegada = ?, "
 				+ "fecha_hora_salida = ?, fecha_hora_llegada = ?, tiempo_vuelo_minutos = ? WHERE id = ?", 
-				vuelo.getNumero(), vuelo.getCantAsientos(), vuelo.getAeropSalida().getId(), vuelo.getAeropLlegada().getId(), vuelo.getFechaHoraSalida(),
+				vuelo.getAerolinea().getId(), vuelo.getNumero(), vuelo.getCantAsientos(), vuelo.getAeropSalida().getId(), vuelo.getAeropLlegada().getId(), vuelo.getFechaHoraSalida(),
 				vuelo.getFechaHoraLlegada(), vuelo.getTiempoVueloMinutos(), vuelo.getId());
 	}
 	
@@ -95,6 +96,10 @@ public class VueloDaoImplDB implements IVueloDao {
 		Vuelo nuevoVuelo = new Vuelo();
 		
 		nuevoVuelo.setId(query.getInt("id"));
+		
+		Aerolinea aerolinea = new Aerolinea(query.getInt("id_aerolinea"));
+		nuevoVuelo.setAerolinea(aerolinea);
+		
 		nuevoVuelo.setNumero(query.getString("numero"));
 		nuevoVuelo.setCantAsientos(query.getInt("cantidad_asientos"));
 		

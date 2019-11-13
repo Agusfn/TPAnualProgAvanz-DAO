@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 public class Vuelo implements Serializable {
 
 	private int id;
+	private Aerolinea aerolinea;
 	private String numero;
 	private int cantAsientos;
 	private Aeropuerto aeropSalida;
@@ -21,9 +22,10 @@ public class Vuelo implements Serializable {
 	{
 		this.id = id;
 	}
-	public Vuelo(String numero, int cantAsientos, Aeropuerto aeropSalida, Aeropuerto aeropLlegada,
+	public Vuelo(Aerolinea aerolinea, String numero, int cantAsientos, Aeropuerto aeropSalida, Aeropuerto aeropLlegada,
 			LocalDateTime fechaHoraSalida, LocalDateTime fechaHoraLlegada, int tiempoVueloMinutos) {
 		super();
+		this.aerolinea = aerolinea;
 		this.numero = numero;
 		this.cantAsientos = cantAsientos;
 		this.aeropSalida = aeropSalida;
@@ -79,6 +81,12 @@ public class Vuelo implements Serializable {
 	}
 	public void setTiempoVueloMinutos(int tiempoVueloMinutos) {
 		this.tiempoVueloMinutos = tiempoVueloMinutos;
+	}
+	public Aerolinea getAerolinea() {
+		return aerolinea;
+	}
+	public void setAerolinea(Aerolinea aerolinea) {
+		this.aerolinea = aerolinea;
 	}
 	
 	
