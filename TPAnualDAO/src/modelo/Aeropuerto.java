@@ -9,8 +9,11 @@ public class Aeropuerto implements Serializable {
 	private String identificacion;
 	private String ciudad;
 	private Provincia provincia;
+	private String nombreProvincia;
 	private Pais pais;
+	private String nombrePais;
 	
+
 	public Aeropuerto() 
 	{
 	}
@@ -55,7 +58,18 @@ public class Aeropuerto implements Serializable {
 	public void setPais(Pais pais) {
 		this.pais = pais;
 	}
-	
+	public String getNombreProvincia() {
+		return nombreProvincia;
+	}
+	public void setNombreProvincia(String nombreProvincia) {
+		this.nombreProvincia = nombreProvincia;
+	}
+	public String getNombrePais() {
+		return nombrePais;
+	}
+	public void setNombrePais(String nombrePais) {
+		this.nombrePais = nombrePais;
+	}
 	
 	
 	

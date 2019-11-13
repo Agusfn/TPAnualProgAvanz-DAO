@@ -6,7 +6,6 @@ import java.io.Serializable;
 public class PasajeroFrecuente implements Serializable {
 
 	private int id;
-	private String alianza;
 	private Aerolinea aerolinea;
 	private String numero;
 	private String categoria;
@@ -18,9 +17,8 @@ public class PasajeroFrecuente implements Serializable {
 	{
 		this.id = id;
 	}
-	public PasajeroFrecuente(String alianza, Aerolinea aerolinea, String numero, String categoria) {
+	public PasajeroFrecuente(Aerolinea aerolinea, String numero, String categoria) {
 		super();
-		this.alianza = alianza;
 		this.aerolinea = aerolinea;
 		this.numero = numero;
 		this.categoria = categoria;
@@ -31,12 +29,6 @@ public class PasajeroFrecuente implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}	
-	public String getAlianza() {
-		return alianza;
-	}
-	public void setAlianza(String alianza) {
-		this.alianza = alianza;
-	}
 	public Aerolinea getAerolinea() {
 		return aerolinea;
 	}

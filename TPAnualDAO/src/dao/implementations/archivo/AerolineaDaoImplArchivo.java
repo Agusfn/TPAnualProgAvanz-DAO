@@ -6,6 +6,7 @@ import java.util.List;
 
 import dao.interfaces.IAerolineaDao;
 import modelo.Aerolinea;
+import modelo.Alianza;
 import util.Archivo;
 import util.Properties;
 
@@ -174,15 +175,25 @@ public class AerolineaDaoImplArchivo implements IAerolineaDao {
 		Aerolinea aerolinea = new Aerolinea();
 		aerolinea.setId(Integer.parseInt(props[0]));
 		aerolinea.setNombre(props[1]);
-		aerolinea.setAlianza(props[2]);
-	//aerolinea.setVuelos();
+		
+		Alianza alianza = null;
+		if(!props[2].equals("")) {
+			alianza = new Alianza(Integer.parseInt(props[2]));
+		}
+		aerolinea.setAlianza(alianza);
+		
 		return aerolinea;
 	}
 	
 	
 	private String aerolineaToCsv(Aerolinea aerolinea)
 	{
-		return aerolinea.getId() + "," + aerolinea.getNombre() + "," + aerolinea.getAlianza();
+		String idAlianza = "";
+		if(aerolinea.getAlianza() != null) {
+			idAlianza = Integer.toString(aerolinea.getAlianza().getId());
+		}
+		
+		return aerolinea.getId() + "," + aerolinea.getNombre() + "," + idAlianza;
 		
 	}
 

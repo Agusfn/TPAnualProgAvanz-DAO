@@ -55,9 +55,8 @@ public class PasajeroFrecuenteDaoImplDB implements IPasajeroFrecuenteDao {
 	
 	public void agregar(PasajeroFrecuente pasajeroFrecuente) throws SQLException
 	{
-		query.execute("INSERT INTO " + tableName + " (alianza, id_aerolinea, numero, categoria) VALUES (?, ?, ?, ?)", 
-				pasajeroFrecuente.getAlianza(), pasajeroFrecuente.getAerolinea().getId(), pasajeroFrecuente.getNumero(), 
-				pasajeroFrecuente.getCategoria());
+		query.execute("INSERT INTO " + tableName + " (id_aerolinea, numero, categoria) VALUES (?, ?, ?)", 
+				pasajeroFrecuente.getAerolinea().getId(), pasajeroFrecuente.getNumero(), pasajeroFrecuente.getCategoria());
 
 		pasajeroFrecuente.setId((int)query.getLastInsertedId());
 	}
@@ -71,8 +70,8 @@ public class PasajeroFrecuenteDaoImplDB implements IPasajeroFrecuenteDao {
 	
 	public void actualizar(PasajeroFrecuente pasajeroFrecuente) throws SQLException
 	{
-		query.update("UPDATE " + tableName + "SET alianza = ?, id_aerolinea = ?, numero = ?, categoria = ? WHERE id = ?", 
-				pasajeroFrecuente.getAlianza(), pasajeroFrecuente.getAerolinea().getId(), pasajeroFrecuente.getNumero(), 
+		query.update("UPDATE " + tableName + "SET id_aerolinea = ?, numero = ?, categoria = ? WHERE id = ?", 
+				pasajeroFrecuente.getAerolinea().getId(), pasajeroFrecuente.getNumero(), 
 				pasajeroFrecuente.getCategoria(), pasajeroFrecuente.getId());
 	}
 	
@@ -93,8 +92,6 @@ public class PasajeroFrecuenteDaoImplDB implements IPasajeroFrecuenteDao {
 		PasajeroFrecuente nuevoPasajeroFrecuente = new PasajeroFrecuente();
 		
 		nuevoPasajeroFrecuente.setId(query.getInt("id"));
-
-		nuevoPasajeroFrecuente.setAlianza(query.getString("alianza"));
 		
 		Aerolinea aerolinea = new Aerolinea(query.getInt("id_aerolinea"));
 		nuevoPasajeroFrecuente.setAerolinea(aerolinea);

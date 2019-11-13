@@ -166,14 +166,13 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 		PasajeroFrecuente pasajeroFrecuente = new PasajeroFrecuente();
 		
 		pasajeroFrecuente.setId(Integer.parseInt(props[0]));
-		pasajeroFrecuente.setAlianza(props[1]);
 		
-		int idAerolinea = Integer.parseInt(props[2]);
+		int idAerolinea = Integer.parseInt(props[1]);
 		AerolineaDaoImplArchivo dao = new AerolineaDaoImplArchivo();
 		pasajeroFrecuente.setAerolinea(dao.obtener(idAerolinea));
 		
-		pasajeroFrecuente.setNumero(props[3]);
-		pasajeroFrecuente.setCategoria(props[4]);
+		pasajeroFrecuente.setNumero(props[2]);
+		pasajeroFrecuente.setCategoria(props[3]);
 		
 		
 		return pasajeroFrecuente;
@@ -181,7 +180,7 @@ public class PasajeroFrecuenteDaoImplArchivo implements IPasajeroFrecuenteDao {
 
 	private String pasajeroFrecuenteToCsv(PasajeroFrecuente pasajFrec) {
 		
-		return pasajFrec.getId() + "," + pasajFrec.getAlianza() + "," + pasajFrec.getAerolinea().getId() + "," + pasajFrec.getNumero() + "," + pasajFrec.getCategoria();
+		return pasajFrec.getId() + "," + pasajFrec.getAerolinea().getId() + "," + pasajFrec.getNumero() + "," + pasajFrec.getCategoria();
 	}
 
 	public void close() throws Exception

@@ -56,9 +56,19 @@ public class DireccionDaoImplDB implements IDireccionDao {
 	
 	public void agregar(Direccion direccion) throws SQLException
 	{
+		
+		Object idProvincia = null;
+		if(direccion.getProvincia() != null) {
+			idProvincia = direccion.getProvincia().getId();
+		}
+		
+		Object idPais = null;
+		if(direccion.getPais() != null) {
+			idPais = direccion.getPais().getId();
+		}
+		
 		query.execute("INSERT INTO " + tableName + " (calle, altura, ciudad, id_provincia, id_pais, codigo_postal) VALUES (?, ?, ?, ?, ?, ?)", 
-				direccion.getCalle(), direccion.getAltura(), direccion.getCiudad(), direccion.getProvincia().getId(), direccion.getPais().getId(),
-				direccion.getCodigoPostal());
+				direccion.getCalle(), direccion.getAltura(), direccion.getCiudad(), idProvincia, idPais, direccion.getCodigoPostal());
 
 		direccion.setId((int)query.getLastInsertedId());
 	}
@@ -72,9 +82,19 @@ public class DireccionDaoImplDB implements IDireccionDao {
 	
 	public void actualizar(Direccion direccion) throws SQLException
 	{
+		
+		Object idProvincia = null;
+		if(direccion.getProvincia() != null) {
+			idProvincia = direccion.getProvincia().getId();
+		}
+		
+		Object idPais = null;
+		if(direccion.getPais() != null) {
+			idPais = direccion.getPais().getId();
+		}
+		
 		query.update("UPDATE " + tableName + "SET calle = ?, altura = ?, ciudad = ?, id_provincia = ?, id_pais = ?, codigo_postal = ? WHERE id = ?", 
-				direccion.getCalle(), direccion.getAltura(), direccion.getCiudad(), direccion.getProvincia().getId(), direccion.getPais().getId(),
-				direccion.getCodigoPostal(), direccion.getId());
+				direccion.getCalle(), direccion.getAltura(), direccion.getCiudad(), idProvincia, idPais, direccion.getCodigoPostal(), direccion.getId());
 	}
 	
 	
@@ -99,11 +119,20 @@ public class DireccionDaoImplDB implements IDireccionDao {
 		direccion.setCiudad(query.getString("ciudad"));
 		direccion.setCodigoPostal(query.getString("codigo_postal"));
 		
-		Provincia provincia = new Provincia(query.getInt("id_provincia"));
-		direccion.setProvincia(provincia);
 		
-		Pais pais = new Pais(query.getInt("id_pais"));
-		direccion.setPais(pais);
+		int idProvincia = query.getInt("id_provincia");
+		if(idProvincia != 0) {
+			direccion.setProvincia(new Provincia(idProvincia));
+		}
+		
+		direccion.setNombreProvincia(query.getString("nombre_provincia"));
+		
+		int idPais = query.getInt("id_pais");
+		if(idPais != 0) {
+			direccion.setPais(new Pais(idPais));
+		}
+		
+		direccion.setNombrePais(query.getString("nombre_pais"));
 		
 		return direccion;	
 	}

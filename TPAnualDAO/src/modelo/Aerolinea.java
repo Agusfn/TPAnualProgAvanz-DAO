@@ -8,7 +8,7 @@ public class Aerolinea implements Serializable {
 
 	private int id;
 	private String nombre;
-	private String alianza;
+	private Alianza alianza;
 	private List<Vuelo> vuelos;
 
 	public Aerolinea() {
@@ -18,7 +18,7 @@ public class Aerolinea implements Serializable {
 	{
 		this.id = id;
 	}
-	public Aerolinea(String nombre, String alianza, List<Vuelo> vuelos) {
+	public Aerolinea(String nombre, Alianza alianza, List<Vuelo> vuelos) {
 		super();
 		this.nombre = nombre;
 		this.alianza = alianza;
@@ -37,10 +37,10 @@ public class Aerolinea implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getAlianza() {
+	public Alianza getAlianza() {
 		return alianza;
 	}
-	public void setAlianza(String alianza) {
+	public void setAlianza(Alianza alianza) {
 		this.alianza = alianza;
 	}
 	public List<Vuelo> getVuelos() {

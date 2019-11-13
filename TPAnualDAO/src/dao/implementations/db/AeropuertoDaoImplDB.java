@@ -56,8 +56,19 @@ public class AeropuertoDaoImplDB implements IAeropuertoDao{
 	
 	public void agregar(Aeropuerto aeropuerto) throws SQLException
 	{
+		
+		Object idProvincia = null;
+		if(aeropuerto.getProvincia() != null) {
+			idProvincia = aeropuerto.getProvincia().getId();
+		}
+		
+		Object idPais = null;
+		if(aeropuerto.getPais() != null) {
+			idPais = aeropuerto.getPais().getId();
+		}
+		
 		query.execute("INSERT INTO " + tableName + " (identificacion, ciudad, id_provincia, id_pais) VALUES (?, ?, ?, ?)", 
-				aeropuerto.getIdentificacion(), aeropuerto.getCiudad(), aeropuerto.getProvincia().getId(), aeropuerto.getPais().getId());
+				aeropuerto.getIdentificacion(), aeropuerto.getCiudad(), idProvincia, idPais);
 
 		aeropuerto.setId((int)query.getLastInsertedId());
 	}
@@ -71,8 +82,19 @@ public class AeropuertoDaoImplDB implements IAeropuertoDao{
 	
 	public void actualizar(Aeropuerto aeropuerto) throws SQLException
 	{
+		
+		Object idProvincia = null;
+		if(aeropuerto.getProvincia() != null) {
+			idProvincia = aeropuerto.getProvincia().getId();
+		}
+		
+		Object idPais = null;
+		if(aeropuerto.getPais() != null) {
+			idPais = aeropuerto.getPais().getId();
+		}
+		
 		query.update("UPDATE " + tableName + "SET identificacion = ?, ciudad = ?, id_provincia = ?, id_pais = ? WHERE id = ?", 
-				aeropuerto.getIdentificacion(), aeropuerto.getCiudad(), aeropuerto.getProvincia().getId(), aeropuerto.getPais().getId(), aeropuerto.getId());
+				aeropuerto.getIdentificacion(), aeropuerto.getCiudad(), idProvincia, idPais, aeropuerto.getId());
 	}
 	
 	
@@ -95,11 +117,20 @@ public class AeropuertoDaoImplDB implements IAeropuertoDao{
 		nuevoAeropuerto.setIdentificacion(query.getString("identificacion"));
 		nuevoAeropuerto.setCiudad(query.getString("ciudad"));
 		
-		Provincia provincia = new Provincia(query.getInt("id_provincia"));
-		nuevoAeropuerto.setProvincia(provincia);
+		int idProvincia = query.getInt("id_provincia");
+		if(idProvincia != 0) {
+			nuevoAeropuerto.setProvincia(new Provincia(idProvincia));
+		}
 		
-		Pais pais = new Pais(query.getInt("id_pais"));
-		nuevoAeropuerto.setPais(pais);
+		nuevoAeropuerto.setNombreProvincia(query.getString("nombre_provincia"));
+	
+		int idPais = query.getInt("id_pais");
+		if(idPais != 0) {
+			nuevoAeropuerto.setPais(new Pais(idPais));
+		}
+		
+		nuevoAeropuerto.setNombrePais(query.getString("nombre_pais"));
+		
 		
 		return nuevoAeropuerto;	
 	}

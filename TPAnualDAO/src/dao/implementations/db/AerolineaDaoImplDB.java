@@ -6,6 +6,7 @@ import java.util.List;
 
 import dao.interfaces.IAerolineaDao;
 import modelo.Aerolinea;
+import modelo.Alianza;
 import util.DbQuery;
 
 public class AerolineaDaoImplDB implements IAerolineaDao {
@@ -54,7 +55,15 @@ public class AerolineaDaoImplDB implements IAerolineaDao {
 	
 	public void agregar(Aerolinea aerolinea) throws SQLException
 	{
-		query.execute("INSERT INTO " + tableName + " (nombre, alianza) VALUES (?, ?)", aerolinea.getNombre(), aerolinea.getAlianza());
+		
+		Object idAlianza;
+		if(aerolinea.getAlianza() == null) {
+			idAlianza = null;
+		} else {
+			idAlianza = aerolinea.getAlianza().getId();
+		}
+		
+		query.execute("INSERT INTO " + tableName + " (nombre, id_alianza) VALUES (?, ?)", aerolinea.getNombre(), idAlianza);
 
 		aerolinea.setId((int)query.getLastInsertedId());
 	}
@@ -68,7 +77,16 @@ public class AerolineaDaoImplDB implements IAerolineaDao {
 	
 	public void actualizar(Aerolinea aerolinea) throws SQLException
 	{
-		query.update("UPDATE " + tableName + "SET nombre = ?, alianza = ? WHERE id = ?", aerolinea.getNombre(), aerolinea.getAlianza(), aerolinea.getId());
+		
+		Object idAlianza;
+		if(aerolinea.getAlianza() == null) {
+			idAlianza = null;
+		} else {
+			idAlianza = aerolinea.getAlianza().getId();
+		}
+		
+		query.update("UPDATE " + tableName + "SET nombre = ?, id_alianza = ? WHERE id = ?", aerolinea.getNombre(), idAlianza, 
+				aerolinea.getId());
 	}
 	
 	
@@ -89,7 +107,12 @@ public class AerolineaDaoImplDB implements IAerolineaDao {
 		
 		nuevoAerolinea.setId(query.getInt("id"));
 		nuevoAerolinea.setNombre(query.getString("nombre"));
-		nuevoAerolinea.setAlianza(query.getString("alianza"));
+		
+		int idAlianza = query.getInt("id_alianza");
+		if(idAlianza != 0) {
+			nuevoAerolinea.setAlianza(new Alianza(idAlianza));
+		}
+		
 		
 		return nuevoAerolinea;	
 	}
