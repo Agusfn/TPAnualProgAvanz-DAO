@@ -7,6 +7,7 @@ import java.util.List;
 import dao.interfaces.IClienteDao;
 import modelo.Cliente;
 import modelo.Direccion;
+import modelo.Pais;
 import modelo.PasajeroFrecuente;
 import modelo.Pasaporte;
 import modelo.Telefono;
@@ -58,10 +59,16 @@ public class ClienteDaoImplDB implements IClienteDao {
 	
 	public void agregar(Cliente cliente) throws SQLException
 	{
+		
+		Object idPasajFrecuente = null;
+		if(cliente.getPasajeroFrecuente() != null) {
+			idPasajFrecuente = cliente.getPasajeroFrecuente().getId();
+		}
+		
 		query.execute("INSERT INTO " + tableName + " (nombre_y_apellido, dni, cuil_o_cuit, fecha_nacimiento, email, id_direccion,"
 				+ "id_pasajero_frecuente, id_telefono, id_pasaporte) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
 				cliente.getNombreYApellido(), cliente.getDni(), cliente.getCuitOCuil(), cliente.getFechaNacimiento(), cliente.getEmail(),
-				cliente.getDireccion().getId(), cliente.getPasajeroFrecuente().getId(), cliente.getTelefono().getId(), cliente.getPasaporte().getId());
+				cliente.getDireccion().getId(), idPasajFrecuente, cliente.getTelefono().getId(), cliente.getPasaporte().getId());
 
 		cliente.setId((int)query.getLastInsertedId());
 	}
@@ -75,10 +82,16 @@ public class ClienteDaoImplDB implements IClienteDao {
 	
 	public void actualizar(Cliente cliente) throws SQLException
 	{
+		
+		Object idPasajFrecuente = null;
+		if(cliente.getPasajeroFrecuente() != null) {
+			idPasajFrecuente = cliente.getPasajeroFrecuente().getId();
+		}
+		
 		query.update("UPDATE " + tableName + "SET nombre_y_apellido = ?, dni = ?, cuil_o_cuit = ?, fecha_nacimiento = ?, email = ?, id_direccion = ?,"
 				+ "id_pasajero_frecuente = ?, id_telefono = ?, id_pasaporte = ? WHERE id = ?", 
 				cliente.getNombreYApellido(), cliente.getDni(), cliente.getCuitOCuil(), cliente.getFechaNacimiento(), cliente.getEmail(), 
-				cliente.getDireccion().getId(), cliente.getPasajeroFrecuente().getId(), cliente.getTelefono().getId(), cliente.getPasaporte().getId(),
+				cliente.getDireccion().getId(), idPasajFrecuente, cliente.getTelefono().getId(), cliente.getPasaporte().getId(),
 				cliente.getId());
 	}
 	
@@ -108,8 +121,10 @@ public class ClienteDaoImplDB implements IClienteDao {
 		Direccion direccion = new Direccion(query.getInt("id_direccion"));
 		cliente.setDireccion(direccion);
 		
-		PasajeroFrecuente pasajFreq = new PasajeroFrecuente(query.getInt("id_pasajero_frecuente"));
-		cliente.setPasajeroFrecuente(pasajFreq);
+		int idPasajFrecuente = query.getInt("id_pasajero_frecuente");
+		if(idPasajFrecuente != 0) {
+			cliente.setPasajeroFrecuente(new PasajeroFrecuente(idPasajFrecuente));
+		}		
 		
 		Telefono tel = new Telefono(query.getInt("id_telefono"));
 		cliente.setTelefono(tel);
