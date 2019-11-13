@@ -72,7 +72,7 @@ public class VueloDaoImplDB implements IVueloDao {
 	
 	public void actualizar(Vuelo vuelo) throws SQLException
 	{
-		query.update("UPDATE " + tableName + "SET numero = ?, cantidad_asientos = ?, id_aeropuerto_salida = ?, id_aeropuerto_llegada = ?, "
+		query.update("UPDATE " + tableName + " SET numero = ?, cantidad_asientos = ?, id_aeropuerto_salida = ?, id_aeropuerto_llegada = ?, "
 				+ "fecha_hora_salida = ?, fecha_hora_llegada = ?, tiempo_vuelo_minutos = ? WHERE id = ?", 
 				vuelo.getNumero(), vuelo.getCantAsientos(), vuelo.getAeropSalida().getId(), vuelo.getAeropLlegada().getId(), vuelo.getFechaHoraSalida(),
 				vuelo.getFechaHoraLlegada(), vuelo.getTiempoVueloMinutos(), vuelo.getId());

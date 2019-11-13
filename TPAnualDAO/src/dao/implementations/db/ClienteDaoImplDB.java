@@ -87,7 +87,7 @@ public class ClienteDaoImplDB implements IClienteDao {
 			idPasajFrecuente = cliente.getPasajeroFrecuente().getId();
 		}
 		
-		query.update("UPDATE " + tableName + "SET nombre_y_apellido = ?, dni = ?, cuit_o_cuil = ?, fecha_nacimiento = ?, email = ?, id_direccion = ?,"
+		query.update("UPDATE " + tableName + " SET nombre_y_apellido = ?, dni = ?, cuit_o_cuil = ?, fecha_nacimiento = ?, email = ?, id_direccion = ?,"
 				+ "id_pasajero_frecuente = ?, id_telefono = ?, id_pasaporte = ? WHERE id = ?", 
 				cliente.getNombreYApellido(), cliente.getDni(), cliente.getCuitOCuil(), cliente.getFechaNacimiento(), cliente.getEmail(), 
 				cliente.getDireccion().getId(), idPasajFrecuente, cliente.getTelefono().getId(), cliente.getPasaporte().getId(),

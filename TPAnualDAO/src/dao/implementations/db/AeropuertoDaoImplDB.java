@@ -93,7 +93,7 @@ public class AeropuertoDaoImplDB implements IAeropuertoDao{
 			idPais = aeropuerto.getPais().getId();
 		}
 		
-		query.update("UPDATE " + tableName + "SET identificacion = ?, ciudad = ?, id_provincia = ?, nombre_provincia = ?, id_pais = ?, nombre_pais = ? WHERE id = ?", 
+		query.update("UPDATE " + tableName + " SET identificacion = ?, ciudad = ?, id_provincia = ?, nombre_provincia = ?, id_pais = ?, nombre_pais = ? WHERE id = ?", 
 				aeropuerto.getIdentificacion(), aeropuerto.getCiudad(), idProvincia, aeropuerto.getNombreProvincia(), idPais, aeropuerto.getNombrePais(), aeropuerto.getId());
 	}
 	

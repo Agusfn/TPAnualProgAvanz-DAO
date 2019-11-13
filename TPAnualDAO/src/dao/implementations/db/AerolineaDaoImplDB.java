@@ -85,7 +85,7 @@ public class AerolineaDaoImplDB implements IAerolineaDao {
 			idAlianza = aerolinea.getAlianza().getId();
 		}
 		
-		query.update("UPDATE " + tableName + "SET nombre = ?, id_alianza = ? WHERE id = ?", aerolinea.getNombre(), idAlianza, 
+		query.update("UPDATE " + tableName + " SET nombre = ?, id_alianza = ? WHERE id = ?", aerolinea.getNombre(), idAlianza, 
 				aerolinea.getId());
 	}
 	

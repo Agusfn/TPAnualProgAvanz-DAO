@@ -72,7 +72,7 @@ public class VentaDaoImplDB implements IVentaDao {
 	
 	public void actualizar(Venta venta) throws SQLException
 	{
-		query.update("UPDATE " + tableName + "SET id_cliente = ?, id_vuelo = ?, id_aerolinea = ?, fecha_y_hore = ?, forma_de_pago = ? WHERE id = ?", 
+		query.update("UPDATE " + tableName + " SET id_cliente = ?, id_vuelo = ?, id_aerolinea = ?, fecha_y_hore = ?, forma_de_pago = ? WHERE id = ?", 
 				venta.getCliente().getId(), venta.getVuelo().getId(), venta.getAerolinea().getId(), venta.getFechaHora(), venta.getFormaDePago(), venta.getId());
 	}
 	

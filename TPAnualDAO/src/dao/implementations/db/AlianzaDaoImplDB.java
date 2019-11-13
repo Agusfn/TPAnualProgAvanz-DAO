@@ -55,7 +55,7 @@ public class AlianzaDaoImplDB implements IAlianzaDao {
 	}
 
 	public void actualizar(Alianza alianza) throws SQLException {
-		query.update("UPDATE " + tableName + "SET nombre = ? WHERE id = ?", alianza.getNombre(), alianza.getId());
+		query.update("UPDATE " + tableName + " SET nombre = ? WHERE id = ?", alianza.getNombre(), alianza.getId());
 	}
 
 	public void close() throws SQLException {

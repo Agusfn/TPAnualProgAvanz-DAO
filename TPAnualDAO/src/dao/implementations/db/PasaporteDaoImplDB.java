@@ -83,7 +83,7 @@ public class PasaporteDaoImplDB implements IPasaporteDao {
 			idPaisEmision = pasaporte.getPaisEmision().getId();
 		}
 		
-		query.update("UPDATE " + tableName + "SET numero = ?, id_pais_emision = ?, nombre_pais = ?, autoridad_emision = ?, fecha_emision = ?, fecha_vencimiento = ? WHERE id = ?", 
+		query.update("UPDATE " + tableName + " SET numero = ?, id_pais_emision = ?, nombre_pais = ?, autoridad_emision = ?, fecha_emision = ?, fecha_vencimiento = ? WHERE id = ?", 
 				pasaporte.getNumero(), idPaisEmision, pasaporte.getNombrePaisEmision(), pasaporte.getAutoridadEmision(), pasaporte.getFechaEmision(), 
 				pasaporte.getFechVencimiento(), pasaporte.getId());
 	}

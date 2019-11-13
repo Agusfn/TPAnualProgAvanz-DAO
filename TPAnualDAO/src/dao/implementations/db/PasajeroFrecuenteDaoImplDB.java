@@ -70,7 +70,7 @@ public class PasajeroFrecuenteDaoImplDB implements IPasajeroFrecuenteDao {
 	
 	public void actualizar(PasajeroFrecuente pasajeroFrecuente) throws SQLException
 	{
-		query.update("UPDATE " + tableName + "SET id_aerolinea = ?, numero = ?, categoria = ? WHERE id = ?", 
+		query.update("UPDATE " + tableName + " SET id_aerolinea = ?, numero = ?, categoria = ? WHERE id = ?", 
 				pasajeroFrecuente.getAerolinea().getId(), pasajeroFrecuente.getNumero(), 
 				pasajeroFrecuente.getCategoria(), pasajeroFrecuente.getId());
 	}

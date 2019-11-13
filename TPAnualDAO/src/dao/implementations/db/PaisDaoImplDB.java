@@ -68,7 +68,7 @@ public class PaisDaoImplDB implements IPaisDao {
 	
 	public void actualizar(Pais pais) throws SQLException
 	{
-		query.update("UPDATE " + tableName + "SET nombre = ? WHERE id = ?", pais.getNombre(), pais.getId());
+		query.update("UPDATE " + tableName + " SET nombre = ? WHERE id = ?", pais.getNombre(), pais.getId());
 	}
 	
 	

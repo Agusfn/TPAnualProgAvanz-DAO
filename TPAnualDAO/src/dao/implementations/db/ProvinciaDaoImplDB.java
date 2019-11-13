@@ -70,7 +70,7 @@ public class ProvinciaDaoImplDB implements IProvinciaDao {
 	
 	public void actualizar(Provincia provincia) throws SQLException
 	{
-		query.update("UPDATE " + tableName + "SET nombre = ?, id_pais = ? WHERE id = ?", provincia.getNombre(), provincia.getPais().getId(), provincia.getId());
+		query.update("UPDATE " + tableName + " SET nombre = ?, id_pais = ? WHERE id = ?", provincia.getNombre(), provincia.getPais().getId(), provincia.getId());
 	}
 	
 	

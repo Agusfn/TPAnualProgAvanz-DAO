@@ -69,7 +69,7 @@ public class TelefonoDaoImplDB implements ITelefonoDao {
 	
 	public void actualizar(Telefono telefono) throws SQLException
 	{
-		query.update("UPDATE " + tableName + "SET nro_personal = ?, nro_celular = ?, nro_laboral = ? WHERE id = ?", 
+		query.update("UPDATE " + tableName + " SET nro_personal = ?, nro_celular = ?, nro_laboral = ? WHERE id = ?", 
 				telefono.getNroPersonal(), telefono.getNroCelular(), telefono.getNroLaboral(), telefono.getId());
 	}
 	
